@@ -1,6 +1,6 @@
 <template>
   <div class="signup container d-flex flex-column align-items-center">
-    <h1 class="fw-bold my-5">Signup</h1>
+    <h1 class="title fw-bold my-5">Signup</h1>
     <form class="w-50">
       <div class="mb-3">
         <input
@@ -85,4 +85,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.title {
+  text-align: center;
+  font-family: 'Dela Gothic One', cursive;
+}
+</style>
