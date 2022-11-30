@@ -1,12 +1,19 @@
 <template>
   <div>
-    <h1 class="title">Signup</h1>
+    <ProjectIndexNav />
+    <ProjectCalender />
   </div>
 </template>
 
 <script>
+import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
+import ProjectCalender from '@/components/ProjectCalender.vue'
+
 export default {
-  components: {},
+  components: {
+    ProjectIndexNav,
+    ProjectCalender
+  },
   data() {
     return {
       sampleData: ''
@@ -21,8 +28,4 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  text-align: center;
-  font-family: 'Dela Gothic One', cursive;
-}
 </style>

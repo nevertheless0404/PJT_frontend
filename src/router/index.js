@@ -24,6 +24,14 @@ const routes = [
     name: 'signup',
     component: () =>
       import(/* webpackChunkName: "signup" */ '../views/SignupView.vue')
+  },
+  {
+    path: '/projectindex',
+    name: 'projectindex',
+    component: () =>
+      import(
+        /* webpackChunkName: "projectindex" */ '../views/ProjectIndexView.vue'
+      )
   }
 ]
 
