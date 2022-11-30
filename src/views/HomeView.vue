@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
+    <img alt="Vue logo" src="../assets/logo.png" />
     <button v-on:click="getMultiData">get data</button>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -10,16 +10,16 @@
 import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       allPeopleList: []
     }
   },
-  created () {
+  created() {
     this.getMultiData()
   },
   methods: {
-    async getMultiData () {
+    async getMultiData() {
       try {
         this.allPeopleList = await axios
           .get('https://jsonplaceholder.typicode.com/users/')
