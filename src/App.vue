@@ -5,7 +5,6 @@
       <router-link to="/login">로그인 하기</router-link> |
       <router-link to="/signup">회원가입</router-link> |
       <router-link to="/projectindex">프로젝트 인덱스</router-link>
-      <!-- <b-button variant="primary">Button</b-button> -->
     </nav>
     <router-view />
   </div>

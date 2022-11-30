@@ -1,6 +1,9 @@
 <template>
   <div>
     <ProjectIndexNav />
+    <router-link to="/projectcreate" class="btn btn-outline-primary"
+      >프로젝트 생성</router-link
+    >
     <ProjectCalender />
   </div>
 </template>
@@ -27,5 +30,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

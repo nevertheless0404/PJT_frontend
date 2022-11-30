@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <header>
+    <!-- <header>
       <p class="current-date">November 2022</p>
       <div class="icons">
         <i class="bi bi-chevron-left"></i>
@@ -51,7 +51,7 @@
         <li>29</li>
         <li>30</li>
       </ul>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -79,7 +79,7 @@ export default {
   min-height: 100vh;
   background: gray;
 } */
-.wrapper{
+/* .wrapper{
   width: 450px;
   background: rgb(255, 209, 209);
 }
@@ -97,5 +97,5 @@ header .current-date{
   display: flex;
   list-style: none;
   flex-wrap: wrap;
-}
+} */
 </style>
