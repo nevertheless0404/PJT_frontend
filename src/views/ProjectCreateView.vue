@@ -17,6 +17,7 @@
       <b-form-datepicker
         id="example-datepicker"
         v-model="start_at"
+        :max="end_at"
         class="mb-2"
       ></b-form-datepicker>
     </div>
@@ -25,6 +26,7 @@
       <b-form-datepicker
         id="example-datepicker2"
         v-model="end_at"
+        :min="start_at"
         class="mb-2"
       ></b-form-datepicker>
     </div>
@@ -64,13 +66,19 @@
       <label for="exampleInputEmail1" class="form-label">주요 기능</label>
       <input
         type="text"
-        class="form-control"
+        class="form-control mb-3"
         id="exampleInputEmail1"
-        placeholder=""
+        placeholder="Functions"
         aria-describedby="emailHelp"
+        v-model="func.content"
+        :key="id"
+        v-for="(func, id) in functions"
       />
       <div id="emailHelp" class="form-text">
-        <button>+ 기능 추가하기</button>
+        <button @click="addfunc">+추가</button>
+      </div>
+      <div id="emailHelp" class="form-text">
+        <button @click="removefunc">-삭제</button>
       </div>
     </div>
     <router-link to="/membercreate" class="btn btn-outline-primary"
@@ -119,6 +127,21 @@ export default {
         this.addSkill()
       }
       console.log(this.skill)
+    },
+    addfunc() {
+      this.functions.push({
+        content: ''
+      })
+      console.log(this.functions)
+    },
+    removefunc() {
+      if (this.functions.length > 1) {
+        this.functions.splice(-1, 1)
+      } else {
+        this.functions.splice(-1, 1)
+        this.addfunc()
+      }
+      console.log(this.functions)
     }
   }
 }
