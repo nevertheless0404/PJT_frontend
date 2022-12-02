@@ -12,28 +12,59 @@
       />
     </div>
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">프로젝트 팀원</label>
-        <input
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1" placeholder="Email"
-          aria-describedby="emailHelp"
-        />
-        <div id="emailHelp" class="form-text">
-          + 팀원 추가하기
-        </div>
-      </div>
+      <label for="example-datepicker">프로젝트 시작일</label>
+      <b-form-datepicker
+        id="example-datepicker"
+        v-model="value"
+        class="mb-2"
+      ></b-form-datepicker>
+    </div>
+    <div class="mb-3">
+      <label for="example-datepicker2">프로젝트 종료일</label>
+      <b-form-datepicker
+        id="example-datepicker2"
+        v-model="value"
+        class="mb-2"
+      ></b-form-datepicker>
+    </div>
     <div class="mb-3">
       <label for="exampleFormControlInput1" class="form-label"
-        >프로젝트 이름</label
+        >프로젝트 목표</label
       >
       <input
         type="text"
         class="form-control"
         id="exampleFormControlInput1"
-        placeholder="웹 프로젝트"
+        placeholder="PJT"
       />
     </div>
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"
+        >사용 언어 / 개발 환경</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="exampleFormControlInput1"
+        placeholder="Python"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">주요 기능</label>
+      <input
+        type="text"
+        class="form-control"
+        id="exampleInputEmail1"
+        placeholder=""
+        aria-describedby="emailHelp"
+      />
+      <div id="emailHelp" class="form-text">
+        <button>+ 기능 추가하기</button>
+      </div>
+    </div>
+    <router-link to="/membercreate" class="btn btn-outline-primary"
+      >다음</router-link
+    >
   </div>
 </template>
 
@@ -42,14 +73,15 @@ export default {
   components: {},
   data() {
     return {
-      sampleData: ''
+      isCreate: false
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+  }
 }
 </script>
 
