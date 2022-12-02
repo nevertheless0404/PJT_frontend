@@ -16,7 +16,7 @@
         <button @click="addMember">+ 팀원 추가하기</button>
       </div>
       <div id="emailHelp" class="form-text">
-        <button @click="removeMember(email)">+ 팀원 삭제하기</button>
+        <button @click="removeMember">+ 팀원 삭제하기</button>
       </div>
     </div>
     <!-- <div v-html="memberHtml" v-if="isCreate" class="mb-3"></div> -->
@@ -45,6 +45,15 @@ export default {
       this.members.push({
         email: ''
       })
+      console.log(this.members)
+    },
+    removeMember() {
+      if (this.members.length > 1) {
+        this.members.splice(-1, 1)
+      } else {
+        this.members.splice(-1, 1)
+        this.addMember()
+      }
       console.log(this.members)
     }
   }
