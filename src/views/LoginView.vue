@@ -57,23 +57,27 @@ export default {
     }
   },
   methods: {
-    onSubmit(email, password) {
+    onSubmit() {
       // LOGIN 액션 실행
-      this.$store
-        .dispatch('LOGIN', { email, password })
-        .then((res) => console.log(res)) // this.redirect())
-        .catch(({ message }) => (this.msg = message))
-      // },
-      // redirect() {
-      // const { search } = window.location
-      // const tokens = search.replace(/^\?/, '').split('&')
-      // const { returnPath } = tokens.reduce((qs, tkn) => {
-      //   const pair = tkn.split('=')
-      //   qs[pair[0]] = decodeURIComponent(pair[1])
-      //   return qs
-      // }, {})
-      // // 리다이렉트 처리
-      // this.$router.push(returnPath)
+      this.$axios
+        .post(
+          'http://127.0.0.1:8000/api/accounts/v1/login/',
+          { email: this.email, password: this.password },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        .then((response) => {
+          console.log(response)
+          if (response.data.access_token) {
+            localStorage.setItem('wtw-token', response.data.access_token)
+          }
+          if (response.data.refresh_token) {
+            localStorage.setItem('wtw-ref-token', response.data.refresh_token)
+          }
+        })
     }
   }
 }
