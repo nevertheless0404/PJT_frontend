@@ -8,7 +8,7 @@
         id="exampleInputEmail1"
         placeholder="Email"
         aria-describedby="emailHelp"
-        v-model="member.email"
+        v-model="member.user"
         :key="id"
         v-for="(member, id) in members"
       />
@@ -31,7 +31,7 @@ export default {
       members: [
         {
           project: '',
-          email: ''
+          user: ''
         }
       ]
     }
@@ -43,7 +43,7 @@ export default {
   methods: {
     addMember() {
       this.members.push({
-        email: ''
+        user: ''
       })
       console.log(this.members)
     },
