@@ -9,13 +9,14 @@
         class="form-control"
         id="exampleFormControlInput1"
         placeholder="PJT 프로젝트"
+        v-model="title"
       />
     </div>
     <div class="mb-3">
       <label for="example-datepicker">프로젝트 시작일</label>
       <b-form-datepicker
         id="example-datepicker"
-        v-model="value"
+        v-model="start_at"
         class="mb-2"
       ></b-form-datepicker>
     </div>
@@ -23,7 +24,7 @@
       <label for="example-datepicker2">프로젝트 종료일</label>
       <b-form-datepicker
         id="example-datepicker2"
-        v-model="value"
+        v-model="end_at"
         class="mb-2"
       ></b-form-datepicker>
     </div>
@@ -36,6 +37,7 @@
         class="form-control"
         id="exampleFormControlInput1"
         placeholder="PJT"
+        v-model="goal"
       />
     </div>
     <div class="mb-3">
@@ -44,10 +46,19 @@
       >
       <input
         type="text"
-        class="form-control"
+        class="form-control mb-3"
         id="exampleFormControlInput1"
-        placeholder="Python"
+        placeholder="Tech stack"
+        v-model="s.name"
+        :key="id"
+        v-for="(s, id) in skill"
       />
+      <div id="exampleFormControlInput1" class="form-text">
+        <button @click="addSkill">+추가</button>
+      </div>
+      <div id="exampleFormControlInput1" class="form-text">
+        <button @click="removeSkill">-삭제</button>
+      </div>
     </div>
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">주요 기능</label>
@@ -73,7 +84,20 @@ export default {
   components: {},
   data() {
     return {
-      isCreate: false
+      title: '',
+      start_at: '',
+      end_at: '',
+      goal: '',
+      skill: [
+        {
+          name: ''
+        }
+      ],
+      functions: [
+        {
+          content: ''
+        }
+      ]
     }
   },
   setup() {},
@@ -81,6 +105,21 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    addSkill() {
+      this.skill.push({
+        name: ''
+      })
+      console.log(this.skill)
+    },
+    removeSkill() {
+      if (this.skill.length > 1) {
+        this.skill.splice(-1, 1)
+      } else {
+        this.skill.splice(-1, 1)
+        this.addSkill()
+      }
+      console.log(this.skill)
+    }
   }
 }
 </script>
