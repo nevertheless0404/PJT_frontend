@@ -8,6 +8,5 @@ function registerUser(userData) {
     'Content-Type': 'application/json'
   })
 }
-
 // 함수 export
 export { registerUser }
