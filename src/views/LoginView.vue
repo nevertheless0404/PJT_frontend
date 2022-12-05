@@ -116,7 +116,7 @@ export default {
       localStorage.setItem('access_token', response.data.access_token)
       localStorage.setItem('refresh_token', response.data.refresh_token)
       this.$store.dispatch('user', response.data.user)
-      this.$router.push('/projectindex')
+      this.$router.push('/project')
     }
   }
 }
