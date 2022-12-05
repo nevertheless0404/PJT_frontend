@@ -1,27 +1,6 @@
 <template>
   <div class="signup container d-flex flex-column align-items-center">
     <h1 class="title fw-bold my-5">Signup</h1>
-    <!-- @submit = v-on:submit -->
-    <!-- prevent: 새로고침 방지 -->
-    <!-- <form @submit.prevent="submitForm">
-      <div>
-        <label for="email">id: </label> -->
-    <!-- v-model: data 속성과 연결 -->
-    <!-- <input id="email" type="text" v-model="email" />
-      </div>
-      <div>
-        <label for="password1">pw: </label>
-        <input id="password1" type="password" v-model="password1" />
-      </div>
-      <div>
-        <label for="password2">pw check: </label>
-        <input id="password2" type="password" v-model="password2" />
-      </div>
-      <button type="submit">회원 가입</button> -->
-    <!-- 결과 메시지 출력 -->
-    <!-- <p>{{ logMessage }}</p>
-    </form> -->
-
     <form
       class="w-50 d-flex flex-column align-items-center"
       @submit.prevent="submitForm"
@@ -57,20 +36,7 @@
           v-model="password2"
         />
       </div>
-      <button
-        type="submit"
-        class="btn w-50 my-3"
-        style="
-          font-size: 20px;
-          font-weight: 600;
-          background-color: rgb(45, 126, 250);
-          color: white;
-          border-radius: 40px;
-          height: 60px;
-        "
-      >
-        회원가입
-      </button>
+      <button type="submit" class="btn w-75 my-3 btn-signup">회원가입</button>
       <!-- 결과 메시지 출력 -->
       <p>{{ logMessage }}</p>
     </form>
@@ -174,5 +140,26 @@ export default {
 .title {
   text-align: center;
   font-family: 'Dela Gothic One', cursive;
+}
+
+input {
+  height: 50px;
+  border-radius: 40px;
+}
+
+.btn-signup {
+  font-size: 20px;
+  font-weight: 600;
+  background-color: rgb(45, 126, 250);
+  color: white;
+  border-radius: 40px;
+  height: 60px;
+}
+
+.btn-signup:hover {
+  background-color: #2064ca;
+  color: white;
+  transform: scale(1.05);
+  transition: 0.3s;
 }
 </style>
