@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import ProjectCreateView from '../views/ProjectCreateView.vue'
+import MemberCreateView from '../views/MemberCreateView.vue'
 
 Vue.use(VueRouter)
 
@@ -32,28 +34,30 @@ const routes = [
       import(/* webpackChunkName: "signup" */ '../views/SignupView.vue')
   },
   {
-    path: '/projectindex',
-    name: 'projectindex',
+    path: '/project',
+    name: 'projectnav',
     component: () =>
-      import(
-        /* webpackChunkName: "projectindex" */ '../views/ProjectIndexView.vue'
-      )
-  },
-  {
-    path: '/projectcreate',
-    name: 'projectcreate',
-    component: () =>
-      import(
-        /* webpackChunkName: "projectcreate" */ '../views/ProjectCreateView.vue'
-      )
-  },
-  {
-    path: '/membercreate',
-    name: 'membercreate',
-    component: () =>
-      import(
-        /* webpackChunkName: "projectcreate" */ '../views/MemberCreateView.vue'
-      )
+      import(/* webpackChunkName: "project" */ '../views/ProjectNavView.vue'),
+    children: [
+      {
+        path: '',
+        name: 'projectindex',
+        component: () =>
+          import(
+            /* webpackChunkName: "project" */ '../views/ProjectIndexView.vue'
+          )
+      },
+      {
+        path: 'create',
+        name: 'projectcreate',
+        component: ProjectCreateView
+      },
+      {
+        path: 'membercreate',
+        name: 'membercreate',
+        component: MemberCreateView
+      }
+    ]
   }
 ]
 

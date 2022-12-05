@@ -97,7 +97,7 @@
         v-for="(func, id) in functions"
       />
     </div>
-    <router-link to="/membercreate" class="btn btn-primary">다음</router-link>
+    <router-link :to="{ name: 'membercreate' }"  class="btn btn-primary">다음</router-link>
   </div>
 </template>
 
