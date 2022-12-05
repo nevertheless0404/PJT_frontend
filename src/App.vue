@@ -1,15 +1,32 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/login">로그인 하기</router-link> |
-      <router-link to="/signup">회원가입</router-link> |
-      <router-link to="/projectindex">프로젝트 인덱스</router-link>
-    </nav>
-    <router-view />
+    <NavBar />
+    <div class="auth-wrapper">
+      <div class="auth-inner">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
-
+<script>
+import axios from 'axios'
+import NavBar from './components/NavBar.vue'
+export default {
+  name: 'App',
+  components: {
+    NavBar
+  },
+  async created() {
+    console.log(localStorage.getItem('access_token'))
+    const response = await axios.get('user/', {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+    this.$store.dispatch('user', response.data)
+  }
+}
+</script>
 <style>
 * {
   font-family: 'Noto Sans KR', sans-serif;

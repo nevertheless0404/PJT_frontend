@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -107,27 +108,15 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      // LOGIN 액션 실행
-      this.$axios
-        .post(
-          'http://127.0.0.1:8000/api/accounts/v1/login/',
-          { email: this.email, password: this.password },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then((response) => {
-          console.log(response)
-          if (response.data.access_token) {
-            localStorage.setItem('wtw-token', response.data.access_token)
-          }
-          if (response.data.refresh_token) {
-            localStorage.setItem('wtw-ref-token', response.data.refresh_token)
-          }
-        })
+    async handleSubmit() {
+      const response = await axios.post('login/', {
+        email: this.email,
+        password: this.password
+      })
+      localStorage.setItem('access_token', response.data.access_token)
+      localStorage.setItem('refresh_token', response.data.refresh_token)
+      this.$store.dispatch('user', response.data.user)
+      this.$router.push('/')
     }
   }
 }
