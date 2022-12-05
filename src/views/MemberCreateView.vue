@@ -1,7 +1,21 @@
 <template>
   <div class="container">
     <div>
-      <label for="exampleInputEmail1" class="form-label">프로젝트 팀원</label>
+      <div class="d-flex justify-content-between">
+        <label for="exampleInputEmail1" class="form-label">프로젝트 팀원</label>
+        <div class="d-flex mb-2">
+          <div id="emailHelp" class="form-text me-2">
+            <b-button size="sm" variant="outline-primary" @click="addMember"
+              ><i class="bi bi-plus-lg"></i> 추가</b-button
+            >
+          </div>
+          <div id="emailHelp" class="form-text">
+            <b-button size="sm" variant="outline-danger" @click="removeMember"
+              ><i class="bi bi-dash-lg"></i> 삭제</b-button
+            >
+          </div>
+        </div>
+      </div>
       <input
         type="email"
         class="form-control mb-3"
@@ -12,12 +26,6 @@
         :key="id"
         v-for="(member, id) in members"
       />
-      <div id="emailHelp" class="form-text">
-        <button @click="addMember">+ 팀원 추가하기</button>
-      </div>
-      <div id="emailHelp" class="form-text">
-        <button @click="removeMember">+ 팀원 삭제하기</button>
-      </div>
     </div>
     <!-- <div v-html="memberHtml" v-if="isCreate" class="mb-3"></div> -->
   </div>
