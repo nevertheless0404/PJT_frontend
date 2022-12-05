@@ -57,7 +57,7 @@
         <h1 class="title login-title fw-bold my-5">Login</h1>
         <form
           class="w-100 d-flex flex-column align-items-center"
-          @submit.prevent="onSubmit(email, password)"
+          @submit.prevent="handleSubmit"
         >
           <div class="mb-3 w-100">
             <input
@@ -104,7 +104,7 @@ export default {
       email: '',
       password: '',
       msg: '',
-      signupUrl: 'http://localhost:8080/signup'
+      signupUrl: '/signup'
     }
   },
   methods: {
@@ -116,7 +116,7 @@ export default {
       localStorage.setItem('access_token', response.data.access_token)
       localStorage.setItem('refresh_token', response.data.refresh_token)
       this.$store.dispatch('user', response.data.user)
-      this.$router.push('/')
+      this.$router.push('/projectindex')
     }
   }
 }
