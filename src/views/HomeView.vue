@@ -39,3 +39,35 @@ export default {
   }
 }
 </script>
+<style scoped>
+* {
+  font-family: 'Dela Gothic One', cursive;
+}
+
+.pjt-logo {
+  width: 50vw;
+}
+
+.pjt-subtitle {
+  font-size: calc(3px + 6vw);
+}
+.welcome-box {
+  margin-top: 25vh;
+}
+
+.btn-intro {
+  font-size: 20px;
+  font-weight: 600;
+  background-color: rgb(45, 126, 250);
+  color: white;
+  border-radius: 40px;
+  height: 60px;
+  min-width: 200px;
+}
+.btn-intro:hover {
+  background-color: #2064ca;
+  color: white;
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+</style>

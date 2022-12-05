@@ -43,9 +43,23 @@
       />
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label"
-        >사용 언어 / 개발 환경</label
-      >
+      <div class="d-flex justify-content-between">
+        <label for="exampleFormControlInput1" class="form-label"
+          >사용 언어 / 개발 환경</label
+        >
+        <div class="d-flex mb-2">
+          <div id="exampleFormControlInput1" class="me-2">
+            <b-button size="sm" variant="outline-primary" @click="addSkill"
+              ><i class="bi bi-plus-lg"></i> 추가</b-button
+            >
+          </div>
+          <div id="exampleFormControlInput1" class="">
+            <b-button size="sm" variant="outline-danger" @click="removeSkill"
+              ><i class="bi bi-dash-lg"></i> 삭제</b-button
+            >
+          </div>
+        </div>
+      </div>
       <input
         type="text"
         class="form-control mb-3"
@@ -55,15 +69,23 @@
         :key="id"
         v-for="(s, id) in skill"
       />
-      <div id="exampleFormControlInput1" class="form-text">
-        <button @click="addSkill">+추가</button>
-      </div>
-      <div id="exampleFormControlInput1" class="form-text">
-        <button @click="removeSkill">-삭제</button>
-      </div>
     </div>
     <div class="mb-3">
-      <label for="exampleInputEmail1" class="form-label">주요 기능</label>
+      <div class="d-flex justify-content-between">
+        <label for="exampleInputEmail1" class="form-label">주요 기능</label>
+        <div class="d-flex mb-2">
+          <div id="emailHelp" class="me-2">
+            <b-button size="sm" variant="outline-primary" @click="addfunc"
+              ><i class="bi bi-plus-lg"></i> 추가</b-button
+            >
+          </div>
+          <div id="emailHelp" class="">
+            <b-button size="sm" variant="outline-danger" @click="removefunc"
+              ><i class="bi bi-dash-lg"></i> 삭제</b-button
+            >
+          </div>
+        </div>
+      </div>
       <input
         type="text"
         class="form-control mb-3"
@@ -74,16 +96,8 @@
         :key="id"
         v-for="(func, id) in functions"
       />
-      <div id="emailHelp" class="form-text">
-        <button @click="addfunc">+추가</button>
-      </div>
-      <div id="emailHelp" class="form-text">
-        <button @click="removefunc">-삭제</button>
-      </div>
     </div>
-    <router-link to="/membercreate" class="btn btn-outline-primary"
-      >다음</router-link
-    >
+    <router-link to="/membercreate" class="btn btn-primary">다음</router-link>
   </div>
 </template>
 
