@@ -81,24 +81,11 @@
               v-model="password"
             />
           </div>
-          <button
-            type="submit"
-            class="btn w-100 my-3 shadow"
-            style="
-              font-size: 20px;
-              font-weight: 600;
-              background-color: rgb(45, 126, 250);
-              color: white;
-              border-radius: 40px;
-              height: 60px;
-            "
-          >
+          <button type="submit" class="btn w-100 my-3 shadow btn-login">
             로그인
           </button>
           <p class="my-1">
-            <a style="text-decoration: none; color: gray" :href="signupUrl"
-              >계정이 없으신가요?</a
-            >
+            <a style="color: gray" :href="signupUrl">계정이 없으신가요?</a>
           </p>
 
           <!-- 결과 메시지 출력 -->
@@ -193,10 +180,31 @@ export default {
   margin: 0 80px 0 80px;
 }
 
+input {
+  height: 50px;
+  border-radius: 40px;
+}
+
 .rocket {
   width: 300px;
   position: absolute;
   top: 20%;
   right: 10%;
+}
+
+.btn-login {
+  font-size: 20px;
+  font-weight: 600;
+  background-color: rgb(45, 126, 250);
+  color: white;
+  border-radius: 40px;
+  height: 60px;
+}
+
+.btn-login:hover {
+  background-color: #2064ca;
+  color: white;
+  transform: scale(1.05);
+  transition: 0.3s;
 }
 </style>
