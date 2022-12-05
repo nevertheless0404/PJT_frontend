@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import './axios'
 // axios를 import
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -19,7 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')
 
 Vue.prototype.$eventBus = new Vue()

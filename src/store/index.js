@@ -1,50 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 
 Vue.use(Vuex)
 
-const resourceHost = 'http://127.0.0.1:8000/api/accounts/v1'
-
-const enhanceAccessToeken = () => {
-  const { accessToken } = localStorage
-  if (!accessToken) return
-  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+const state = {
+  user: null
 }
-enhanceAccessToeken()
 
-export default new Vuex.Store({
-  state: {
-    accessToken: null
-  },
+const store = new Vuex.Store({
+  state,
   getters: {
-    isAuthenticated(state) {
-      state.accessToken = state.accessToken || localStorage.accessToken
-      return state.accessToken
-    }
-  },
-  mutations: {
-    LOGIN(state, { accessToken }) {
-      state.accessToken = accessToken
-      localStorage.accessToken = accessToken
-    },
-    LOGOUT(state) {
-      state.accessToken = null
-      delete localStorage.accessToken
+    user: (state) => {
+      return state.user
     }
   },
   actions: {
-    LOGIN({ commit }, { email, password }) {
-      return axios
-        .post(`${resourceHost}/login/`, { email, password })
-        .then(({ data }) => {
-          commit('LOGIN', data)
-          axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`
-        })
-    },
-    LOGOUT({ commit }) {
-      axios.defaults.headers.common.Authorization = undefined
-      commit('LOGOUT')
+    user(context, user) {
+      context.commit('user', user)
+    }
+  },
+  mutations: {
+    user(state, user) {
+      state.user = user
     }
   }
 })
+
+export default store

@@ -3,20 +3,18 @@
     <img alt="Vue logo" src="../assets/logo.png" />
     <button v-on:click="getMultiData">get data</button>
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <h3 v-if="user">hi, {{ user.email }}</h3>
+    <h3 v-if="!user">not logged</h3>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import { mapGetters } from 'vuex'
 export default {
-  data() {
-    return {
-      allPeopleList: []
-    }
-  },
-  created() {
-    this.getMultiData()
+  name: 'HomePage',
+  computed: {
+    ...mapGetters(['user'])
   },
   methods: {
     async getMultiData() {

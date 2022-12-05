@@ -3,7 +3,7 @@
     <h1 class="title fw-bold my-5">Login</h1>
     <form
       class="w-50 d-flex flex-column align-items-center"
-      @submit.prevent="onSubmit(email, password)"
+      @submit.prevent="handleSubmit"
     >
       <div class="mb-3 w-100">
         <input
@@ -41,43 +41,29 @@
       >
         로그인
       </button>
-      <!-- 결과 메시지 출력 -->
-      <p>{{ msg }}</p>
     </form>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       email: '',
-      password: '',
-      msg: ''
+      password: ''
     }
   },
   methods: {
-    onSubmit() {
-      // LOGIN 액션 실행
-      this.$axios
-        .post(
-          'http://127.0.0.1:8000/api/accounts/v1/login/',
-          { email: this.email, password: this.password },
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-        .then((response) => {
-          console.log(response)
-          if (response.data.access_token) {
-            localStorage.setItem('wtw-token', response.data.access_token)
-          }
-          if (response.data.refresh_token) {
-            localStorage.setItem('wtw-ref-token', response.data.refresh_token)
-          }
-        })
+    async handleSubmit() {
+      const response = await axios.post('login/', {
+        email: this.email,
+        password: this.password
+      })
+      localStorage.setItem('access_token', response.data.access_token)
+      localStorage.setItem('refresh_token', response.data.refresh_token)
+      this.$store.dispatch('user', response.data.user)
+      this.$router.push('/')
     }
   }
 }
