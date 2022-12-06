@@ -33,6 +33,9 @@
               >로그아웃</a
             >
           </li>
+          <li class="nav-item">
+            <routerLink class="nav-link" to="/project">프로젝트</routerLink>
+          </li>
         </ul>
       </div>
     </div>
