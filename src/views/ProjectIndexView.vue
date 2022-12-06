@@ -17,16 +17,20 @@
         >
       </div>
     </div>
+    <TodoList />
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 import ProjectCalender from '@/components/ProjectCalender.vue'
+import TodoList from '@/components/TodoList.vue'
+
 import { projectIndex } from '@/api/index'
 export default {
   components: {
-    ProjectCalender, ProjectIndexNav
+    ProjectCalender, ProjectIndexNav, TodoList
   },
   data() {
     return {

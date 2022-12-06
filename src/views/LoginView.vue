@@ -1,6 +1,6 @@
 <template>
   <div class="row w-100">
-    <div class="col-0 col-lg-6 row left-box p-0">
+    <div class="col-0 col-lg-5 row left-box p-0">
       <h1
         class="title ms-5 mt-5"
         style="text-align: left; font-size: calc(3px + 4vw)"
@@ -18,7 +18,7 @@
       />
       <h1
         class="title bottom-title ms-5 mb-5"
-        style="text-align: left; font-size: calc(7px + 6vw)"
+        style="text-align: left; font-size: calc(7px + 5vw)"
       >
         Let's
         <span style="color: #3485ff; font-family: 'Dela Gothic One', cursive"
@@ -33,8 +33,8 @@
         !
       </h1>
     </div>
-    <div class="signup col-12 col-lg-6 d-flex align-items-center">
-      <div class="login-box w-100">
+    <div class="signup col-12 col-lg-7 d-flex align-items-center">
+      <div class="login-box w-100 d-flex flex-column align-items-center">
         <img
           src="@/assets/images/rocket_1.png"
           class="rocket col-12 p-0"
@@ -54,7 +54,9 @@
             >T</span
           >
         </h1>
-        <h1 class="title login-title fw-bold my-5">Login</h1>
+        <h1 class="title d-flex flex-column align-self-start fw-bold my-5">
+          Login
+        </h1>
         <form
           class="w-100 d-flex flex-column align-items-center"
           @submit.prevent="handleSubmit"
@@ -131,10 +133,6 @@ export default {
     visibility: hidden;
     position: absolute;
   }
-  .login-title {
-    display: flex;
-    justify-content: center;
-  }
   .mobile-title {
     display: contents;
   }
@@ -144,10 +142,6 @@ export default {
   .mobile-title {
     visibility: hidden;
     position: absolute;
-  }
-  .login-title {
-    display: flex;
-    justify-content: start;
   }
 }
 .title {
@@ -166,7 +160,7 @@ export default {
 }
 
 .login-box {
-  margin: 0 80px 0 80px;
+  margin: 0 10vw 0 10vw;
 }
 
 input {
@@ -177,8 +171,8 @@ input {
 .rocket {
   width: 300px;
   position: absolute;
-  top: 20%;
-  right: 10%;
+  top: 17%;
+  right: 20%;
 }
 
 .btn-login {
