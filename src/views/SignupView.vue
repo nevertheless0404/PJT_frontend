@@ -71,6 +71,7 @@ export default {
 
       // 가입 후 폼 초기화
       this.initForm()
+      this.$router.push('/login')
     },
     initForm() {
       this.email = ''

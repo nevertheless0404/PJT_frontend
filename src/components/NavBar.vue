@@ -1,7 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <routerLink class="navbar-brand" to="/">Navbar</routerLink>
+  <nav class="navbar navbar-expand-lg bg-light sticky-top">
+    <div class="container-fluid px-5">
+      <routerLink class="navbar-brand" to="/projectindex">
+        <img src="@/assets/images/logo.png" width="120px" />
+      </routerLink>
       <button
         class="navbar-toggler"
         type="button"
@@ -13,7 +15,10 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div
+        class="collapse navbar-collapse d-flex justify-content-end"
+        id="navbarNav"
+      >
         <ul class="navbar-nav" v-if="!user">
           <li class="nav-item">
             <routerLink class="nav-link" to="/login">로그인</routerLink>

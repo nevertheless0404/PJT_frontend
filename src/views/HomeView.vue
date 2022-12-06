@@ -1,20 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/images/logo.png" />
-    <button v-on:click="getMultiData">get data</button>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <h3 v-if="user">hi, {{ user.email }}</h3>
-    <h3 v-if="!user">not logged</h3>
+  <div class="home d-flex flex-column align-items-center welcome-box">
+    <img src="@/assets/images/logo.png" class="pjt-logo" />
+    <h3 class="pjt-subtitle">P to J projecT</h3>
+    <a
+      :href="gotoLogin"
+      class="btn w-25 my-5 shadow d-flex align-items-center justify-content-center btn-intro"
+    >
+      Start
+    </a>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapGetters } from 'vuex'
 export default {
-  name: 'HomePage',
-  computed: {
-    ...mapGetters(['user'])
+  data() {
+    return {
+      allPeopleList: [],
+      gotoLogin: '/login'
+    }
+  },
+  created() {
+    this.getMultiData()
   },
   methods: {
     async getMultiData() {
@@ -43,18 +50,15 @@ export default {
 * {
   font-family: 'Dela Gothic One', cursive;
 }
-
 .pjt-logo {
   width: 50vw;
 }
-
 .pjt-subtitle {
   font-size: calc(3px + 6vw);
 }
 .welcome-box {
   margin-top: 25vh;
 }
-
 .btn-intro {
   font-size: 20px;
   font-weight: 600;
