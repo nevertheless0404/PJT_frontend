@@ -3,7 +3,7 @@
     <router-link :to="{ name: 'projectcreate' }" class="btn btn-outline-primary"
       >프로젝트 생성</router-link
     >
-    <ProjectCalender />
+    <ProjectCalender class="w-50"/>
     <router-view></router-view>
   </div>
 </template>
