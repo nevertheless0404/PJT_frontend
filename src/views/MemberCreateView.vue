@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProjectIndexNav />
-    <!-- {{ this.members }} -->
+    {{ this.members }}
     <div class="container mt-4">
       <form @submit.prevent="submitMember">
         <div>
@@ -74,10 +74,10 @@ export default {
       // API 요청시 전달할 userData 객체
       let stringMember = ''
       this.members.forEach((ele) => {
-        stringMember += ele.name + ' '
+        stringMember += ele.user + ' '
       })
       const memberData = {
-        project: this.project,
+        id: this.id,
         user: stringMember
       }
 

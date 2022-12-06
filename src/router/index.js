@@ -40,6 +40,12 @@ const routes = [
       import(/* webpackChunkName: "project" */ '../views/ProjectIndexView.vue')
   },
   {
+    path: '/project/:id',
+    name: 'projectdetail',
+    component: () =>
+      import(/* webpackChunkName: "project" */ '../views/ProjectDetailVeiw.vue')
+  },
+  {
     path: '/projectcreate',
     name: 'projectcreate',
     component: ProjectCreateView

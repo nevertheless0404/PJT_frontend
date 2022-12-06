@@ -6,12 +6,15 @@
       <!-- <p>{{ this.projects }}</p> -->
       <div>
         <div v-for="(project, id) in projects" :key="id">
-          <div class="pjts mb-3">
+          <div class="pjts">
+          <router-link
+          :to="{ name: 'projectdetail', params: { id: project.id } }">
             <span class="pjtTitle">{{ project.title }}</span>
+          </router-link>
           </div>
         </div>
         <router-link
-          :to="{ name: 'projectcreate', params: {} }"
+          :to="{ name: 'projectcreate' }"
           class="btn btn-outline-primary"
           >프로젝트 생성</router-link
         >
@@ -67,6 +70,7 @@ export default {
   width: 300px;
   padding: 20px;
   border-radius: 10px;
+  margin-bottom: 30px;
 }
 .pjtTitle {
   font-weight: 500;

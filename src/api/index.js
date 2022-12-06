@@ -33,9 +33,9 @@ function projectCreate(projectData) {
   })
 }
 
-function projeckPk() {
+function projectPk() {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/membercreate'
+  const url = 'http://127.0.0.1:8000/recent_project/'
   // console.log('projectData :', projectData)
   return axios.get(url, {
     headers: {
@@ -57,4 +57,4 @@ function memberCreate(memberData) {
   })
 }
 // 함수 export
-export { registerUser, projectIndex, projectCreate, projeckPk, memberCreate }
+export { registerUser, projectIndex, projectCreate, projectPk, memberCreate }
