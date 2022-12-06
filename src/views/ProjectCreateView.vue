@@ -157,7 +157,7 @@ export default {
       }
 
       await projectCreate(projectData)
-      this.$router.push({ name: 'membercreate' })
+      this.$router.push({ name: 'projectindex' })
     },
     addSkill() {
       this.skill.push({
