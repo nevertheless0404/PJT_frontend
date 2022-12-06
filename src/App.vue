@@ -9,6 +9,7 @@
 </template>
 <script>
 import axios from 'axios'
+
 export default {
   async created() {
     console.log(localStorage.getItem('access_token'))
