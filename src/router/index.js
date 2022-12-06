@@ -35,29 +35,19 @@ const routes = [
   },
   {
     path: '/project',
-    name: 'projectnav',
+    name: 'projectindex',
     component: () =>
-      import(/* webpackChunkName: "project" */ '../views/ProjectNavView.vue'),
-    children: [
-      {
-        path: '',
-        name: 'projectindex',
-        component: () =>
-          import(
-            /* webpackChunkName: "project" */ '../views/ProjectIndexView.vue'
-          )
-      },
-      {
-        path: 'create',
-        name: 'projectcreate',
-        component: ProjectCreateView
-      },
-      {
-        path: 'membercreate',
-        name: 'membercreate',
-        component: MemberCreateView
-      }
-    ]
+      import(/* webpackChunkName: "project" */ '../views/ProjectIndexView.vue')
+  },
+  {
+    path: '/projectcreate',
+    name: 'projectcreate',
+    component: ProjectCreateView
+  },
+  {
+    path: '/membercreate',
+    name: 'membercreate',
+    component: MemberCreateView
   }
 ]
 

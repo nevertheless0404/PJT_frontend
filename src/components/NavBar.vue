@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid px-5">
-      <routerLink class="navbar-brand" to="/project">
+      <routerLink class="navbar-brand" :to="{ name: 'projectindex' }">
         <img src="@/assets/images/logo.png" width="120px" />
       </routerLink>
       <button
