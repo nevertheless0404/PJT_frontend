@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProjectCreateView from '../views/ProjectCreateView.vue'
 import MemberCreateView from '../views/MemberCreateView.vue'
+import GoogleLogin from '../views/GoogleLogin.vue'
 
 Vue.use(VueRouter)
 
@@ -18,15 +19,11 @@ const routes = [
     name: 'login',
     component: LoginView
   },
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (login.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () =>
-  //     import(/* webpackChunkName: "login" */ '../views/LoginView.vue')
-  // },
+  {
+    path: '/google/callback/',
+    name: 'GoogleLogin',
+    component: GoogleLogin
+  },
   {
     path: '/signup',
     name: 'signup',

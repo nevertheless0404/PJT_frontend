@@ -89,7 +89,7 @@
           <p class="my-1">
             <a style="color: gray" :href="signupUrl">계정이 없으신가요?</a>
           </p>
-
+          <GoogleLogin />
           <!-- 결과 메시지 출력 -->
           <p>{{ msg }}</p>
         </form>
@@ -100,13 +100,15 @@
 
 <script>
 import axios from 'axios'
+import GoogleLogin from '../components/GoogleLogin.vue'
+
 export default {
+  components: { GoogleLogin },
   data() {
     return {
       email: '',
       password: '',
       msg: '',
-      signupUrl: '/signup'
     }
   },
   methods: {

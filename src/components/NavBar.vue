@@ -92,6 +92,7 @@ export default {
   methods: {
     handleClick() {
       localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
       this.$store.dispatch('user', null)
       this.$router.push('/')
     }
