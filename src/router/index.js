@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProjectCreateView from '../views/ProjectCreateView.vue'
 import MemberCreateView from '../views/MemberCreateView.vue'
+import GoogleLogin from '../views/GoogleLogin.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: LoginView
+  },
+  {
+    path: '/google/callback/',
+    name: 'GoogleLogin',
+    component: GoogleLogin
   },
   {
     path: '/signup',
