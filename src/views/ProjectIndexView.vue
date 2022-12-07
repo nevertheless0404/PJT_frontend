@@ -1,26 +1,29 @@
 <template>
   <div>
     <ProjectIndexNav />
-    <div class="container d-flex justify-content-evenly mt-4">
-      <ProjectCalender />
-      <!-- <p>{{ this.projects }}</p> -->
-      <div>
-        <div v-for="(project, id) in projects" :key="id">
-          <div class="pjts">
-          <router-link
-          :to="{ name: 'projectdetail', params: { id: project.id } }">
-            <span class="pjtTitle">{{ project.title }}</span>
-          </router-link>
+    <div class="container mt-4">
+      <div class="d-flex justify-content-evenly">
+        <ProjectCalender />
+        <!-- <p>{{ this.projects }}</p> -->
+        <div>
+          <div v-for="(project, id) in projects" :key="id">
+            <div class="pjts">
+              <router-link
+                :to="{ name: 'projectdetail', params: { id: project.id } }"
+              >
+                <span class="pjtTitle">{{ project.title }}</span>
+              </router-link>
+            </div>
           </div>
+          <router-link
+            :to="{ name: 'projectcreate' }"
+            class="btn btn-outline-primary"
+            >프로젝트 생성</router-link
+          >
         </div>
-        <router-link
-          :to="{ name: 'projectcreate' }"
-          class="btn btn-outline-primary"
-          >프로젝트 생성</router-link
-        >
       </div>
+      <TodoList />
     </div>
-    <TodoList />
     <router-view></router-view>
   </div>
 </template>
@@ -33,7 +36,9 @@ import TodoList from '@/components/TodoList.vue'
 import { projectIndex } from '@/api/index'
 export default {
   components: {
-    ProjectCalender, ProjectIndexNav, TodoList
+    ProjectCalender,
+    ProjectIndexNav,
+    TodoList
   },
   data() {
     return {

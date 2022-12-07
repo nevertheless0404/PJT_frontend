@@ -45,14 +45,19 @@
 
 <script>
 import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
-import { memberCreate, projectPk } from '@/api/index'
+import { memberCreate } from '@/api/index'
 export default {
   components: { ProjectIndexNav },
   data() {
     return {
+      // project: [
+      //   {
+      //     id: ''
+      //   }
+      // ],
       members: [
         {
-          id: '',
+          id: this.$route.params.id,
           user: ''
         }
       ]
@@ -60,12 +65,12 @@ export default {
   },
   setup() {},
   created() {
-    projectPk() // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
-      .then((response) => {
-        console.log(response)
-        this.members = response.data
-      }) // 성공하면 json 객체를 받아온다.
-      .catch((error) => console.log(error))
+    // projectPk() // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
+    //   .then((response) => {
+    //     console.log(response)
+    //     this.project = response.data.id
+    //   }) // 성공하면 json 객체를 받아온다.
+    //   .catch((error) => console.log(error))
   },
   mounted() {},
   unmounted() {},
@@ -77,12 +82,13 @@ export default {
         stringMember += ele.user + ' '
       })
       const memberData = {
-        id: this.id,
+        id: '',
         user: stringMember
       }
-
+      memberData.id = this.$route.params.id
+      console.log(memberData.id)
       await memberCreate(memberData)
-      this.$router.push('/project/')
+      this.$router.push({ name: 'projectdetail', params: memberData.id })
     },
     addMember() {
       this.members.push({

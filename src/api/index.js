@@ -33,22 +33,23 @@ function projectCreate(projectData) {
   })
 }
 
-function projectPk() {
-  // 요청할 URL
-  const url = 'http://127.0.0.1:8000/recent_project/'
-  // console.log('projectData :', projectData)
-  return axios.get(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('access_token')
-    }
-  })
-}
+// function projectPk() {
+//   // 요청할 URL
+//   const url = 'http://127.0.0.1:8000/recent_project/'
+//   // console.log('projectData :', projectData)
+//   return axios.get(url, {
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: 'Bearer ' + localStorage.getItem('access_token')
+//     }
+//   })
+// }
 
 function memberCreate(memberData) {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/membercreate'
+  const url = `http://127.0.0.1:8000/memberadmin/${memberData.id}/`
   console.log('memberData :', memberData)
+  console.log(url)
   return axios.post(url, memberData, {
     headers: {
       'Content-Type': 'application/json',
@@ -57,4 +58,4 @@ function memberCreate(memberData) {
   })
 }
 // 함수 export
-export { registerUser, projectIndex, projectCreate, projectPk, memberCreate }
+export { registerUser, projectIndex, projectCreate, memberCreate }
