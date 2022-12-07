@@ -35,14 +35,28 @@ export default {
   components: { draggable },
   data() {
     return {
-      sampleData: ''
+      newTask: '',
+      arrBacklog: [
+        { name: '하루종일 숨쉬기' },
+        { name: '침대에서 뒹굴거리기' },
+        { name: '밥 잘먹기' }
+      ],
+      arrInProgress: [],
+      arrDone: []
     }
   },
   setup() {},
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    add() {
+      if (this.newTask) {
+        this.arrBacklog.push({ name: this.newTask })
+        this.newTask = ''
+      }
+    }
+  }
 }
 </script>
 
