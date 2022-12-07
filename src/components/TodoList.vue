@@ -4,26 +4,30 @@
     <!--todos 리스트 데이터에 체크된 인덱스 번호를 todo_lst에 저장하여 추후에 todos에 인덱스로 접근하여 complete 상태 변환해서 보내기-->
     <div class="card">
       <div class="card-body">
-        <h1 style="font-size: 40px my-5">To Do List</h1>
-        <div :key="idx" v-for="(todo, idx) in todos">
-          <input
-            type="checkbox"
-            name=""
-            id="html"
-            :value="idx"
-            v-model="todo_list"
-            style="width: 25px; height: 25px"
-          />
-          <label class="ms-3" for="html" style="font-size: 30px"
-            >{{ todo.title }} | {{ todo.project }}</label
-          >
-        </div>
+        <form @submit.prevent="todoSubmit">
+          <h1 style="font-size: 40px my-5">To Do List</h1>
+          <div :key="idx" v-for="(todo, idx) in todos">
+            <input
+              type="checkbox"
+              name=""
+              id="html"
+              :value="idx"
+              v-model="todo_list"
+              style="width: 25px; height: 25px"
+            />
+            <label class="ms-3" for="html" style="font-size: 30px"
+              >{{ todo.title }} | {{ todo.project }}</label
+            >
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   components: {},
   data() {
@@ -43,7 +47,18 @@ export default {
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    async todoSubmit() {
+      const response = await axios.post('login/', {
+        email: this.email,
+        password: this.password
+      })
+      localStorage.setItem('access_token', response.data.access_token)
+      localStorage.setItem('refresh_token', response.data.refresh_token)
+      this.$store.dispatch('user', response.data.user)
+      this.$router.push('/project')
+    }
+  }
 }
 </script>
 
