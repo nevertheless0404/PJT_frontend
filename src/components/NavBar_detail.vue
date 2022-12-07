@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-light sticky-top">
+  <!-- <nav class="navbar navbar-expand-lg bg-light sticky-top">
     <div class="container-fluid px-5">
       <routerLink class="navbar-brand" :to="{ name: 'projectindex' }">
         <img src="@/assets/images/logo.png" width="120px" />
@@ -51,7 +51,67 @@
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> -->
+  <div>
+    <b-navbar toggleable="lg" type="light" variant="light" class="px-5">
+      <b-navbar-brand :to="{ name: 'projectindex' }"
+        ><img src="@/assets/images/logo.png" width="120px"
+      /></b-navbar-brand>
+
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto w-100 justify-content-between">
+          <!-- project 드롭다운 버튼 -->
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>프로젝트</em>
+            </template>
+            <b-dropdown-item v-if="user">
+              <routerLink class="nav-link" to="/project">프로젝트</routerLink>
+            </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <routerLink
+                class="nav-link"
+                :to="{ name: 'membercreate', params: pjtPk }"
+                >팀원 초대</routerLink
+              >
+            </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <routerLink class="nav-link" :to="{ name: 'todo_project' }"
+                >오늘 할 일</routerLink
+              >
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <!-- user login 버튼 -->
+          <b-nav-item-dropdown right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <em>{{ user.email }}</em>
+            </template>
+            <b-dropdown-item v-if="!user">
+              <routerLink class="nav-link" to="/login">Login</routerLink>
+            </b-dropdown-item>
+            <b-dropdown-item v-if="!user">
+              <routerLink class="nav-link" to="/signup">Signup</routerLink>
+            </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <a
+                class="nav-link"
+                href="javascript:void(0)"
+                @click="handleClick"
+              >
+                로그아웃
+              </a>
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>

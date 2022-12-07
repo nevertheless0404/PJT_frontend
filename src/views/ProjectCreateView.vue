@@ -108,6 +108,7 @@
         <button type="submit" class="btn btn-primary">다음</button>
       </form>
     </div>
+    hh{{ this.start_at }} kk{{ this.end_at }}
   </div>
 </template>
 
