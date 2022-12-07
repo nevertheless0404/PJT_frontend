@@ -57,7 +57,7 @@
         <h1 class="title login-title fw-bold my-5">Login</h1>
         <form
           class="w-100 d-flex flex-column align-items-center"
-          @submit.prevent="onSubmit(email, password)"
+          @submit.prevent="handleSubmit()"
         >
           <div class="mb-3 w-100">
             <input
@@ -103,8 +103,7 @@ export default {
     return {
       email: '',
       password: '',
-      msg: '',
-      signupUrl: 'http://localhost:8080/signup'
+      msg: ''
     }
   },
   methods: {
