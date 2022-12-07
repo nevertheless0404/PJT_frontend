@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
+import ProjectCreateView from '../views/ProjectCreateView.vue'
+import MemberCreateView from '../views/MemberCreateView.vue'
 
 Vue.use(VueRouter)
 
@@ -23,28 +25,33 @@ const routes = [
       import(/* webpackChunkName: "signup" */ '../views/SignupView.vue')
   },
   {
-    path: '/projectindex',
+    path: '/project',
     name: 'projectindex',
     component: () =>
-      import(
-        /* webpackChunkName: "projectindex" */ '../views/ProjectIndexView.vue'
-      )
+      import(/* webpackChunkName: "project" */ '../views/ProjectIndexView.vue')
+  },
+  {
+    path: '/project/:id',
+    name: 'projectdetail',
+    props: true,
+    component: () =>
+      import(/* webpackChunkName: "project" */ '../views/ProjectDetailVeiw.vue')
   },
   {
     path: '/projectcreate',
     name: 'projectcreate',
-    component: () =>
-      import(
-        /* webpackChunkName: "projectcreate" */ '../views/ProjectCreateView.vue'
-      )
+    component: ProjectCreateView
   },
   {
-    path: '/membercreate',
+    path: '/project/:id/membercreate',
     name: 'membercreate',
+    component: MemberCreateView
+  },
+  {
+    path: '/project/:id/todo',
+    name: 'todo_project',
     component: () =>
-      import(
-        /* webpackChunkName: "projectcreate" */ '../views/MemberCreateView.vue'
-      )
+      import(/* webpackChunkName: "project" */ '../views/TodoProjectView.vue')
   }
 ]
 

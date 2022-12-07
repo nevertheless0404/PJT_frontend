@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <NavBar />
     <div class="auth-wrapper">
       <div class="auth-inner">
         <router-view />
@@ -10,12 +9,8 @@
 </template>
 <script>
 import axios from 'axios'
-import NavBar from './components/NavBar.vue'
+
 export default {
-  name: 'App',
-  components: {
-    NavBar
-  },
   async created() {
     console.log(localStorage.getItem('access_token'))
     const response = await axios.get('user/', {
