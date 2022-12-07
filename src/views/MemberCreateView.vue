@@ -1,7 +1,6 @@
 <template>
   <div>
     <ProjectIndexNav />
-    {{ this.members }}
     <div class="container mt-4">
       <form @submit.prevent="submitMember">
         <div>

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <ProjectIndexNav />
-    <router-view />
+    <!-- <ProjectIndexNav />
+    <router-view /> -->
   </div>
 </template>
 
 <script>
-import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
+// import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 export default {
-  components: { ProjectIndexNav },
+  // components: { ProjectIndexNav },
   data() {
     return {
       sampleData: ''
