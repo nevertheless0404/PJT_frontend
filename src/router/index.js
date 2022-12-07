@@ -42,6 +42,7 @@ const routes = [
   {
     path: '/project/:id',
     name: 'projectdetail',
+    props: true,
     component: () =>
       import(/* webpackChunkName: "project" */ '../views/ProjectDetailVeiw.vue')
   },
@@ -51,9 +52,15 @@ const routes = [
     component: ProjectCreateView
   },
   {
-    path: '/membercreate',
+    path: '/project/:id/membercreate',
     name: 'membercreate',
     component: MemberCreateView
+  },
+  {
+    path: '/project/:id/todo',
+    name: 'todo_project',
+    component: () =>
+      import(/* webpackChunkName: "project" */ '../views/TodoProjectView.vue')
   }
 ]
 
