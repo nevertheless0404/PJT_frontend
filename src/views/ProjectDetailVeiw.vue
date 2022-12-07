@@ -17,14 +17,6 @@ export default {
   data() {
     return {
       props: '$route.params.id',
-      newTask: '',
-      arrBacklog: [
-        { name: '하루종일 숨쉬기' },
-        { name: '침대에서 뒹굴거리기' },
-        { name: '밥 잘먹기' }
-      ],
-      arrInProgress: [],
-      arrDone: [],
       pjtPk: this.$route.params.id
     }
   },
@@ -32,14 +24,7 @@ export default {
   created() {},
   mounted() {},
   unmounted() {},
-  methods: {
-    add() {
-      if (this.newTask) {
-        this.arrBacklog.push({ name: this.newTask })
-        this.newTask = ''
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 
