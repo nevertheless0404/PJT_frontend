@@ -73,17 +73,24 @@
               <routerLink class="nav-link" to="/project">프로젝트</routerLink>
             </b-dropdown-item>
             <b-dropdown-item v-if="user">
-              <routerLink
-                class="nav-link"
-                :to="{ name: 'membercreate', params: pjtPk }"
-                >팀원 초대</routerLink
-              >
-            </b-dropdown-item>
-            <b-dropdown-item v-if="user">
               <routerLink class="nav-link" :to="{ name: 'todo_project' }"
-                >오늘 할 일</routerLink
+              >오늘 할 일</routerLink
               >
             </b-dropdown-item>
+            <div :v-if="(user.pk === resPk)">
+              <b-dropdown-item v-if="user">
+                <routerLink
+                  class="nav-link"
+                  :to="{ name: 'membercreate', params: pjtPk }"
+                  >팀원 초대</routerLink
+                >
+              </b-dropdown-item>
+              <b-dropdown-item v-if="user">
+                <routerLink class="nav-link" :to="{ name: 'projectupdate' }"
+                  >프로젝트 수정</routerLink
+                >
+              </b-dropdown-item>
+            </div>
           </b-nav-item-dropdown>
 
           <!-- user login 버튼 -->
@@ -116,11 +123,21 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { projectGet } from '@/api/index'
+
 export default {
   name: 'NavBar',
   props: ['childValue'],
+  created() {
+    projectGet(this.$route.params.id).then((response) => {
+      this.resPk = response.data.id
+    })
+  },
   data() {
-    return { pjtPk: this.childValue }
+    return {
+      pjtPk: this.childValue,
+      resPk: ""
+    }
   },
   methods: {
     handleClick() {
