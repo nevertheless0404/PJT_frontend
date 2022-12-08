@@ -1,23 +1,67 @@
 <template>
-  <div>
+  <div class="mt-4">
     <div class="row">
-      <div class="col form-inline">
+      <div class="col d-flex">
         <b-form-input
-          v-model="newTask"
-          aria-placeholder="Enter Task"
+          v-model="newTask.title"
+          placeholder="Enter Task"
           @keyup.enter="add"
         ></b-form-input>
-        <b-button variant="primary">Add</b-button>
+        <b-button class="ms-2" variant="primary" @click="add">Add</b-button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row mt-3">
+      <div class="col-md-4">
         <div class="p-2 alert alert-secondary">
           <h3>Backlog</h3>
-          <draggable class="list-group" :list="arrBacklog" group="tasks">
+          <draggable
+            class="list-group kanban-column"
+            :list="arrBacklog"
+            group="tasks"
+          >
             <div
               class="list-group-item"
-              v-for="element in arrBacklog"
+              v-for="(element, idx) in arrBacklog"
+              :key="idx"
+              v-b-modal.my-modal
+            >
+              {{ element.title }}
+            </div>
+            <b-modal id="my-modal" title="element.title"
+              >Hello From My Modal!</b-modal
+            >
+          </draggable>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-2 alert alert-primary">
+          <h3>In Progress</h3>
+          <draggable
+            class="list-group kanban-column"
+            :list="arrInProgress"
+            group="tasks"
+          >
+            <div
+              class="list-group-item"
+              v-for="element in arrInProgress"
+              :key="element.name"
+            >
+              {{ element.name }}
+            </div>
+          </draggable>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="p-2 alert alert-success">
+          <h3>Done</h3>
+          <draggable
+            class="list-group kanban-column"
+            :list="arrDone"
+            group="tasks"
+          >
+            <div
+              class="list-group-item"
+              v-for="element in arrDone"
               :key="element.name"
             >
               {{ element.name }}
@@ -35,11 +79,16 @@ export default {
   components: { draggable },
   data() {
     return {
-      newTask: '',
+      newTask: [
+        {
+          title: '',
+          content: ''
+        }
+      ],
       arrBacklog: [
-        { name: '하루종일 숨쉬기' },
-        { name: '침대에서 뒹굴거리기' },
-        { name: '밥 잘먹기' }
+        { title: '하루종일 숨쉬기', content: '' },
+        { title: '침대에서 뒹굴거리기', content: '' },
+        { title: '밥 잘먹기', content: '' }
       ],
       arrInProgress: [],
       arrDone: []
@@ -52,7 +101,7 @@ export default {
   methods: {
     add() {
       if (this.newTask) {
-        this.arrBacklog.push({ name: this.newTask })
+        this.arrBacklog.push({ title: this.newTask.title, content: '' })
         this.newTask = ''
       }
     }
@@ -60,4 +109,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.kanban-column {
+  min-height: 300px;
+}
+</style>
