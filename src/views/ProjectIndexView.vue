@@ -17,7 +17,7 @@
           </div>
           <router-link
             :to="{ name: 'projectcreate' }"
-            class="btn btn-outline-primary"
+            class="btn btn-warning"
             >프로젝트 생성</router-link
           >
         </div>
@@ -80,4 +80,10 @@ export default {
 .pjtTitle {
   font-weight: 500;
 }
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
 </style>
