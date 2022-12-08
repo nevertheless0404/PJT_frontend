@@ -2,12 +2,12 @@
   <div>
     <ProjectIndexNav />
     <div class="container mt-4">
-      <div class="d-flex justify-content-evenly">
-        <ProjectCalender class="w-100"/>
+      <div class="d-flex justify-content-evenly row">
+        <ProjectCalender class="col-12 col-lg-8" />
         <!-- <p>{{ this.projects }}</p> -->
-        <div>
-          <div v-for="(project, id) in projects" :key="id">
-            <div class="pjts">
+        <div class="col-12 col-lg-4 d-flex flex-column align-items-center p-4">
+          <div v-for="(project, id) in projects" :key="id" class="w-100">
+            <div class="pjts w-100">
               <router-link
                 :to="{ name: 'projectdetail', params: { id: project.id } }"
               >
@@ -17,7 +17,7 @@
           </div>
           <router-link
             :to="{ name: 'projectcreate' }"
-            class="btn btn-warning"
+            class="btn btn-primary align-self-end w-100 project_add d-flex align-items-center justify-content-center"
             >프로젝트 생성</router-link
           >
         </div>
@@ -80,10 +80,19 @@ export default {
 .pjtTitle {
   font-weight: 500;
 }
-
-a{
-  text-decoration: none;
-  color: black;
+.project_add {
+  font-size: 17px;
+  font-weight: 600;
+  background-color: rgb(45, 126, 250);
+  color: white;
+  border-radius: 40px;
+  height: 55px;
 }
 
+.project_add:hover {
+  background-color: #2064ca;
+  color: white;
+  transform: scale(1.05);
+  transition: 0.3s;
+}
 </style>
