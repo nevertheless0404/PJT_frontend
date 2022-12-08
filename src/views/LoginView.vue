@@ -109,6 +109,7 @@ export default {
       email: '',
       password: '',
       msg: '',
+      signupUrl: '/signup'
     }
   },
   methods: {
