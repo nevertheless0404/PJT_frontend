@@ -172,9 +172,9 @@ input {
 }
 
 .rocket {
-  width: 300px;
+  width: 20vw;
   position: absolute;
-  top: 17%;
+  top: 50px;
   right: 20%;
 }
 
