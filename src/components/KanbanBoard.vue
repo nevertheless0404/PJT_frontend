@@ -49,7 +49,8 @@
                 @click="showModal(element)"
                 v-if="element.title"
               >
-                {{ element.title }}
+                {{ element.title }}<br />
+                {{ element.start_at }} - {{ element.end_at }}
               </button>
             </div>
           </draggable>
@@ -151,26 +152,63 @@
 
 <script>
 import draggable from 'vuedraggable'
+import { todoCreate } from '@/api/index'
+import { todoList } from '@/api/index'
+
 export default {
   components: { draggable },
   data() {
     return {
-      newTask: [
-        {
-          title: '',
-          content: '',
-          start_at: '',
-          end_at: ''
-        }
-      ],
-      arrBacklog: [{ title: '', content: '', start_at: '', end_at: '' }],
+      newTask: {
+        title: '',
+        content: '',
+        start_at: '',
+        end_at: ''
+      },
+      arrBacklog: [],
       arrInProgress: [],
       arrDone: [],
       modalData: []
     }
   },
   setup() {},
-  created() {},
+  created() {
+    todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
+      .then((response) => {
+        console.log('response.data :', response.data)
+        response.data.forEach((ele) => {
+          if (ele.complete === 0) {
+            this.arrBacklog.push({
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              complete: 0
+            })
+          } else if (ele.complete === 1) {
+            this.arrInProgress.push({
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              complete: 1
+            })
+          } else {
+            this.arrDone.push({
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              complete: 2
+            })
+          }
+        })
+      }) // 성공하면 json 객체를 받아온다.
+      .catch((error) => console.log(error))
+  },
   mounted() {},
   unmounted() {},
   methods: {
@@ -182,15 +220,23 @@ export default {
     hideModal() {
       this.$refs['my-modal'].hide()
     },
-    todoAdd() {
+    async todoAdd() {
       if (this.newTask) {
         this.arrBacklog.push({
+          project: this.$route.params.id,
           title: this.newTask.title,
           content: this.newTask.content,
           start_at: this.newTask.start_at,
           end_at: this.newTask.end_at
         })
-        console.log('이번 투두 :', this.arrBacklog)
+        const new_data = {
+          title: this.newTask.title,
+          content: this.newTask.content,
+          start_at: this.newTask.start_at,
+          end_at: this.newTask.end_at
+        }
+        await todoCreate(this.$route.params.id, new_data)
+        console.log('이번 user :')
         this.newTask.title = ''
         this.newTask.content = ''
         this.newTask.start_at = ''
