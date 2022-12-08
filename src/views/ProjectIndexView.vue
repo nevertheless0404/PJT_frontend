@@ -3,7 +3,7 @@
     <ProjectIndexNav />
     <div class="container mt-4">
       <div class="d-flex justify-content-evenly">
-        <ProjectCalender />
+        <ProjectCalender class="w-100"/>
         <!-- <p>{{ this.projects }}</p> -->
         <div>
           <div v-for="(project, id) in projects" :key="id">
