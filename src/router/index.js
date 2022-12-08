@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProjectCreateView from '../views/ProjectCreateView.vue'
+import ProjectUpdateView from '../views/ProjectUpdateView.vue'
 import MemberCreateView from '../views/MemberCreateView.vue'
 import GoogleLogin from '../views/GoogleLogin.vue'
 
@@ -42,6 +43,12 @@ const routes = [
     props: true,
     component: () =>
       import(/* webpackChunkName: "project" */ '../views/ProjectDetailVeiw.vue')
+  },
+  {
+    path: '/project/:id/update',
+    name: 'projectupdate',
+    props: true,
+    component: ProjectUpdateView
   },
   {
     path: '/projectcreate',
