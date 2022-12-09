@@ -2,6 +2,7 @@
   <div>
     <NavProject v-bind:childValue="pjtPk" />
     <div class="container mt-4">
+      <InformBoard />
       <ProjectCalender />
       <KanbanBoard />
     </div>
@@ -13,8 +14,10 @@
 import NavProject from '@/components/NavBar_detail.vue'
 import ProjectCalender from '@/components/ProjectCalender.vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
+import InformBoard from '@/components/InformBoard.vue'
+
 export default {
-  components: { ProjectCalender, NavProject, KanbanBoard },
+  components: { ProjectCalender, NavProject, KanbanBoard, InformBoard },
   data() {
     return {
       props: '$route.params.id',

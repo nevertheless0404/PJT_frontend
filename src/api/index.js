@@ -137,5 +137,29 @@ function isRead(notificationPk) {
   })
 }
 
+function informCreate(pjt_pk, new_inform) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  return axios.post(url, new_inform, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+
+  })
+}
+
+function informList(pjt_pk) {
+  // 요청할 URL
+  print('이거다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ' + pjt_pk)
+  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // 함수 export
-export { registerUser, projectIndex, projectCreate, memberCreate, projectGet, projectUpdate, markdownGet, NotificationGet, isRead }
+export { registerUser, projectIndex, projectCreate, memberCreate, projectGet, projectUpdate, markdownGet, todoList, NotificationGet, isRead, informCreate, informList }
