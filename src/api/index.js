@@ -19,6 +19,7 @@ function projectIndex() {
   })
 }
 
+
 function projectCreate(projectData) {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/project/'
@@ -87,7 +88,6 @@ function memberCreate(memberData) {
   })
 }
 
-
 function NotificationGet() {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/notification`
@@ -114,8 +114,6 @@ function todoCreate(pjt_pk, new_data) {
   )
 }
 
-
-
 function todoList(pjt_pk) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
@@ -128,18 +126,29 @@ function todoList(pjt_pk) {
   })
 }
 
+function todoPutDrag(pjt_pk, update_data) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  return (
+    axios.put(url, update_data[0], {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+  )
+}
+
 function todoPut(pjt_pk, update_data) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  console.log('update 데이터 : ', update_data)
   return (
     axios.put(url, update_data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('put 요청 후 데이터 :', update_data)
+    })
   )
 }
 
@@ -198,6 +207,7 @@ export {
   todoCreate,
   todoList,
   todoPut,
+  todoPutDrag,
   todoDel,
   isRead,
   informCreate,
