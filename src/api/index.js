@@ -54,6 +54,7 @@ function projectUpdate(project, projectData) {
 
 function markdownGet(project) {
   // 요청할 URL
+  console.log('웨 안 뒈 마 크 다 운')
   const url = `http://127.0.0.1:8000/${project}/markdown`
   return axios.get(url, {
     headers: {
@@ -113,8 +114,6 @@ function todoCreate(pjt_pk, new_data) {
     console.log('post 요청 후 데이터 :', new_data)
   )
 }
-
-
 
 function todoList(pjt_pk) {
   // 요청할 URL
@@ -180,7 +179,6 @@ function informCreate(pjt_pk, new_inform) {
 }
 
 function informList(pjt_pk) {
-  print('이거다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ' + pjt_pk)
   const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
   return axios.get(url, {
     headers: {
@@ -189,17 +187,34 @@ function informList(pjt_pk) {
     }
   })
 }
+
+function InformUpdate(project, projectData) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/project/${project}/`
+  return axios.put(url, projectData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // 함수 export
 export {
   registerUser,
   projectIndex,
   projectCreate,
+  markdownGet,
+  projectGet,
+  projectUpdate,
   memberCreate,
+  NotificationGet,
   todoCreate,
   todoList,
   todoPut,
   todoDel,
   isRead,
   informCreate,
-  informList
+  informList,
+  InformUpdate
 }
