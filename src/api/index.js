@@ -92,6 +92,12 @@ function NotificationGet() {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/notification`
   return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
 
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
@@ -106,19 +112,24 @@ function todoCreate(pjt_pk, new_data) {
   })
 }
 
-function isRead(notificationPk) {
-  // 요청할 URL
-  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
-  return axios.put(url, notificationPk, {
-  }),
-  console.log("post 요청 후 데이터 :",new_data)
-}
+
 
 function todoList(pjt_pk) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
   // console.log('projectData :', projectData)
   return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function isRead(notificationPk) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/isread/${notificationPk}/`
+  return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
