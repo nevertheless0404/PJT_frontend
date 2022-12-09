@@ -3,7 +3,7 @@
     <ProjectIndexNav />
     <div class="container mt-4">
       <div class="d-flex justify-content-evenly row">
-        <ProjectCalender class="col-12 col-lg-8" />
+        <ProjectCalender  v-bind:childValue="projects" class="col-12 col-lg-8" />
         <!-- <p>{{ this.projects }}</p> -->
         <div class="col-12 col-lg-4 d-flex flex-column align-items-center p-4">
           <div v-for="(project, id) in projects" :key="id" class="w-100">
