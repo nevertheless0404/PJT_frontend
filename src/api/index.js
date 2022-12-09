@@ -19,6 +19,7 @@ function projectIndex() {
   })
 }
 
+
 function projectCreate(projectData) {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/project/'
@@ -54,6 +55,7 @@ function projectUpdate(project, projectData) {
 
 function markdownGet(project) {
   // 요청할 URL
+  console.log('웨 안 뒈 마 크 다 운')
   const url = `http://127.0.0.1:8000/${project}/markdown`
   return axios.get(url, {
     headers: {
@@ -87,7 +89,6 @@ function memberCreate(memberData) {
   })
 }
 
-
 function NotificationGet() {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/notification`
@@ -114,8 +115,6 @@ function todoCreate(pjt_pk, new_data) {
   )
 }
 
-
-
 function todoList(pjt_pk) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
@@ -128,18 +127,29 @@ function todoList(pjt_pk) {
   })
 }
 
+function todoPutDrag(pjt_pk, update_data) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  return (
+    axios.put(url, update_data[0], {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+  )
+}
+
 function todoPut(pjt_pk, update_data) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  console.log('update 데이터 : ', update_data)
   return (
     axios.put(url, update_data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('put 요청 후 데이터 :', update_data)
+    })
   )
 }
 
@@ -180,7 +190,6 @@ function informCreate(pjt_pk, new_inform) {
 }
 
 function informList(pjt_pk) {
-  print('이거다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ' + pjt_pk)
   const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
   return axios.get(url, {
     headers: {
@@ -189,17 +198,35 @@ function informList(pjt_pk) {
     }
   })
 }
+
+function InformUpdate(project, projectData) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/project/${project}/`
+  return axios.put(url, projectData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // 함수 export
 export {
   registerUser,
   projectIndex,
   projectCreate,
+  markdownGet,
+  projectGet,
+  projectUpdate,
   memberCreate,
+  NotificationGet,
   todoCreate,
   todoList,
   todoPut,
+  todoPutDrag,
   todoDel,
   isRead,
   informCreate,
-  informList
+  informList,
+  InformUpdate
 }

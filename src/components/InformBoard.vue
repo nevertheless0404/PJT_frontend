@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <p :key="id" v-for="(s, id) in informs">{{s.name}}</p>
+  <div class="mb-4">
+    <b-card
+      border-variant="secondary"
+      header="Notice"
+      header-border-variant="secondary"
+      align="center"
+    >
+      <b-card-text>
+        <p :key="id" v-for="(s, id) in informs" class="mb-0">{{s.name}}</p>
+      </b-card-text>
+    </b-card>
   </div>
 </template>
 
