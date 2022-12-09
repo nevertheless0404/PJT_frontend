@@ -56,6 +56,8 @@
 
         <!-- <b-collapse id="nav-collapse" is-nav class="d-flex justify-content-end"> -->
         <!-- Right aligned nav items -->
+        <div><AlarmBell /></div>
+
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
@@ -87,14 +89,21 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import AlarmBell from '@/components/AlarmBell.vue'
+
 export default {
   name: 'NavBar',
+  components: { AlarmBell },
   methods: {
     handleClick() {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       this.$store.dispatch('user', null)
       this.$router.push('/')
+    },
+    btnClick() {
+      const pTag = document.querySelector('#ptag')
+      pTag.style.display = ''
     }
   },
   computed: {
