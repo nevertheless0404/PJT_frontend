@@ -24,13 +24,13 @@
             @change="refresh"
             ><div v-for="element in arrBacklog" :key="element.id">
               <button
-                class="list-group-item text-start w-100 rounded-2"
+                class="todo list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                {{ element.title }}<br />
+                <p class="todoTitle">{{ element.title }}</p>
                 {{ element.start_at }} - {{ element.end_at }}
               </button>
             </div>
@@ -49,13 +49,13 @@
           >
             <div v-for="element in arrInProgress" :key="element.id">
               <button
-                class="list-group-item text-start w-100 rounded-2"
+                class="todo list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                {{ element.title }}<br />
+                <p class="todoTitle">{{ element.title }}</p>
                 {{ element.start_at }} - {{ element.end_at }}
               </button>
             </div>
@@ -74,13 +74,13 @@
           >
             <div v-for="element in arrDone" :key="element.id">
               <button
-                class="list-group-item text-start w-100 rounded-2"
+                class="todo list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                {{ element.title }}<br />
+                <p class="todoTitle">{{ element.title }}</p>
                 {{ element.start_at }} - {{ element.end_at }}
               </button>
             </div>
@@ -92,11 +92,20 @@
       <!-- 칸반보드 디테일 모달 -->
       <b-modal ref="my-modal" hide-footer hide-header>
         <div class="d-block" v-if="!edit">
-          <h3>{{ modalData.title }}</h3>
+          <div class="d-flex justify-content-between align-items-center">
+            <h3 class="m-0">{{ modalData.title }}</h3>
+            <i
+              v-if="!edit"
+              variant="outline-danger"
+              block
+              @click="hideModal"
+              class="bi bi-x-lg"
+              style="font-size: 25px; cursor: pointer"
+            ></i>
+          </div>
           <hr />
-          <p>id : {{ modalData.id }}</p>
-          <p>세부 내용 : {{ modalData.content }}</p>
-          <p>기간 : {{ modalData.start_at }} - {{ modalData.end_at }}</p>
+          <p class="mb-1" style="color:gray;">설명</p><p class="mb-3">{{ modalData.content }}</p>
+          <p class="mb-1" style="color:gray;">기간</p><p style="font-size:17px;">{{ modalData.start_at }} - {{ modalData.end_at }}</p>
         </div>
         <form @submit.prevent="todoUpdate" v-if="edit">
           <div class="mb-3">
@@ -168,30 +177,26 @@
             </button>
           </div>
         </form>
-        <b-button
-          v-if="!edit"
-          class="mt-3"
-          variant="outline-danger"
-          block
-          @click="hideModal"
-          >Close Me</b-button
-        >
-        <b-button
-          v-if="!edit"
-          class="mt-3"
-          variant="outline-primary"
-          block
-          @click="editModal"
-          >Edit</b-button
-        >
-        <b-button
-          v-if="!edit"
-          class="mt-3"
-          variant="outline-danger"
-          block
-          @click="deleteTodo"
-          >Delete</b-button
-        >
+        <div class="d-flex">
+          <b-button
+            size="sm"
+            v-if="!edit"
+            class="mt-3 me-2"
+            variant="outline-primary"
+            block
+            @click="editModal"
+            ><i class="bi bi-pencil"></i
+          ></b-button>
+          <b-button
+            size="sm"
+            v-if="!edit"
+            class="mt-3"
+            variant="outline-danger"
+            block
+            @click="deleteTodo"
+            ><i class="bi bi-trash3"></i
+          ></b-button>
+        </div>
       </b-modal>
 
       <!-- 칸반보드 작성 모달 -->
@@ -458,5 +463,15 @@ export default {
 <style scoped>
 .kanban-column {
   min-height: 300px;
+}
+
+.btn-group-lg > .btn > input {
+  display: none !important;
+}
+
+.todoTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0px;
 }
 </style>
