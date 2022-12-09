@@ -3,8 +3,9 @@
     <NavProject v-bind:childValue="pjtPk" />
     <div class="container mt-4">
       <ProjectCalender />
-      <kanbanBoard />
+      <KanbanBoard />
     </div>
+    user : {{ user }}
   </div>
 </template>
 

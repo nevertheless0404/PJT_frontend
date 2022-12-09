@@ -70,7 +70,9 @@
               <em>프로젝트</em>
             </template>
             <b-dropdown-item v-if="user">
-              <routerLink class="nav-link" to="/project">프로젝트</routerLink>
+              <routerLink class="nav-link" to="/project"
+                >프로젝트 정보 수정</routerLink
+              >
             </b-dropdown-item>
             <b-dropdown-item v-if="user">
               <routerLink class="nav-link" :to="{ name: 'todo_project' }"

@@ -5,7 +5,16 @@
     <div class="card">
       <div class="card-body">
         <form @submit.prevent="todoSubmit">
-          <h1 style="font-size: 40px my-5">To Do List</h1>
+          <div class='todoli'>
+            <h1 style="font-size: 40px my-5">To Do List</h1>
+            <div class='allprogress'>
+              <p class='pnj'>P</p>
+              <div class='progressbar'>
+                <progress id="progress" value="20" max="100"></progress>
+              </div>
+              <p class='pnj'>J</p>
+            </div>
+          </div> 
           <div :key="idx" v-for="(todo, idx) in todos">
             <input
               type="checkbox"
@@ -15,7 +24,7 @@
               v-model="todo_list"
               style="width: 25px; height: 25px"
             />
-            <label class="ms-3" for="html" style="font-size: 30px"
+            <label class="ms-3 font1" for="html"  style="font-size: 15px"
               >{{ todo.title }} | {{ todo.project }}</label
             >
           </div>
@@ -65,5 +74,46 @@ export default {
 <style scoped>
 * {
   font-family: 'Dela Gothic One', cursive;
+}
+
+.font1 {
+  font-family: 'Noto Serif KR', serif;
+}
+
+.todoli {
+  display: flex;
+}
+
+.progressbar {
+  display: flex;
+  align-items: center;
+  margin: 10px;
+  
+}
+
+.allprogress {
+  display: flex;
+  margin-left: 100px;
+  align-items: center;
+}
+
+.pnj {
+  margin-top:10px;
+}
+
+#progress {
+    appearance: none;
+}
+#progress::-webkit-progress-bar {
+    background: #FFC062;
+    border-radius:4px;
+   
+}
+#progress::-webkit-progress-value {
+    border-radius:4px;
+     background:#3485FF;
+
+
+
 }
 </style>
