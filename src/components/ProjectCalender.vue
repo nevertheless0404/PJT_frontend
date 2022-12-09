@@ -9,8 +9,16 @@ import listPlugin from '@fullcalendar/list'
 
 const options = reactive({
   plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
-  initialView: 'dayGridMonth'
-})
+  initialView: 'dayGridMonth',
+  headerToolbar: {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek'
+  },
+  editable: true,
+  selectable: true,
+
+});
 </script>
 
 <template>
@@ -19,4 +27,14 @@ const options = reactive({
   </div>
 </template>
 
-<style scoped></style>
+<style scope>
+.fc-daygrid-day-number{
+  color: black !important;
+  text-decoration: none !important;
+}
+
+.fc-col-header-cell-cushion{
+  color: black !important;
+  text-decoration: none !important;
+}
+</style>

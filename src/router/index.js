@@ -3,7 +3,9 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProjectCreateView from '../views/ProjectCreateView.vue'
+import ProjectUpdateView from '../views/ProjectUpdateView.vue'
 import MemberCreateView from '../views/MemberCreateView.vue'
+import MarkdownView from '../views/MarkdownView.vue'
 import GoogleLogin from '../views/GoogleLogin.vue'
 
 Vue.use(VueRouter)
@@ -44,6 +46,12 @@ const routes = [
       import(/* webpackChunkName: "project" */ '../views/ProjectDetailVeiw.vue')
   },
   {
+    path: '/project/:id/update',
+    name: 'projectupdate',
+    props: true,
+    component: ProjectUpdateView
+  },
+  {
     path: '/projectcreate',
     name: 'projectcreate',
     component: ProjectCreateView
@@ -58,7 +66,12 @@ const routes = [
     name: 'todo_project',
     component: () =>
       import(/* webpackChunkName: "project" */ '../views/TodoProjectView.vue')
-  }
+  },
+  {
+    path: '/project/:id/markdown',
+    name: 'markdown',
+    component: MarkdownView
+  },
 ]
 
 const router = new VueRouter({

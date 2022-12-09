@@ -7,14 +7,33 @@ import './axios'
 // axios를 import
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+
+// Prism
+import Prism from 'prismjs';
+// highlight code
+import 'prismjs/components/prism-json';
+import koKR from '@kangc/v-md-editor/lib/lang/ko-KR';
+
+VueMarkdownEditor.use(vuepressTheme, {
+  Prism,
+})
 
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+Vue.use(VueMarkdownEditor)
+VueMarkdownEditor.lang.use('ko-KR', koKR);
 Vue.config.productionTip = false
 
 new Vue({
