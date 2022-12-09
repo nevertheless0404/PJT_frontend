@@ -33,18 +33,6 @@ function projectCreate(projectData) {
   })
 }
 
-// function projectPk() {
-//   // 요청할 URL
-//   const url = 'http://127.0.0.1:8000/recent_project/'
-//   // console.log('projectData :', projectData)
-//   return axios.get(url, {
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: 'Bearer ' + localStorage.getItem('access_token')
-//     }
-//   })
-// }
-
 function memberCreate(memberData) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${memberData.id}/`
@@ -114,6 +102,38 @@ function todoDel(pjt_pk, update_data) {
     console.log('del 요청 후 데이터 :', update_data)
   )
 }
+
+function isRead(notificationPk) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
+  return axios.put(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function informCreate(pjt_pk, new_inform) {
+  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  return axios.post(url, new_inform, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function informList(pjt_pk) {
+  print('이거다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ' + pjt_pk)
+  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
 // 함수 export
 export {
   registerUser,
@@ -123,5 +143,8 @@ export {
   todoCreate,
   todoList,
   todoPut,
-  todoDel
+  todoDel,
+  isRead,
+  informCreate,
+  informList
 }
