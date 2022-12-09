@@ -1,9 +1,10 @@
 <template>
   <div>
     <ProjectIndexNav />
-    <div class="container mt-4 container1">
-      <div class="d-flex row">
-        <ProjectCalender class="col col-8 col-xs-12" />
+
+    <div class="container mt-4">
+      <div class="d-flex justify-content-evenly row">
+        <ProjectCalender  v-bind:childValue="projects" class="col-12 col-lg-8" />
         <!-- <p>{{ this.projects }}</p> -->
         
         <div class='allpjtindex col col-4 col-xs-12'>

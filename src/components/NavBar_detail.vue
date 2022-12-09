@@ -79,7 +79,7 @@
               >오늘 할 일</routerLink
               >
             </b-dropdown-item>
-            <div :v-if="(user.pk === resPk)">
+            <div :v-if="(user.pk == resPk)">
               <b-dropdown-item v-if="user">
                 <routerLink
                   class="nav-link"
@@ -90,6 +90,11 @@
               <b-dropdown-item v-if="user">
                 <routerLink class="nav-link" :to="{ name: 'projectupdate' }"
                   >프로젝트 수정</routerLink
+                >
+              </b-dropdown-item>
+              <b-dropdown-item v-if="user">
+                <routerLink class="nav-link" :to="{ name: 'projectnotice' }"
+                  >공지사항</routerLink
                 >
               </b-dropdown-item>
             </div>
