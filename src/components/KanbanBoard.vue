@@ -459,40 +459,4 @@ export default {
 .kanban-column {
   min-height: 300px;
 }
-/* .radio {
-  overflow: hidden;
-  border-radius: 15px;
-}*/
-  padding: 7px 16px;
-  font-size: 14px;
-  border: 1px solid rgb(172, 173, 177);
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 23px;
-}
-.radioLabel2 {
-  padding: 7px 16px;
-  font-size: 14px;
-  border: 1px solid rgb(136, 176, 255);
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 23px;
-}
-.radioLabel3 {
-  padding: 7px 16px;
-  font-size: 14px;
-  border: 1px solid rgb(168, 213, 192);
-  cursor: pointer;
-  transition: 0.3s;
-  border-radius: 23px;
-} */
-/* .radioInput1:checked + .radioLabel1 {
-  background-color: rgb(216, 217, 220);
-}
-.radioInput2:checked + .radioLabel2 {
-  background-color: rgb(211, 225, 252);
-}
-.radioInput3:checked + .radioLabel3 {
-  background-color: rgb(217, 242, 229);
-} */
 </style>
