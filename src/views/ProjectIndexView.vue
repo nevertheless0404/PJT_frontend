@@ -5,21 +5,21 @@
       <div class="d-flex justify-content-evenly">
         <ProjectCalender />
         <!-- <p>{{ this.projects }}</p> -->
-        <div>
-          <div v-for="(project, id) in projects" :key="id">
-            <div class="pjts">
+        <div class='allpjtindex'>
+          <div  class='pjtindex'>
+            <div v-for="(project, id) in projects" :key="id">
               <router-link
-                :to="{ name: 'projectdetail', params: { id: project.id } }"
-              >
-                <span class="pjtTitle">{{ project.title }}</span>
+                :to="{ name: 'projectdetail', params: { id: project.id } }">
+                <div class="pjts">
+                  <span class="pjtTitle">{{ project.title }}</span>
+                </div>
               </router-link>
             </div>
           </div>
           <router-link
             :to="{ name: 'projectcreate' }"
-            class="btn btn-outline-primary"
-            >프로젝트 생성</router-link
-          >
+            class="btn1"
+            >프로젝트 생성</router-link>
         </div>
       </div>
       <TodoList />
@@ -76,8 +76,54 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
+  border: #D9D9D9 solid 2px;
+  
+  
 }
+
+.pjts:hover {
+  border: #3485FF solid 2px;
+}
+
+.btn1 {
+  color: white;
+  background-color: #3485FF;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  border: #D9D9D9 solid 2px;
+  text-decoration: none;
+  text-align : center;
+}
+
+.btn1:hover {
+  border: #3485FF solid 2px;
+}
+
 .pjtTitle {
   font-weight: 500;
+  text-decoration: none;
 }
+
+.pjtindex {
+  height:300px;
+  width: 400px;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pjtindex::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.allpjtindex{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
 </style>
