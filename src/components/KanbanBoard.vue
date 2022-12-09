@@ -20,7 +20,9 @@
             class="list-group kanban-column"
             :list="arrBacklog"
             group="tasks"
-            ><div v-for="(element, idx) in arrBacklog" :key="idx">
+            v-model="arrBacklog"
+            @change="refresh"
+            ><div v-for="element in arrBacklog" :key="element.id">
               <button
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
@@ -41,8 +43,10 @@
             class="list-group kanban-column"
             :list="arrInProgress"
             group="tasks"
+            v-model="arrInProgress"
+            @change="refresh"
           >
-            <div v-for="(element, idx) in arrInProgress" :key="idx">
+            <div v-for="element in arrInProgress" :key="element.id">
               <button
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
@@ -63,8 +67,10 @@
             class="list-group kanban-column"
             :list="arrDone"
             group="tasks"
+            v-model="arrDone"
+            @change="refresh"
           >
-            <div v-for="(element, idx) in arrDone" :key="idx">
+            <div v-for="element in arrDone" :key="element.id">
               <button
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
@@ -82,14 +88,130 @@
     <div>
       <!-- 칸반보드 디테일 모달 -->
       <b-modal ref="my-modal" hide-footer hide-header>
-        <div class="d-block">
+        <div class="d-block" v-if="!edit">
           <h3>{{ modalData.title }}</h3>
           <hr />
+          <p>id : {{ modalData.id }}</p>
           <p>세부 내용 : {{ modalData.content }}</p>
           <p>기간 : {{ modalData.start_at }} - {{ modalData.end_at }}</p>
         </div>
-        <b-button class="mt-3" variant="outline-danger" block @click="hideModal"
+        <form @submit.prevent="todoUpdate" v-if="edit">
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label"
+              >제목</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder=""
+              v-model="updateData.title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label"
+              >내용</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="exampleFormControlInput1"
+              placeholder=""
+              v-model="updateData.content"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="example-datepicker">할 일 시작일</label>
+            <b-form-datepicker
+              id="example-datepicker"
+              v-model="updateData.start_at"
+              :max="end_at"
+              class="mb-2"
+            ></b-form-datepicker>
+          </div>
+          <div class="mb-3">
+            <label for="example-datepicker2">할 일 종료일</label>
+            <b-form-datepicker
+              id="example-datepicker2"
+              v-model="updateData.end_at"
+              :min="start_at"
+              class="mb-2"
+            ></b-form-datepicker>
+          </div>
+          <div class="mb-3">
+            <label for="example-datepicker2">할 일 상태</label>
+            <div class="radio d-flex">
+              <div class="me-3">
+                <input
+                  class="radioInput1"
+                  type="radio"
+                  name=""
+                  id="0"
+                  value="0"
+                  v-model="complete"
+                  autocomplete="off"
+                  checked
+                />
+                <label class="radioLabel1" for="0">Backlog</label>
+              </div>
+              <div class="me-3">
+                <input
+                  class="radioInput2"
+                  type="radio"
+                  name=""
+                  id="1"
+                  value="1"
+                  v-model="complete"
+                  autocomplete="off"
+                />
+                <label class="radioLabel2" for="1">InProgress</label>
+              </div>
+              <div>
+                <input
+                  class="radioInput3"
+                  type="radio"
+                  name=""
+                  id="2"
+                  value="2"
+                  v-model="complete"
+                  autocomplete="off"
+                />
+                <label class="radioLabel3" for="2">Done</label>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button @click="editCancle" v-if="edit" class="btn btn-secondary">
+              Cancle
+            </button>
+            <button type="submit" v-if="edit" class="btn btn-primary">
+              Edit Finish
+            </button>
+          </div>
+        </form>
+        <b-button
+          v-if="!edit"
+          class="mt-3"
+          variant="outline-danger"
+          block
+          @click="hideModal"
           >Close Me</b-button
+        >
+        <b-button
+          v-if="!edit"
+          class="mt-3"
+          variant="outline-primary"
+          block
+          @click="editModal"
+          >Edit</b-button
+        >
+        <b-button
+          v-if="!edit"
+          class="mt-3"
+          variant="outline-danger"
+          block
+          @click="deleteTodo"
+          >Delete</b-button
         >
       </b-modal>
 
@@ -152,13 +274,19 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { todoCreate } from '@/api/index'
-import { todoList } from '@/api/index'
+import { todoCreate, todoList, todoPut, todoDel } from '@/api/index'
+
+let before_title,
+  before_content,
+  before_start_at,
+  before_end_at,
+  before_complete
 
 export default {
   components: { draggable },
   data() {
     return {
+      complete: '',
       newTask: {
         title: '',
         content: '',
@@ -168,7 +296,23 @@ export default {
       arrBacklog: [],
       arrInProgress: [],
       arrDone: [],
-      modalData: []
+      modalData: [
+        {
+          title: '',
+          content: '',
+          start_at: '',
+          end_at: ''
+        }
+      ],
+      updateData: [
+        {
+          title: '',
+          content: '',
+          start_at: '',
+          end_at: ''
+        }
+      ],
+      edit: false
     }
   },
   setup() {},
@@ -179,6 +323,7 @@ export default {
         response.data.forEach((ele) => {
           if (ele.complete === 0) {
             this.arrBacklog.push({
+              id: ele.id,
               project: ele.project,
               title: ele.title,
               content: ele.content,
@@ -188,6 +333,7 @@ export default {
             })
           } else if (ele.complete === 1) {
             this.arrInProgress.push({
+              id: ele.id,
               project: ele.project,
               title: ele.title,
               content: ele.content,
@@ -197,6 +343,7 @@ export default {
             })
           } else {
             this.arrDone.push({
+              id: ele.id,
               project: ele.project,
               title: ele.title,
               content: ele.content,
@@ -205,22 +352,36 @@ export default {
               complete: 2
             })
           }
+          len_Back = len(this.arrBacklog)
+          len_In = len(this.arrInProgress)
+          len_Done = len(this.arrDone)
         })
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
+    todoUpdate(this.$route.params.id)
   },
   mounted() {},
   unmounted() {},
   methods: {
     showModal(element) {
       this.$refs['my-modal'].show()
-      console.log('element: ', element)
       this.modalData = element
+      this.updateData = element
+      before_title = this.modalData.title
+      before_content = this.modalData.content
+      before_start_at = this.modalData.start_at
+      before_end_at = this.modalData.end_at
+      before_complete = this.modalData.complete
     },
     hideModal() {
       this.$refs['my-modal'].hide()
     },
     async todoAdd() {
+      this.updateData.title = ''
+      this.updateData.content = ''
+      this.updateData.start_at = ''
+      this.updateData.end_at = ''
+      this.updateData.complete = ''
       if (this.newTask) {
         this.arrBacklog.push({
           project: this.$route.params.id,
@@ -244,14 +405,81 @@ export default {
         this.$refs['modal'].hide()
       }
     },
-    add() {}
-  },
-  createModal() {}
+    editModal() {
+      this.edit = true
+    },
+    editCancle() {
+      this.edit = false
+      this.updateData.title = before_title
+      this.updateData.content = before_content
+      this.updateData.start_at = before_start_at
+      this.updateData.end_at = before_end_at
+      this.updateData.complete = before_complete
+      this.$refs['my-modal'].hide()
+    },
+    todoUpdate() {
+      this.updateData.complete = this.complete
+      todoPut(this.$route.params.id, this.updateData)
+      this.updateData.title = ''
+      this.updateData.content = ''
+      this.updateData.start_at = ''
+      this.updateData.end_at = ''
+      this.updateData.complete = ''
+      this.$router.go()
+      this.$refs['my-modal'].hide()
+    },
+    deleteTodo() {
+      todoDel(this.$route.params.id, this.modalData)
+      this.$router.go()
+      this.$refs['my-modal'].hide()
+    },
+    refresh() {}
+  }
 }
 </script>
 
 <style scoped>
 .kanban-column {
   min-height: 300px;
+}
+/* .radio {
+  overflow: hidden;
+  border-radius: 15px;
+}*/
+.radio input {
+  display: none;
+}
+.radioLabel1 {
+  padding: 7px 16px;
+  font-size: 14px;
+  border: 1px solid rgb(172, 173, 177);
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 23px;
+}
+.radioLabel2 {
+  padding: 7px 16px;
+  font-size: 14px;
+  border: 1px solid rgb(136, 176, 255);
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 23px;
+}
+.radioLabel3 {
+  padding: 7px 16px;
+  font-size: 14px;
+  border: 1px solid rgb(168, 213, 192);
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 23px;
+}
+.radioInput1:checked + .radioLabel1 {
+  background-color: rgb(216, 217, 220);
+}
+.radioInput2:checked + .radioLabel2 {
+  background-color: rgb(211, 225, 252);
+}
+.radioInput3:checked + .radioLabel3 {
+  background-color: rgb(217, 242, 229);
 }
 </style>
