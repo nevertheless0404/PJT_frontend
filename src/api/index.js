@@ -128,7 +128,7 @@ function todoList(pjt_pk) {
 
 function isRead(notificationPk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/isread/${notificationPk}/`
+  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
   return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
