@@ -94,7 +94,7 @@
               </b-dropdown-item>
               <b-dropdown-item v-if="user">
                 <routerLink class="nav-link" :to="{ name: 'projectnotice' }"
-                  >공지사항</routerLink
+                  >공지사항 수정</routerLink
                 >
               </b-dropdown-item>
             </div>
