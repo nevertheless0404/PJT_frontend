@@ -1,21 +1,47 @@
 <template>
   <div>
     <ProjectIndexNav />
+
     <div class="container mt-4">
       <div class="d-flex justify-content-evenly row">
         <ProjectCalender  v-bind:childValue="projects" class="col-12 col-lg-8" />
         <!-- <p>{{ this.projects }}</p> -->
-        <div class="col-12 col-lg-4 d-flex flex-column align-items-center p-4">
-          <div v-for="(project, id) in projects" :key="id" class="w-100">
-            <div class="pjts w-100">
+        
+        <div class='allpjtindex col col-4 col-xs-12'>
+          <div  class='pjtindex'>
+            <div v-for="(project, id) in projects" :key="id">
               <router-link
-                :to="{ name: 'projectdetail', params: { id: project.id } }">
-                <div class="pjts">
-                  <span class="pjtTitle">{{ project.title }}</span>
+                :to="{ name: 'projectdetail', params: { id: project.id } }" class="text-decoration-none"
+              >
+                
+                <div class="d-flex pjtbox" v-if="project.color === 1">
+                  <div class="pjts-color-1">
+                  </div>
+                  <div class="pjts-1">
+                    <span class="pjtTitle">{{ project.title }}</span>
+                  </div>
                 </div>
+                
+                <div class="d-flex pjtbox" v-else-if="project.color === 2">
+                  <div class="pjts-color-2">
+                  </div>
+                  <div class="pjts-2">
+                    <span class="pjtTitle">{{ project.title }}</span>
+                  </div>
+                </div>
+                
+                <div class="d-flex pjtbox" v-else>
+                  <div class="pjts-color-3">
+                  </div>
+                  <div class="pjts-3">
+                    <span class="pjtTitle">{{ project.title }}</span>
+                  </div>
+                </div>
+                
               </router-link>
             </div>
           </div>
+        
           <router-link
             :to="{ name: 'projectcreate' }"
             class="btn1"
@@ -42,7 +68,7 @@ export default {
   },
   data() {
     return {
-      projects: [{ id: '' }, { title: '' }, { start_at: '' }, { end_at: '' }]
+      projects: [{ id: '' }, { title: '' }, { start_at: '' }, { end_at: '' }, { color: '' }]
     }
   },
   setup() {},
@@ -69,20 +95,94 @@ export default {
 </script>
 
 <style scoped>
-.pjts {
+.pjtbox{
+  margin-bottom: 25px;
+}
+
+.pjts-1 {
   background-color: white;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 300px;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 30px;
-  border: #D9D9D9 solid 2px;
-  
+  width: 280px;
+  border-radius: 0px 10px 10px 0px;
+  padding:20px;
+  color: black;
+
+  box-shadow: inset 0px 0px 0px #3485FF;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
   
 }
 
-.pjts:hover {
-  border: #3485FF solid 2px;
+.pjts-color-1 {
+  background-color: white;
+  width: 20px;
+  background-color: #3485FF;
+  border-radius: 10px 0px 0px 10px;
+  
+}
+
+.pjts-1:hover {
+  color: white;
+  box-shadow: inset 300px 0px 0px #3485FF;
+}
+
+.pjts-2 {
+  background-color: white;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 280px;
+  border-radius: 0px 10px 10px 0px;
+  border: #F2F2F2;
+  border-style: solid;
+  border-width: 0px;
+  padding:20px;
+  color: black;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.pjts-color-2 {
+  background-color: white;
+  width: 20px;
+  background-color: #FFC062;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.pjts-2:hover {
+  box-shadow: inset 300px 0px 0px #FFC062;
+  color: white;
+}
+
+.pjts-3 {
+  background-color: white;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 280px;
+  border-radius: 0px 10px 10px 0px;
+  border: #F2F2F2;
+  border-style: solid;
+  border-width: 0px;
+  padding:20px;
+  color: black;
+
+  box-shadow: inset 0px 0px 0px #F24E1E;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.pjts-color-3 {
+  background-color: white;
+  width: 20px;
+  background-color: #F24E1E;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.pjts-3:hover {
+  box-shadow: inset 300px 0px 0px #F24E1E;
+  color: white;
 }
 
 .btn1 {
@@ -92,23 +192,30 @@ export default {
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  border: #D9D9D9 solid 2px;
+  border: #D9D9D9 solid 0px;
   text-decoration: none;
   text-align : center;
+
+  box-shadow: inset 0px 0px 0px #F24E1E;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
 .btn1:hover {
-  border: #3485FF solid 2px;
+
+  box-shadow: inset 300px 0px 0px 0px #F24E1E;
 }
 
 .pjtTitle {
-  font-weight: 500;
+  font-weight: bold;
   text-decoration: none;
 }
 
 .pjtindex {
-  height:300px;
-  width: 400px;
+  margin-top:50px;
+  margin-bottom:20px;
+  width: 300px;
   overflow: auto;
   display: flex;
   align-items: center;
@@ -124,6 +231,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  height:500px;
 }
 
 
@@ -142,5 +250,11 @@ export default {
   transform: scale(1.05);
   transition: 0.3s;
 }
+
+.container1 {
+  padding-right:200px;
+  padding-left:200px;
+}
+
 
 </style>

@@ -3,7 +3,6 @@ import axios from 'axios'
 function registerUser(userData) {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/api/accounts/v1/registration/'
-  console.log('userData :', userData)
   return axios.post(url, userData, {
     'Content-Type': 'application/json'
   })
@@ -12,7 +11,6 @@ function registerUser(userData) {
 function projectIndex() {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/project/'
-  // console.log('projectData :', projectData)
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -24,8 +22,40 @@ function projectIndex() {
 function projectCreate(projectData) {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/project/'
-  console.log('projectData :', projectData)
   return axios.post(url, projectData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function projectGet(project) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/project/${project}/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function projectUpdate(project, projectData) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/project/${project}/`
+  return axios.put(url, projectData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function markdownGet(project) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/${project}/markdown`
+  return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -49,7 +79,6 @@ function memberCreate(memberData) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${memberData.id}/`
   console.log('memberData :', memberData)
-  console.log(url)
   return axios.post(url, memberData, {
     headers: {
       'Content-Type': 'application/json',
@@ -57,6 +86,12 @@ function memberCreate(memberData) {
     }
   })
 }
+
+
+function NotificationGet() {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/notification`
+  return axios.get(url, {
 
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
@@ -67,6 +102,14 @@ function todoCreate(pjt_pk, new_data) {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
     }
+
+  })
+}
+
+function isRead(notificationPk) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
+  return axios.put(url, notificationPk, {
   }),
   console.log("post 요청 후 데이터 :",new_data)
 }
@@ -82,5 +125,6 @@ function todoList(pjt_pk) {
     }
   })
 }
+
 // 함수 export
-export { registerUser, projectIndex, projectCreate, memberCreate, todoCreate, todoList }
+export { registerUser, projectIndex, projectCreate, memberCreate, projectGet, projectUpdate, markdownGet, NotificationGet, isRead }
