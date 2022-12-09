@@ -196,7 +196,7 @@ export default {
   text-decoration: none;
   text-align : center;
 
-  box-shadow: inset 0px 0px 0px #F24E1E;
+  box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
   -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
   transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
@@ -204,7 +204,7 @@ export default {
 
 .btn1:hover {
 
-  box-shadow: inset 300px 0px 0px 0px #F24E1E;
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 
 .pjtTitle {

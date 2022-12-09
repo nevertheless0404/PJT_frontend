@@ -4,7 +4,7 @@
     <router-view></router-view>
     <div v-if="this.$router" class="container">
       <form @submit.prevent="putpjt">
-        <div class="mb-3">
+        <div class="mt-5 mb-3">
           <label for="exampleFormControlInput1" class="form-label"
             >프로젝트 제목</label
           >
@@ -53,17 +53,13 @@
             >
             <div class="d-flex mb-2">
               <div id="exampleFormControlInput1" class="me-2">
-                <b-button size="sm" variant="outline-primary" @click="addSkill"
-                  ><i class="bi bi-plus-lg"></i> 추가</b-button
-                >
+                <div class="btn2" @click="addSkill"
+                  ><i class="bi bi-plus-lg"></i> 추가</div>
               </div>
               <div id="exampleFormControlInput1" class="">
-                <b-button
-                  size="sm"
-                  variant="outline-danger"
+                <div class="btn3"
                   @click="removeSkill"
-                  ><i class="bi bi-dash-lg"></i> 삭제</b-button
-                >
+                  ><i class="bi bi-dash-lg"></i> 삭제</div>
               </div>
             </div>
           </div>
@@ -82,13 +78,13 @@
             <label for="exampleInputEmail1" class="form-label">주요 기능</label>
             <div class="d-flex mb-2">
               <div id="emailHelp" class="me-2">
-                <b-button size="sm" variant="outline-primary" @click="addfunc"
-                  ><i class="bi bi-plus-lg"></i> 추가</b-button
+                <div class="btn2" @click="addfunc"
+                  ><i class="bi bi-plus-lg"></i> 추가</div
                 >
               </div>
               <div id="emailHelp" class="">
-                <b-button size="sm" variant="outline-danger" @click="removefunc"
-                  ><i class="bi bi-dash-lg"></i> 삭제</b-button
+                <div class="btn3" @click="removefunc"
+                  ><i class="bi bi-dash-lg"></i> 삭제</div
                 >
               </div>
             </div>
@@ -104,7 +100,9 @@
             v-for="(func, id) in functions"
           />
         </div>
-        <button type="submit" class="btn btn-primary">다음</button>
+        <div class='btn1box'>
+          <button type="submit" class="btn1">다음</button>
+        </div>
       </form>
     </div>
   </div>
@@ -198,4 +196,81 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.btn1box {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.btn1 {
+  color: white;
+  background-color: #3485FF;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.btn1:hover {
+
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+
+
+.btn2 {
+  color: white;
+  background-color: #3485FF;
+  width: 70px;
+  height: 31px;
+  border-radius: 3px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  padding: 5px;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.2s cubic-bezier(.5, .24, 0, 1)
+}
+
+.btn2:hover {
+
+  box-shadow: inset 70px 0px 0px 0px #FFC062;
+}
+
+
+.btn3 {
+  color: white;
+  background-color: #F24E1E;
+  box-shadow: 5px 9px 16px 0px #F24E1E;
+  width: 70px;
+  height: 31px;
+  border-radius: 3px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  padding: 5px;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.2s cubic-bezier(.5, .24, 0, 1)
+}
+
+.btn3:hover {
+
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+</style>
+
