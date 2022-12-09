@@ -27,6 +27,7 @@
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
+                @mousedown="pick_id(element)"
                 v-if="element.title"
               >
                 {{ element.title }}<br />
@@ -51,6 +52,7 @@
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
+                @mousedown="pick_id(element)"
                 v-if="element.title"
               >
                 {{ element.title }}<br />
@@ -75,6 +77,7 @@
                 class="list-group-item text-start w-100 rounded-2"
                 id="show-btn"
                 @click="showModal(element)"
+                @mousedown="pick_id(element)"
                 v-if="element.title"
               >
                 {{ element.title }}<br />
@@ -250,13 +253,23 @@
 
 <script>
 import draggable from 'vuedraggable'
-import { todoCreate, todoList, todoPut, todoDel } from '@/api/index'
+import {
+  todoCreate,
+  todoList,
+  todoPut,
+  todoPutDrag,
+  todoDel
+} from '@/api/index'
 
 let before_title,
   before_content,
   before_start_at,
   before_end_at,
-  before_complete
+  before_complete,
+  drag_id,
+  len_back,
+  len_in,
+  refresh_onetime = 0
 
 export default {
   components: { draggable },
@@ -280,16 +293,8 @@ export default {
           end_at: ''
         }
       ],
-      updateData: [
-        {
-          title: '',
-          content: '',
-          start_at: '',
-          end_at: ''
-        }
-      ],
+      updateData: [],
       edit: false,
-      // selected: this.complete,
       options: [
         { text: 'Backlog', value: '0' },
         { text: 'In Progress', value: '1' },
@@ -301,7 +306,6 @@ export default {
   created() {
     todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
-        console.log('response.data :', response.data)
         response.data.forEach((ele) => {
           if (ele.complete === 0) {
             this.arrBacklog.push({
@@ -314,7 +318,6 @@ export default {
               complete: 0
             })
             this.complete = ele.complete
-            console.log('라디오 선택',this.selected)
           } else if (ele.complete === 1) {
             this.arrInProgress.push({
               id: ele.id,
@@ -326,7 +329,6 @@ export default {
               complete: 1
             })
             this.complete = ele.complete
-            console.log('라디오 선택',this.selected)
           } else {
             this.arrDone.push({
               id: ele.id,
@@ -338,12 +340,10 @@ export default {
               complete: 2
             })
             this.complete = ele.complete
-            console.log('라디오 선택',this.complete)
           }
-          len_Back = len(this.arrBacklog)
-          len_In = len(this.arrInProgress)
-          len_Done = len(this.arrDone)
         })
+        len_back = this.arrBacklog.length
+        len_in = this.arrInProgress.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
     todoUpdate(this.$route.params.id)
@@ -408,12 +408,14 @@ export default {
     todoUpdate() {
       this.updateData.complete = this.complete
       todoPut(this.$route.params.id, this.updateData)
-      this.updateData.title = ''
-      this.updateData.content = ''
-      this.updateData.start_at = ''
-      this.updateData.end_at = ''
-      this.updateData.complete = ''
+      this.updateData = []
       this.$router.go()
+      this.$refs['my-modal'].hide()
+    },
+    todoUpdateDrag() {
+      this.updateData[0].complete = this.complete
+      todoPutDrag(this.$route.params.id, this.updateData)
+      this.updateData = []
       this.$refs['my-modal'].hide()
     },
     deleteTodo() {
@@ -421,7 +423,34 @@ export default {
       this.$router.go()
       this.$refs['my-modal'].hide()
     },
-    refresh() {}
+    pick_id(ele) {
+      drag_id = ele.id
+      this.updateData.id = drag_id
+      this.updateData.push({
+        id: drag_id,
+        complete: 4,
+        title: ele.title,
+        content: ele.content,
+        start_at: ele.start_at,
+        end_at: ele.end_at
+      })
+      this.updateData.complete = 8
+    },
+    refresh() {
+      refresh_onetime += 1
+      if (refresh_onetime < 2) {
+        if (this.arrBacklog.length > len_back) {
+          this.complete = '0'
+        } else if (this.arrInProgress.length > len_in) {
+          this.complete = '1'
+        } else {
+          this.complete = '2'
+        }
+        this.todoUpdateDrag()
+      } else {
+        refresh_onetime = 0
+      }
+    }
   }
 }
 </script>
@@ -434,10 +463,6 @@ export default {
   overflow: hidden;
   border-radius: 15px;
 }*/
-.btn-group-lg > .btn > input {
-  display: none !important;
-}
-/* .radioLabel1 {
   padding: 7px 16px;
   font-size: 14px;
   border: 1px solid rgb(172, 173, 177);
