@@ -141,48 +141,24 @@
               class="mb-2"
             ></b-form-datepicker>
           </div>
+          <!-- 라디오 버튼 -->
           <div class="mb-3">
-            <label for="example-datepicker2">할 일 상태</label>
-            <div class="radio d-flex">
-              <div class="me-3">
-                <input
-                  class="radioInput1 btn-check"
-                  type="radio"
-                  name="options"
-                  id="0"
-                  value="0"
+            <div id="radio">
+              <b-form-group label="할 일 상태" v-slot="{ ariaDescribedby }">
+                <b-form-radio-group
+                  id="btn-radios-2"
                   v-model="complete"
-                  autocomplete="off"
-                  checked
-                />
-                <label class="radioLabel1" for="0">Backlog</label>
-              </div>
-              <div class="me-3">
-                <input
-                  class="radioInput2 btn-check"
-                  type="radio"
-                  name="options"
-                  id="1"
-                  value="1"
-                  v-model="complete"
-                  autocomplete="off"
-                />
-                <label class="radioLabel2" for="1">InProgress</label>
-              </div>
-              <div>
-                <input
-                  class="radioInput3 btn-check"
-                  type="radio"
-                  name="options"
-                  id="2"
-                  value="2"
-                  v-model="complete"
-                  autocomplete="off"
-                />
-                <label class="radioLabel3" for="2">Done</label>
-              </div>
+                  :options="options"
+                  :aria-describedby="ariaDescribedby"
+                  button-variant="outline-success"
+                  size="lg"
+                  name="radio-btn-outline"
+                  buttons
+                ></b-form-radio-group>
+              </b-form-group>
             </div>
           </div>
+
           <div class="d-flex justify-content-between">
             <button @click="editCancle" v-if="edit" class="btn btn-secondary">
               Cancle
@@ -318,14 +294,18 @@ export default {
         }
       ],
       updateData: [],
-      edit: false
+      edit: false,
+      options: [
+        { text: 'Backlog', value: '0' },
+        { text: 'In Progress', value: '1' },
+        { text: 'Done', value: '2' }
+      ]
     }
   },
   setup() {},
   created() {
     todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
-        console.log('response.data :', response.data)
         response.data.forEach((ele) => {
           if (ele.complete === 0) {
             this.arrBacklog.push({
@@ -337,6 +317,7 @@ export default {
               end_at: ele.end_at,
               complete: 0
             })
+            this.complete = ele.complete
           } else if (ele.complete === 1) {
             this.arrInProgress.push({
               id: ele.id,
@@ -347,6 +328,7 @@ export default {
               end_at: ele.end_at,
               complete: 1
             })
+            this.complete = ele.complete
           } else {
             this.arrDone.push({
               id: ele.id,
@@ -357,6 +339,7 @@ export default {
               end_at: ele.end_at,
               complete: 2
             })
+            this.complete = ele.complete
           }
         })
         len_back = this.arrBacklog.length
@@ -425,23 +408,14 @@ export default {
     todoUpdate() {
       this.updateData.complete = this.complete
       todoPut(this.$route.params.id, this.updateData)
-      this.updateData.title = ''
-      this.updateData.content = ''
-      this.updateData.start_at = ''
-      this.updateData.end_at = ''
-      this.updateData.complete = ''
+      this.updateData = []
       this.$router.go()
       this.$refs['my-modal'].hide()
     },
     todoUpdateDrag() {
       this.updateData[0].complete = this.complete
       todoPutDrag(this.$route.params.id, this.updateData)
-      // this.updateData.title = '555'
-      // this.updateData.content = ''
-      // this.updateData.start_at = ''
-      // this.updateData.end_at = ''
-      // this.updateData.complete = ''
-      this.$router.go()
+      this.updateData = []
       this.$refs['my-modal'].hide()
     },
     deleteTodo() {
@@ -489,10 +463,6 @@ export default {
   overflow: hidden;
   border-radius: 15px;
 }*/
-/* .radio input {
-  display: none;
-} */
-.radioLabel1 {
   padding: 7px 16px;
   font-size: 14px;
   border: 1px solid rgb(172, 173, 177);
@@ -515,8 +485,8 @@ export default {
   cursor: pointer;
   transition: 0.3s;
   border-radius: 23px;
-}
-.radioInput1:checked + .radioLabel1 {
+} */
+/* .radioInput1:checked + .radioLabel1 {
   background-color: rgb(216, 217, 220);
 }
 .radioInput2:checked + .radioLabel2 {
@@ -524,5 +494,5 @@ export default {
 }
 .radioInput3:checked + .radioLabel3 {
   background-color: rgb(217, 242, 229);
-}
+} */
 </style>
