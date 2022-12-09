@@ -5,7 +5,6 @@
       <ProjectCalender />
       <KanbanBoard />
     </div>
-    user : {{ user }}
   </div>
 </template>
 
