@@ -2,8 +2,7 @@
   <div>
     <NavBar_detail />
     <div v-if="this.$router" class="container">
-      <p>{{ $route.params.id }}</p>
-      <form @submit.prevent="submitinform">
+      <form>
         <div class="mb-3">
           <div class="d-flex justify-content-between">
             <label for="exampleFormControlInput1" class="form-label"
@@ -35,7 +34,8 @@
             v-for="(s, id) in inform"
           />
         </div>
-        <button type="submit" class="btn btn-primary">저장</button>
+        <button @click="submitinform" v-if="(responseLen===0)" type="submit" class="btn btn-primary">저장</button>
+        <button @click="putinform" v-if="responseLen" type="submit" class="btn btn-primary">수정</button>
       </form>
     </div>
   </div>
@@ -44,17 +44,28 @@
 <script>
 import NavBar_detail from '@/components/NavBar_detail.vue'
 import { informCreate } from '@/api/index'
+import { informList } from '@/api/index'
+import { InformPut } from '@/api/index'
 
 export default {
   components: { NavBar_detail },
   data() {
     return {
       content: '',
-      inform: [{ name: '' }]
+      inform: [],
+      responseLen: 0
     }
   },
   setup() {},
-  created() {},
+  created() {
+    informList(this.$route.params.id)
+    .then((response) => {
+      this.responseLen = response.data.length
+      for (const resContent of response.data[0].content.split(' ')) {
+        this.inform.push({name: resContent})
+      }
+    })
+  },
   mounted() {},
   unmounted() {},
   methods: {
@@ -69,6 +80,19 @@ export default {
         content: stringInform
       }
       await informCreate(this.$route.params.id, informData)
+    },
+    async putinform() {
+      let stringContent = ''
+      this.inform.forEach((ele) => {
+        stringContent += ele.name + ' '
+      })
+      const informData = {
+        id: this.$route.params.id,
+        content: stringContent
+      }
+
+      await InformPut(this.$route.params.id, informData)
+      this.$router.push({ name: 'projectdetail', params: {id: this.$route.params.id} })
     },
     addInform() {
       this.inform.push({
@@ -88,11 +112,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.title {
-  text-align: center;
-  font-family: 'Dela Gothic One', cursive;
-}
-
-</style>
