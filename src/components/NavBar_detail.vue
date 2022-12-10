@@ -84,6 +84,11 @@
               >마크다운 생성</routerLink
               >
             </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <routerLink class="nav-link" :to="{ name: 'projectmember' }"
+              >팀원 확인</routerLink
+              >
+            </b-dropdown-item>
             <div :v-if="(user.pk == resPk)">
               <b-dropdown-item v-if="user">
                 <routerLink
