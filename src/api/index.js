@@ -223,6 +223,27 @@ function InformPut(project, informData) {
   })
 }
 
+function commentCreate(pjt_pk, todo_pk, new_comment) {
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  return axios.post(url, new_comment, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function commentList(pjt_pk, todo_pk) {
+  console.log('투두피케이'+todo_pk)
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // 함수 export
 export {
   registerUser,
@@ -242,5 +263,7 @@ export {
   isRead,
   informCreate,
   informList,
-  InformPut
+  InformPut,
+  commentCreate,
+  commentList
 }
