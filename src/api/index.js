@@ -211,10 +211,11 @@ function informList(pjt_pk) {
   })
 }
 
-function InformUpdate(project, projectData) {
+function InformPut(project, informData) {
+  console.log(informData)
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/project/${project}/`
-  return axios.put(url, projectData, {
+  const url = `http://127.0.0.1:8000/informs/${project}/detail`
+  return axios.put(url, informData, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -263,6 +264,6 @@ export {
   isRead,
   informCreate,
   informList,
-  InformUpdate,
-  MemberList
+  MemberList,
+  InformPut
 }
