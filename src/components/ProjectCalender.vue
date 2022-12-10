@@ -1,6 +1,7 @@
 <template>
   <div>
     <FullCalendar v-bind:options="calendarOptions" />
+    
   </div>
 </template>
 
@@ -28,21 +29,17 @@ export default {
         headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek'
+        right: 'dayGridMonth,timeGridWeek',
       },
-      events:[
-        {
-          title : "projects"
-          , color : "##0000FF"
-          , textColor : "#000000"
-          , start : "2022-12-02"
-          , end : "2022-12-06T10:00:00"
-        }],
+      events: this.calenders,
       editable: true,
       selectable: true,
     }
   }
 },
+created() {
+console.log(this.projects)
+}
 }
 </script>
 
