@@ -216,6 +216,26 @@ function InformPut(project, informData) {
   })
 }
 
+function commentCreate(pjt_pk, todo_pk, new_comment) {
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  return axios.post(url, new_comment, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function commentList(pjt_pk, todo_pk) {
+  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // function MemberList(project, memberData) {
 //   const url = `http://127.0.0.1:8000/memberadmin/${project}/${memberData}/`
 //   return axios.get(url, {
@@ -229,7 +249,6 @@ function InformPut(project, informData) {
 function  MemberList(project) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${project}/`
-  console.log
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -257,6 +276,8 @@ export {
   isRead,
   informCreate,
   informList,
-  MemberList,
-  InformPut
+  InformPut,
+  commentCreate,
+  commentList
+  MemberList
 }

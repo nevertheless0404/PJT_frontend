@@ -201,6 +201,19 @@
             ><i class="bi bi-trash3"></i
           ></b-button>
         </div>
+        <hr />
+        <div>
+          <p>댓글</p>
+          <form @submit.prevent="submitComment" class="row">
+            <input type="text" v-model="comment" class="col-auto form-control">
+            <button type="submit" class="col-auto btn btn-primary mb-3">댓글</button>
+          </form>
+          <div v-for="c in comments" class="row">
+            <p class="col">{{c.user}}</p>
+            <p class="col">{{c.comment}}</p>
+            <p class="col">{{c.created_at}}</p>
+          </div>
+        </div>
       </b-modal>
 
       <!-- 칸반보드 작성 모달 -->
@@ -267,7 +280,9 @@ import {
   todoList,
   todoPut,
   todoPutDrag,
-  todoDel
+  todoDel,
+  commentCreate,
+  commentList
 } from '@/api/index'
 
 let before_title,
@@ -297,6 +312,7 @@ export default {
       arrDone: [],
       modalData: [
         {
+          id: '',
           title: '',
           content: '',
           start_at: '',
@@ -309,7 +325,9 @@ export default {
         { text: 'Backlog', value: '0' },
         { text: 'In Progress', value: '1' },
         { text: 'Done', value: '2' }
-      ]
+      ],
+      comment: '',
+      comments: []
     }
   },
   setup() {},
@@ -362,15 +380,32 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    async submitComment() {
+      const new_comment = this.comment
+      await commentCreate(this.$route.params.id, this.modalData.id, {comment: new_comment})
+      commentList(this.$route.params.id, this.modalData.id)
+      .then((response) => {
+        console.log(response)
+        this.comments = response.data
+      })
+      this.comment=''
+    },
     showModal(element) {
       this.$refs['my-modal'].show()
       this.modalData = element
       this.updateData = element
+      this.modalData.id = element.id
       before_title = this.modalData.title
       before_content = this.modalData.content
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
+      commentList(this.$route.params.id, this.modalData.id)
+      .then((response) => {
+        console.log(response)
+        this.comments = response.data
+
+      })
     },
     hideModal() {
       this.$refs['my-modal'].hide()
