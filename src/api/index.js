@@ -223,6 +223,28 @@ function InformPut(project, informData) {
   })
 }
 
+// function MemberList(project, memberData) {
+//   const url = `http://127.0.0.1:8000/memberadmin/${project}/${memberData}/`
+//   return axios.get(url, {
+//     headers: {
+//       'Content-Type': 'applications/json',
+//       Authorization: 'Bearer' + localStorage.getItem('access_token')
+//     }
+//   })
+// }
+
+function  MemberList(project) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/memberadmin/${project}/`
+  console.log
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 // 함수 export
 export {
   registerUser,
@@ -242,5 +264,6 @@ export {
   isRead,
   informCreate,
   informList,
+  MemberList,
   InformPut
 }
