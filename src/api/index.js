@@ -19,7 +19,6 @@ function projectIndex() {
   })
 }
 
-
 function projectCreate(projectData) {
   // 요청할 URL
   const url = 'http://127.0.0.1:8000/project/'
@@ -68,14 +67,12 @@ function markdownGet(project) {
 function markdownPut(project, update_markdown) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${project}/markdown/`
-  return (
-    axios.put(url, update_markdown, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    })
-  )
+  return axios.put(url, update_markdown, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
 }
 // function projectPk() {
 //   // 요청할 URL
@@ -142,33 +139,29 @@ function todoList(pjt_pk) {
 function todoPutDrag(pjt_pk, update_data) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  return (
-    axios.put(url, update_data[0], {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    })
-  )
+  return axios.put(url, update_data[0], {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
 }
 
 function todoPut(pjt_pk, update_data) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  return (
-    axios.put(url, update_data, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    })
-  )
+  return axios.put(url, update_data, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
 }
 
 function todoDel(pjt_pk, update_data) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  console.log('update 데이터 : ', update_data)
+  console.log('del 데이터 : ', update_data)
   return (
     axios.delete(url, {
       headers: {
@@ -234,8 +227,28 @@ function commentCreate(pjt_pk, todo_pk, new_comment) {
 }
 
 function commentList(pjt_pk, todo_pk) {
-  console.log('투두피케이'+todo_pk)
   const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+// function MemberList(project, memberData) {
+//   const url = `http://127.0.0.1:8000/memberadmin/${project}/${memberData}/`
+//   return axios.get(url, {
+//     headers: {
+//       'Content-Type': 'applications/json',
+//       Authorization: 'Bearer' + localStorage.getItem('access_token')
+//     }
+//   })
+// }
+
+function  MemberList(project) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/memberadmin/${project}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -266,4 +279,5 @@ export {
   InformPut,
   commentCreate,
   commentList
+  MemberList
 }

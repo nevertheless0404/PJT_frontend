@@ -1,26 +1,67 @@
 <template>
   <div>
     <div class="container mt-4">
-      <h3 class="title fw-bold my-5">ProjectMember</h3>
-      <div class="d-flex justify-content-start">
-        <div class="memberbox">
-          <span class="pjtmember">멤버멤버</span>
+      <form @submit.prevent="submitMembes">
+        <h3 class="title fw-bold my-5">ProjectMember</h3>
+        <div class="d-flex justify-content-center">
+          <div class="allmember">
+            <div class="memberbox" :key="id" v-for="(member, id) in members">
+              <span class="pjtmember">{{ member.user }}</span>
+            </div>
+          </div>
         </div>
-      </div>
-      <router-link
-            :to="{ name: 'membercreate' }"
-            class="btn1"
-            >+ 팀원 추가</router-link>
-        </div>
+          <router-link
+              :to="{ name: 'membercreate' }"
+              class="btn1"
+              >
+              + 팀원 추가</router-link>
+      </form>
     </div>
   </div>
 </template>
 <script>
+import { MemberList } from '@/api/index'
 
+export default {
+  data() {
+    return {
+      members: [
+        {
+          id: '',
+          user: ''
+        }
+      ]
+    }
+  },
+  setup() {},
+  created() {
+    MemberList(this.$route.params.id)
+    .then((response) => {
+      console.log(response.data)
+      this.members = response.data
+      console.log(this.members)
+      .catch((error) => console.log(error))
+    })
+  },
+  mounted() {},
+  unmounted() {},
+  // methods: {
+  //   async submitMembers() {
+  //     let stringMember = ''
+  //     this.member.forEach((ele) => {
+  //       stringMember += ele.user + ' '
+  //     })
+
+  //     const memberData = {
+  //       id: '',
+  //       user: stringMember
+  //     }
+  //     await MemberList(this.$route.params.id, memberData)
+}
 </script>
 <style scoped>
 .title {
-  text-align: left;
+  text-align: center;
   font-family: 'Dela Gothic One', cursive;
 }
 
@@ -40,24 +81,33 @@
 }
 
 .btn1 {
+  margin: auto;
   color: white;
-
   background-color: #3485FF;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 100px;
-  height: 28px;
+  width: 300px;
+  height: 50px;
   border-radius: 10px;
   border: #D9D9D9 solid 0px;
   text-decoration: none;
-  text-align: center;
-  box-shadow: inset 0px 0px 0px #F24E1E;
+  text-align : center;
+  
+
+  box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
   -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
   transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
 .btn1:hover {
-  box-shadow: inset 300px 0px 0px 0px #F24E1E;
+
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+
+.allmember{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 300px;
 }
 
 </style>

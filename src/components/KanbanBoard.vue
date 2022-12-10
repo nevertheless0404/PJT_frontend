@@ -104,8 +104,12 @@
             ></i>
           </div>
           <hr />
-          <p class="mb-1" style="color:gray;">설명</p><p class="mb-3">{{ modalData.content }}</p>
-          <p class="mb-1" style="color:gray;">기간</p><p style="font-size:17px;">{{ modalData.start_at }} - {{ modalData.end_at }}</p>
+          <p class="mb-1" style="color: gray">설명</p>
+          <p class="mb-3">{{ modalData.content }}</p>
+          <p class="mb-1" style="color: gray">기간</p>
+          <p style="font-size: 17px">
+            {{ modalData.start_at }} - {{ modalData.end_at }}
+          </p>
         </div>
         <form @submit.prevent="todoUpdate" v-if="edit">
           <div class="mb-3">
@@ -289,6 +293,7 @@ let before_title,
   drag_id,
   len_back,
   len_in,
+  len_done,
   refresh_onetime = 0
 
 export default {
@@ -367,6 +372,7 @@ export default {
         })
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
     todoUpdate(this.$route.params.id)
@@ -456,7 +462,9 @@ export default {
       this.updateData[0].complete = this.complete
       todoPutDrag(this.$route.params.id, this.updateData)
       this.updateData = []
-      this.$refs['my-modal'].hide()
+      len_back = this.arrBacklog.length
+      len_in = this.arrInProgress.length
+      len_done = this.arrDone.length
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
@@ -481,12 +489,14 @@ export default {
       if (refresh_onetime < 2) {
         if (this.arrBacklog.length > len_back) {
           this.complete = '0'
+          this.todoUpdateDrag()
         } else if (this.arrInProgress.length > len_in) {
           this.complete = '1'
-        } else {
+          this.todoUpdateDrag()
+        } else if (this.arrDone.length > len_done) {
           this.complete = '2'
+          this.todoUpdateDrag()
         }
-        this.todoUpdateDrag()
       } else {
         refresh_onetime = 0
       }
