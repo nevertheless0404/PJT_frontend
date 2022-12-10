@@ -101,7 +101,7 @@
           />
         </div>
         <div class='btn1box'>
-          <button type="submit" class="btn1">다음</button>
+          <button type="submit" class="btn1 mb-5">수정</button>
         </div>
       </form>
     </div>
@@ -160,7 +160,7 @@ export default {
       }
 
       await projectUpdate(this.$route.params.id, projectData)
-      this.$router.push({ name: 'projectindex' })
+      this.$router.push({ name: 'projectdetail', params: {id: this.$route.params.id} })
     },
     addSkill() {
       this.skill.push({

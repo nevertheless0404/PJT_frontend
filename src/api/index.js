@@ -56,7 +56,7 @@ function projectUpdate(project, projectData) {
 function markdownGet(project) {
   // 요청할 URL
   console.log('웨 안 뒈 마 크 다 운')
-  const url = `http://127.0.0.1:8000/${project}/markdown`
+  const url = `http://127.0.0.1:8000/${project}/markdown/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -65,6 +65,18 @@ function markdownGet(project) {
   })
 }
 
+function markdownPut(project, update_markdown) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/${project}/markdown/`
+  return (
+    axios.put(url, update_markdown, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+  )
+}
 // function projectPk() {
 //   // 요청할 URL
 //   const url = 'http://127.0.0.1:8000/recent_project/'
@@ -216,6 +228,7 @@ export {
   projectIndex,
   projectCreate,
   markdownGet,
+  markdownPut,
   projectGet,
   projectUpdate,
   memberCreate,
