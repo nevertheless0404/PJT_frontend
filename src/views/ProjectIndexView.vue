@@ -4,12 +4,12 @@
 
     <div class="container mt-4">
       <div class="d-flex justify-content-evenly row">
-        <ProjectCalender  v-bind:childValue="projects" class="col-12 col-lg-8" />
+        <ProjectCalender v-bind:childValue="projects" class="col-12 col-lg-8" />
         <!-- <p>{{ this.projects }}</p> -->
         
         <div class='allpjtindex col col-4 col-xs-12'>
           <div  class='pjtindex'>
-            <div v-for="(project, id) in projects" :key="id">
+            <div v-for="(project, id) in projects" :key="id" v-bind:childValue="project">
               <router-link
                 :to="{ name: 'projectdetail', params: { id: project.id } }" class="text-decoration-none"
               >
