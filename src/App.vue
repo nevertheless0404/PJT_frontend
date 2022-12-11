@@ -47,4 +47,8 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+input[type="radio"] {
+  display: none !important;
+}
 </style>

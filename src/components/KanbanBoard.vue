@@ -23,6 +23,7 @@
             v-model="arrBacklog"
             @change="refresh"
             ><div v-for="element in arrBacklog" :key="element.id">
+              <!-- 칸반보드 요소들 -->
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
                 id="show-btn"
@@ -30,7 +31,12 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <p class="todoTitle">{{ element.title }}</p>
+                <div class="d-flex">
+                  <p class="todoTitle">{{ element.title }}</p>
+                  <!-- 유저 이름 -->
+                  <!-- <div class="avatar">{{ user.email }}</div>
+                  <b-avatar style="background-color:lightgray;" :text="user.email"></b-avatar> -->
+                </div>
                 {{ element.start_at }} - {{ element.end_at }}
               </button>
             </div>
@@ -90,7 +96,7 @@
     </div>
     <div>
       <!-- 칸반보드 디테일 모달 -->
-      <b-modal ref="my-modal" hide-footer hide-header>
+      <b-modal ref="my-modal" hide-footer hide-header no-close-on-backdrop no-close-on-esc>
         <div class="d-block" v-if="!edit">
           <div class="d-flex justify-content-between align-items-center">
             <h3 class="m-0">{{ modalData.title }}</h3>
@@ -154,22 +160,21 @@
               class="mb-2"
             ></b-form-datepicker>
           </div>
+
           <!-- 라디오 버튼 -->
           <div class="mb-3">
-            <div id="radio">
-              <b-form-group label="할 일 상태" v-slot="{ ariaDescribedby }">
-                <b-form-radio-group
-                  id="btn-radios-2"
-                  v-model="complete"
-                  :options="options"
-                  :aria-describedby="ariaDescribedby"
-                  button-variant="outline-success"
-                  size="lg"
-                  name="radio-btn-outline"
-                  buttons
-                ></b-form-radio-group>
-              </b-form-group>
-            </div>
+            <b-form-group label="할 일 상태" v-slot="{ ariaDescribedby }">
+              <b-form-radio-group
+                id="btn-radios-2"
+                v-model="complete"
+                :options="options"
+                :aria-describedby="ariaDescribedby"
+                button-variant="outline-success"
+                size="lg"
+                name="radio-btn-outline"
+                buttons
+              ></b-form-radio-group>
+            </b-form-group>
           </div>
 
           <div class="d-flex justify-content-between">
@@ -201,20 +206,20 @@
             ><i class="bi bi-trash3"></i
           ></b-button>
         </div>
-        <hr />
-        <div>
+        <div v-if="!edit">
+          <hr />
           <p>댓글</p>
           <form @submit.prevent="submitComment" class="row">
             <input
               type="text"
               v-model="comment"
-              class="col-auto form-control"
+              class="col-auto form-control mb-3"
             />
             <button type="submit" class="col-auto btn btn-primary mb-3">
               댓글
             </button>
           </form>
-          <div v-for="c in comments" class="row">
+          <div :key="id" v-for="(c, id) in comments" class="row" style="justify-content: flex-end;">
             <p class="col">{{ c.user }}</p>
             <p class="col">{{ c.comment }}</p>
             <p class="col">{{ c.created_at }}</p>
@@ -280,6 +285,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import draggable from 'vuedraggable'
 import {
   todoCreate,
@@ -300,7 +306,8 @@ let before_title,
   len_back,
   len_in,
   len_done,
-  refresh_onetime = 0
+  refresh_onetime = 0,
+  user_s
 
 export default {
   components: { draggable },
@@ -328,9 +335,9 @@ export default {
       updateData: [],
       edit: false,
       options: [
-        { text: 'Backlog', value: '0' },
-        { text: 'In Progress', value: '1' },
-        { text: 'Done', value: '2' }
+        { text: 'Backlog', value: 0 },
+        { text: 'In Progress', value: 1 },
+        { text: 'Done', value: 2 }
       ],
       comment: '',
       comments: []
@@ -455,7 +462,7 @@ export default {
       this.updateData.start_at = before_start_at
       this.updateData.end_at = before_end_at
       this.updateData.complete = before_complete
-      this.$refs['my-modal'].hide()
+      // this.$refs['my-modal'].hide()
     },
     todoUpdate() {
       this.updateData.complete = this.complete
@@ -510,6 +517,9 @@ export default {
         refresh_onetime = 0
       }
     }
+  },
+    computed: {
+    ...mapGetters(['user'])
   }
 }
 </script>
@@ -519,13 +529,16 @@ export default {
   min-height: 300px;
 }
 
-.btn-group-lg > .btn > input {
-  display: none !important;
-}
-
 .todoTitle {
   font-size: 18px;
   font-weight: 600;
   margin: 8px 0px;
+}
+
+.b-avatar {
+  padding-left: 5px;
+}
+.b-avatar .b-avatar-text {
+  justify-content: flex-start !important;
 }
 </style>
