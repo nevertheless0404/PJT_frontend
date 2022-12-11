@@ -26,14 +26,12 @@
                     <span class="pjtTitle">{{ project.title }}</span>
                   </div>
                 </div>
-
                 <div class="d-flex pjtbox" v-else-if="project.color === 2">
                   <div class="pjts-color-2"></div>
                   <div class="pjts-2">
                     <span class="pjtTitle">{{ project.title }}</span>
                   </div>
                 </div>
-
                 <div class="d-flex pjtbox" v-else>
                   <div class="pjts-color-3"></div>
                   <div class="pjts-3">
@@ -67,8 +65,23 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
-
 import { projectIndex } from '@/api/index'
+
+// let color_lst = [
+//     '#F24E1E' /*red*/,
+//     '#59BDF5' /*skyblue*/,
+//     '#FFC062' /*skin*/,
+//     '#3C59EE' /*dark-blue*/,
+//     '#FEDE35' /*yellow*/,
+//     '#3485FF' /*blue*/,
+//     '#FF9737' /*orange*/,
+//     '#89CD69' /*yellow-green*/,
+//     '#8D68F3' /*purple*/,
+//     '#4EB791' /*green*/
+//   ],
+//   color_idx = 0
+
+let pjt_color
 export default {
   components: {
     // ProjectCalender,
@@ -97,41 +110,63 @@ export default {
       }
     }
   },
+  computed() {},
   setup() {},
   created() {
     projectIndex() // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
-        console.log('1111resposne:', response)
         this.projects = response.data
+        let idx = 0
         for (const pjt of this.projects) {
-          if (pjt.cololr === 1) {
-            pjt.color = '#3485ff'
-          } else if (pjt.cololr === 2) {
-            pjt.color = '#ffc062'
+          if (pjt.color === 1) {
+            pjt_color = '#3485ff'
+          } else if (pjt.color === 2) {
+            pjt_color = '#ffc062'
           } else {
-            pjt.color = '#f24e1e'
+            pjt_color = '#f24e1e'
           }
           this.calendarOptions.events.push({
             title: pjt.title,
             start: pjt.start_at,
             end: pjt.end_at,
-            color: pjt.color
+            color: pjt_color
           })
         }
-        //   this.projects.push({
-        //     deadline: ''
-        //   })
-        //   this.projects.forEach((ele) => {
-        //   stringSkill += ele.name + ' '
-        // })
-        //   const year = Number(this.projects.end_at.slice(0, 4))
-        //   console.log(year)
-      }) // 성공하면 json 객체를 받아온다.
+        colorChange()
+      })
       .catch((error) => console.log(error))
   },
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    // colorChange() {
+    //   // pjts-color 스타일 컬러 속성 주기
+    //   let pjts = document.getElementsByClassName('pjts-color')
+    //   for (let i = 0; i < pjts.length; i++) {
+    //     if (color_idx < color_lst.length) {
+    //       pjts[i].style.backgroundColor = color_lst[color_idx]
+    //     } else {
+    //       color_idx = 0
+    //       pjts[i].style.backgroundColor = color_lst[color_idx]
+    //     }
+    //     color_idx += 1
+    //   }
+    //   color_idx = 0
+    //   // pjt 스타일 컬러 속성 주기
+    //   let pjts_2 = document.getElementsByClassName('pjts')
+    //   for (let i = 0; i < pjts_2.length; i++) {
+    //     if (color_idx < color_lst.length) {
+    //       pjts_2[i].style.boxShadow = color_lst[color_idx]
+    //     } else {
+    //       color_idx = 0
+    //       pjts_2[i].style.boxShadow = color_lst[color_idx]
+    //     }
+    //     color_idx += 1
+    //   }
+    //   color_idx = 0
+    // pjt hover 속성 주기
+    // 포기...
+  }
 }
 </script>
 
@@ -160,7 +195,7 @@ export default {
 }
 
 .pjts-color-1 {
-  background-color: white;
+  /* background-color: white; */
   width: 20px;
   background-color: #3485ff;
   border-radius: 10px 0px 0px 10px;
@@ -190,7 +225,7 @@ export default {
 }
 
 .pjts-color-2 {
-  background-color: white;
+  /* background-color: white; */
   width: 20px;
   background-color: #ffc062;
   border-radius: 10px 0px 0px 10px;
@@ -219,7 +254,7 @@ export default {
 }
 
 .pjts-color-3 {
-  background-color: white;
+  /* background-color: white; */
   width: 20px;
   background-color: #f24e1e;
   border-radius: 10px 0px 0px 10px;
