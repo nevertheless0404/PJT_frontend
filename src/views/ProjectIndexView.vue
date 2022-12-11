@@ -231,11 +231,12 @@ export default {
 }
 
 .btn1 {
+  display: flex;
   color: white;
   background-color: #3485ff;
   box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
-  height: 50px;
+  height: 40px;
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
@@ -261,7 +262,6 @@ export default {
 
 .pjtindex {
   margin-top: 50px;
-  margin-bottom: 20px;
   width: 300px;
   overflow: auto;
   display: flex;
