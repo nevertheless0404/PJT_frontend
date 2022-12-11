@@ -5,25 +5,23 @@
     
       <div class="card-body cb1">
           <div class='todoli'>
-            <h1 style="font-size: 40px my-5" class="text-center" >To Do</h1>
-            <div class='allprogress'>
+            <div style="font-size: 40px my-5" class="btn1" >할 일 목록</div>
             </div>
           </div> 
-          <div v-for="(todo, idx) in todos">
-            <div class="ms-3" v-if="todo.project.color === 1" style="font-size: 15px">
-            <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-            </div>
+            <div v-for="(todo, idx) in todos"  v-if="todo.complete === 0">
+              <div class="ms-3" v-if="todo.project.color === 1" style="font-size: 15px">
+              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+              </div>
 
-            <div class="ms-3" v-if="todo.project.color === 2" style="font-size: 15px">
-            <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-            </div>
+              <div class="ms-3" v-if="todo.project.color === 2" style="font-size: 15px">
+              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+              </div>
 
-            <div class=" listbox" v-else style="font-size: 15px" >
-            <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-            <div class="todo3-c font1"  v-if="todo.complete === 0">😥진행중</div>
-            <div class="todo3-u font1"  v-if="todo.complete === 1">😀완료</div>
+              <div class=" listbox" v-else style="font-size: 15px" >
+              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+              </div>
             </div>
-          </div>
+            <div style="font-size: 40px my-5" class="btn2" ></div>
       </div>
     
   </div>
@@ -68,10 +66,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: 'Dela Gothic One', cursive;
-}
-
 .cb1 {
   display: flex;
   align-items: center;
@@ -139,63 +133,90 @@ export default {
   white-space: wrap;
   min-width: 80px;
   width: auto;
+  color: white;
+  box-shadow: inset 300px 0px 0px #f24e1e;
 }
 
 
+
+
+
 .todo1 {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   background-color: white;
   color: black;
   padding:5px;
-  border-radius: 0px;
+  border-radius: 0px 10px 10px 0px;
   border: #F24E1E;;
-  border-style: solid;
-  border-width: 2px;
-  width: 100px;
+  
+  width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  box-shadow: inset 0px 0px 0px #f24e1e;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
 
 .todo2 {
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   background-color: #F24E1E;
   color: white;
   padding:5px;
   border-radius: 10px 0px 0px 10px;
   border: #F24E1E;
-  border-style: solid;
-  border-width: 2px;
-  width: 50px;
+ 
+  width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
 }
 
-.todo3-c {
-  margin-bottom: 8px;
-  background-color: #F24E1E;
-  color: black;
-  padding:5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #F24E1E;
-  border-style: solid;
-  border-width: 2px;
-  width: 80px;
-}
-
-.todo3-u {
-  margin-bottom: 8px;
-  background-color: #F24E1E;
+.btn1 {
+  display: flex;
   color: white;
-  padding:5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #F24E1E;
-  border-style: solid;
-  border-width: 2px;
-  width: 80px;
+  background-color: #9E9E9E;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 300px;
+  height: 30px;
+  border-radius: 10px 10px 0px 0px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #adb5bd;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
 }
+
+.btn2 {
+  display: flex;
+  color: white;
+  background-color: #9E9E9E;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  margin-bottom: 5px;
+  width: 300px;
+  height: 30px;
+  border-radius: 0px 0px 10px 10px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #adb5bd;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
 
 
 
