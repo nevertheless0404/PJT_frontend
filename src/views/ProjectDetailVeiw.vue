@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import NavProject from '@/components/NavBar_detail.vue'
 // import ProjectCalender from '@/components/ProjectCalender.vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
@@ -89,7 +90,6 @@ export default {
           for (let ele of response.data) {
             console.log(ele)
             if (ele.complete === 0 || ele.complete === 1) {
-              console.log('조건문 내부')
               this.calendarOptions.events.push({
                 title: ele.title,
                 start: ele.start_at,
@@ -106,6 +106,9 @@ export default {
         }) // 성공하면 json 객체를 받아온다.
         .catch((error) => console.log(error))
     }
+  },
+    computed: {
+    ...mapGetters(['user'])
   }
 }
 </script>
