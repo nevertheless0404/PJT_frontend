@@ -3,22 +3,28 @@
     <NavBar_detail />
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
-      <div class="d-flex justify-content-center">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <form @submit.prevent="postmember" class='form1 mb-5'>
+          <div class="w-100 d-flex">
+            <input type="email" class="form-control" placeholder="Email" v-model="memberInput">
+            <button type="submit" class="btn btn-primary">추가</button>
+          </div>
+        </form>
         <div class="allmember">
           <div class="memberbox" :key="id" v-for="(member, id) in members">
             <span class="pjtmember">{{ member.user }}</span>
             <span v-if="(member.leader===true)">팀장</span>
             <span v-if="(member.leader===false)">팀원
-              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-dark">팀장 위임</button>
+              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-dark">
+                팀장 위임
+              </button>
+              <button @click="deletemember" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-danger">
+                팀원 삭제
+              </button>
             </span>
           </div>
         </div>
       </div>
-        <router-link
-            :to="{ name: 'membercreate' }"
-            class="btn1"
-            >
-            + 팀원 추가</router-link>
     </div>
   </div>
 </template>
@@ -27,6 +33,8 @@ import { mapGetters } from 'vuex'
 import NavBar_detail from '@/components/NavBar_detail.vue'
 import { MemberList } from '@/api/index'
 import { changeLeader } from '@/api/index'
+import { deleteMember } from '@/api/index'
+import { memberCreate } from '@/api/index'
 
 export default {
   components: { NavBar_detail },
@@ -47,7 +55,6 @@ export default {
     MemberList(this.$route.params.id)
     .then((response) => {
       this.members = response.data
-      console.log(response.data)
       for (let i=0; i<response.data.length; i++) {
         if (response.data[i].leader == true) {
           this.teamLeader = response.data[i].user
@@ -61,6 +68,41 @@ export default {
     async changeleader() {
       const meberId = event.target.getAttribute('data-id')
       await changeLeader(this.$route.params.id, meberId)
+      MemberList(this.$route.params.id)
+      .then((response) => {
+        this.members = response.data
+        for (let i=0; i<response.data.length; i++) {
+          if (response.data[i].leader == true) {
+            this.teamLeader = response.data[i].user
+          }
+        }
+      })
+    },
+    async deletemember() {
+      const meberId = event.target.getAttribute('data-id')
+      await deleteMember(this.$route.params.id, meberId)
+      MemberList(this.$route.params.id)
+      .then((response) => {
+        this.members = response.data
+        for (let i=0; i<response.data.length; i++) {
+          if (response.data[i].leader == true) {
+            this.teamLeader = response.data[i].user
+          }
+        }
+      })
+    },
+    async postmember() {
+      console.log(this.memberInput)
+      await memberCreate(this.$route.params.id, {user:this.memberInput})
+      MemberList(this.$route.params.id)
+      .then((response) => {
+        this.members = response.data
+        for (let i=0; i<response.data.length; i++) {
+          if (response.data[i].leader == true) {
+            this.teamLeader = response.data[i].user
+          }
+        }
+      })
     }
   },
   computed: {
@@ -77,7 +119,7 @@ export default {
 .memberbox{
   background-color: white;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 1000px;
+  width: 100%;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
@@ -119,7 +161,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 300px;
+  width: 80%;
 }
 
 </style>

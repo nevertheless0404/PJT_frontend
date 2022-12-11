@@ -91,13 +91,6 @@
             </b-dropdown-item>
             <div :v-if="(user.pk == resPk)">
               <b-dropdown-item v-if="user">
-                <routerLink
-                  class="nav-link"
-                  :to="{ name: 'membercreate', params: pjtPk }"
-                  >팀원 초대</routerLink
-                >
-              </b-dropdown-item>
-              <b-dropdown-item v-if="user">
                 <routerLink class="nav-link" :to="{ name: 'projectupdate' }"
                   >프로젝트 수정</routerLink
                 >
