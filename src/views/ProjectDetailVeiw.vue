@@ -64,7 +64,27 @@ export default {
   },
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    calendarRefresh() {
+      this.calendarOptions.events = []
+      todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
+        .then((response) => {
+          response.data.forEach((ele) => {
+            console.log(ele)
+            if (ele.complete === 0 || ele.complete === 1) {
+              console.log('조건문 내부')
+              this.calendarOptions.events.push({
+                title: ele.title,
+                start: ele.start_at,
+                end: ele.end_at,
+                color: 'red'
+              })
+            }
+          })
+        }) // 성공하면 json 객체를 받아온다.
+        .catch((error) => console.log(error))
+    }
+  }
 }
 </script>
 
