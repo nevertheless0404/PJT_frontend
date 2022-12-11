@@ -104,8 +104,12 @@
             ></i>
           </div>
           <hr />
-          <p class="mb-1" style="color:gray;">설명</p><p class="mb-3">{{ modalData.content }}</p>
-          <p class="mb-1" style="color:gray;">기간</p><p style="font-size:17px;">{{ modalData.start_at }} - {{ modalData.end_at }}</p>
+          <p class="mb-1" style="color: gray">설명</p>
+          <p class="mb-3">{{ modalData.content }}</p>
+          <p class="mb-1" style="color: gray">기간</p>
+          <p style="font-size: 17px">
+            {{ modalData.start_at }} - {{ modalData.end_at }}
+          </p>
         </div>
         <form @submit.prevent="todoUpdate" v-if="edit">
           <div class="mb-3">
@@ -197,6 +201,25 @@
             ><i class="bi bi-trash3"></i
           ></b-button>
         </div>
+        <hr />
+        <div>
+          <p>댓글</p>
+          <form @submit.prevent="submitComment" class="row">
+            <input
+              type="text"
+              v-model="comment"
+              class="col-auto form-control"
+            />
+            <button type="submit" class="col-auto btn btn-primary mb-3">
+              댓글
+            </button>
+          </form>
+          <div v-for="c in comments" class="row">
+            <p class="col">{{ c.user }}</p>
+            <p class="col">{{ c.comment }}</p>
+            <p class="col">{{ c.created_at }}</p>
+          </div>
+        </div>
       </b-modal>
 
       <!-- 칸반보드 작성 모달 -->
@@ -263,7 +286,9 @@ import {
   todoList,
   todoPut,
   todoPutDrag,
-  todoDel
+  todoDel,
+  commentCreate,
+  commentList
 } from '@/api/index'
 
 let before_title,
@@ -274,6 +299,7 @@ let before_title,
   drag_id,
   len_back,
   len_in,
+  len_done,
   refresh_onetime = 0
 
 export default {
@@ -292,6 +318,7 @@ export default {
       arrDone: [],
       modalData: [
         {
+          id: '',
           title: '',
           content: '',
           start_at: '',
@@ -304,7 +331,9 @@ export default {
         { text: 'Backlog', value: '0' },
         { text: 'In Progress', value: '1' },
         { text: 'Done', value: '2' }
-      ]
+      ],
+      comment: '',
+      comments: []
     }
   },
   setup() {},
@@ -349,6 +378,7 @@ export default {
         })
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
     todoUpdate(this.$route.params.id)
@@ -356,15 +386,31 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    async submitComment() {
+      const new_comment = this.comment
+      await commentCreate(this.$route.params.id, this.modalData.id, {
+        comment: new_comment
+      })
+      commentList(this.$route.params.id, this.modalData.id).then((response) => {
+        console.log(response)
+        this.comments = response.data
+      })
+      this.comment = ''
+    },
     showModal(element) {
       this.$refs['my-modal'].show()
       this.modalData = element
       this.updateData = element
+      this.modalData.id = element.id
       before_title = this.modalData.title
       before_content = this.modalData.content
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
+      commentList(this.$route.params.id, this.modalData.id).then((response) => {
+        console.log(response)
+        this.comments = response.data
+      })
     },
     hideModal() {
       this.$refs['my-modal'].hide()
@@ -397,6 +443,7 @@ export default {
         this.newTask.end_at = ''
         this.$refs['modal'].hide()
       }
+      this.$parent.calendarRefresh()
     },
     editModal() {
       this.edit = true
@@ -416,17 +463,22 @@ export default {
       this.updateData = []
       this.$router.go()
       this.$refs['my-modal'].hide()
+      this.$parent.calendarRefresh()
     },
-    todoUpdateDrag() {
+    async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
-      todoPutDrag(this.$route.params.id, this.updateData)
+      await todoPutDrag(this.$route.params.id, this.updateData)
       this.updateData = []
-      this.$refs['my-modal'].hide()
+      len_back = this.arrBacklog.length
+      len_in = this.arrInProgress.length
+      len_done = this.arrDone.length
+      this.$parent.calendarRefresh()
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
       this.$router.go()
       this.$refs['my-modal'].hide()
+      this.$parent.calendarRefresh()
     },
     pick_id(ele) {
       drag_id = ele.id
@@ -446,12 +498,14 @@ export default {
       if (refresh_onetime < 2) {
         if (this.arrBacklog.length > len_back) {
           this.complete = '0'
+          this.todoUpdateDrag()
         } else if (this.arrInProgress.length > len_in) {
           this.complete = '1'
-        } else {
+          this.todoUpdateDrag()
+        } else if (this.arrDone.length > len_done) {
           this.complete = '2'
+          this.todoUpdateDrag()
         }
-        this.todoUpdateDrag()
       } else {
         refresh_onetime = 0
       }
