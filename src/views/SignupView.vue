@@ -37,14 +37,27 @@
         />
       </div>
       <button type="submit" class="btn w-75 my-3 btn-signup">회원가입</button>
-      <!-- 결과 메시지 출력 -->
-      <p>{{ logMessage }}</p>
-      <p v-if="errors.length > 0">
+      <!-- <p v-if="errors.length > 0">
         Please correct the following error(s):
         <ul>
           <li :key="idx" v-for="(error, idx) in errors">{{ error }}</li>
         </ul>
-      </p>
+      </p> -->
+      <div class="mt-3">
+        <div :key="idx" v-for="(error, idx) in errors" class="w-100">
+          <b-alert
+            v-model="showDismissibleAlert"
+            variant="danger"
+            class="w-100"
+          >
+            {{ error }}
+          </b-alert>
+        </div>
+      </div>
+
+      <!-- <b-button @click="showDismissibleAlert=true" variant="info" class="m-1">
+        Show dismissible alert ({{ showDismissibleAlert ? 'visible' : 'hidden' }})
+      </b-button> -->
     </form>
   </div>
 </template>
@@ -61,15 +74,21 @@ export default {
       password2: '',
       // log
       logMessage: '',
-      errors:[]
+      errors: [],
+      showDismissibleAlert: false
     }
   },
   methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
     async submitForm() {
       this.checkForm()
       // API 요청시 전달할 userData 객체
-      if(this.errors.length < 1){
-        console.log('!!!!!!!!')
+      if (this.errors.length < 1) {
         const userData = {
           email: this.email,
           password1: this.password1,
@@ -81,6 +100,8 @@ export default {
         // 가입 후 폼 초기화
         this.initForm()
         this.$router.push('/login')
+      } else {
+        this.showDismissibleAlert = true
       }
     },
     initForm() {
@@ -91,20 +112,22 @@ export default {
     checkForm() {
       console.log('체크폼 실행')
       this.errors = []
-      if(this.email === ''){
-        this.errors.push("Email required")
+      if (this.email === '') {
+        this.errors.push('Email required')
       }
-      if(this.password1 === '') {
-        this.errors.push("Password required")
+      if (this.email.split('@')[0].length < 4) {
+        this.errors.push(
+          "Too short you email length. Please length +3 before '@'"
+        )
       }
-      if(this.email.split('@')[0].length < 4) {
-        this.errors.push("Too short you email length. Please length +3 before '@'")
+      if (this.password1 === '') {
+        this.errors.push('Password required')
       }
-      if(this.password1.length < 9) {
-        this.errors.push("Too short you password length. Please password +8")
+      if (this.password1.length < 9) {
+        this.errors.push('Too short you password length. Please password +8')
       }
-      if(this.password1 != this.password2) {
-        this.errors.push("Password does not matching")
+      if (this.password1 != this.password2) {
+        this.errors.push('Password does not matching')
       }
     }
   }
