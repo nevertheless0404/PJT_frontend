@@ -56,7 +56,6 @@
 
         <!-- <b-collapse id="nav-collapse" is-nav class="d-flex justify-content-end"> -->
         <!-- Right aligned nav items -->
-        <div><AlarmBell /></div>
 
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
@@ -80,6 +79,11 @@
               </a>
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <div
+            class="d-flex align-items-center justify-content-center mx-3 pt-1"
+          >
+            <AlarmBell />
+          </div>
         </b-navbar-nav>
         <!-- </b-collapse> -->
       </b-navbar>
