@@ -1,62 +1,71 @@
 <template>
   <div>
+    <NavBar_detail />
     <div class="container mt-4">
-      <form @submit.prevent="submitMembes">
-        <h3 class="title fw-bold my-5">ProjectMember</h3>
-        <div class="d-flex justify-content-center">
-          <div class="allmember">
-            <div class="memberbox" :key="id" v-for="(member, id) in members">
-              <span class="pjtmember">{{ member.user }}</span>
-            </div>
+      <h3 class="title fw-bold my-5">ProjectMember</h3>
+      <div class="d-flex justify-content-center">
+        <div class="allmember">
+          <div class="memberbox" :key="id" v-for="(member, id) in members">
+            <span class="pjtmember">{{ member.user }}</span>
+            <span v-if="(member.leader===true)">팀장</span>
+            <span v-if="(member.leader===false)">팀원
+              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-dark">팀장 위임</button>
+            </span>
           </div>
         </div>
-          <router-link
-              :to="{ name: 'membercreate' }"
-              class="btn1"
-              >
-              + 팀원 추가</router-link>
-      </form>
+      </div>
+        <router-link
+            :to="{ name: 'membercreate' }"
+            class="btn1"
+            >
+            + 팀원 추가</router-link>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+import NavBar_detail from '@/components/NavBar_detail.vue'
 import { MemberList } from '@/api/index'
+import { changeLeader } from '@/api/index'
 
 export default {
+  components: { NavBar_detail },
   data() {
     return {
       members: [
         {
           id: '',
-          user: ''
+          user: '',
+          leader: false
         }
-      ]
+      ],
+      teamLeader: ''
     }
   },
   setup() {},
   created() {
     MemberList(this.$route.params.id)
     .then((response) => {
-      console.log(response.data)
       this.members = response.data
-      console.log(this.members)
-      .catch((error) => console.log(error))
+      console.log(response.data)
+      for (let i=0; i<response.data.length; i++) {
+        if (response.data[i].leader == true) {
+          this.teamLeader = response.data[i].user
+        }
+      }
     })
   },
   mounted() {},
   unmounted() {},
-  // methods: {
-  //   async submitMembers() {
-  //     let stringMember = ''
-  //     this.member.forEach((ele) => {
-  //       stringMember += ele.user + ' '
-  //     })
-
-  //     const memberData = {
-  //       id: '',
-  //       user: stringMember
-  //     }
-  //     await MemberList(this.$route.params.id, memberData)
+  methods: {
+    async changeleader() {
+      const meberId = event.target.getAttribute('data-id')
+      await changeLeader(this.$route.params.id, meberId)
+    }
+  },
+  computed: {
+    ...mapGetters(['user'])
+  }
 }
 </script>
 <style scoped>
@@ -90,7 +99,7 @@ export default {
   border: #D9D9D9 solid 0px;
   text-decoration: none;
   text-align : center;
-  
+
 
   box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
