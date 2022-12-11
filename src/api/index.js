@@ -245,7 +245,7 @@ function commentList(pjt_pk, todo_pk) {
 //   })
 // }
 
-function  MemberList(project) {
+function MemberList(project) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${project}/`
   return axios.get(url, {
@@ -260,6 +260,18 @@ function changeLeader(pjt_pk, user_pk) {
   console.log(pjt_pk, user_pk)
   const url = `http://127.0.0.1:8000/changeleader/${pjt_pk}/${user_pk}/`
   return axios.get(url, {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function memberPut(project, memberData) {
+  console.log(memberData)
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/memberadmin/${project}/detail`
+  return axios.put(url, memberData, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -290,5 +302,6 @@ export {
   commentCreate,
   commentList,
   MemberList,
-  changeLeader
+  changeLeader,
+  memberPut
 }

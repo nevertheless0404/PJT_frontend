@@ -5,9 +5,7 @@
       <form @submit.prevent="putinform" v-if="responseLen">
         <div class="mb-3">
           <div class="d-flex justify-content-between">
-            <label for="exampleFormControlInput1" class="form-label"
-              >공지사항</label
-            >
+            <h1 class="title text-center">Notice</h1>
             <div class="d-flex mb-2">
               <div id="exampleFormControlInput1" class="me-2">
                 <b-button size="sm" variant="outline-primary" @click="addInform"
@@ -145,3 +143,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+
+.title{
+  font-family: 'Dela Gothic One', cursive;
+}
+
+</style>

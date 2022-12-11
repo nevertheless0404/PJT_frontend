@@ -205,13 +205,19 @@
         <div>
           <p>댓글</p>
           <form @submit.prevent="submitComment" class="row">
-            <input type="text" v-model="comment" class="col-auto form-control">
-            <button type="submit" class="col-auto btn btn-primary mb-3">댓글</button>
+            <input
+              type="text"
+              v-model="comment"
+              class="col-auto form-control"
+            />
+            <button type="submit" class="col-auto btn btn-primary mb-3">
+              댓글
+            </button>
           </form>
           <div v-for="c in comments" class="row">
-            <p class="col">{{c.user}}</p>
-            <p class="col">{{c.comment}}</p>
-            <p class="col">{{c.created_at}}</p>
+            <p class="col">{{ c.user }}</p>
+            <p class="col">{{ c.comment }}</p>
+            <p class="col">{{ c.created_at }}</p>
           </div>
         </div>
       </b-modal>
@@ -382,13 +388,14 @@ export default {
   methods: {
     async submitComment() {
       const new_comment = this.comment
-      await commentCreate(this.$route.params.id, this.modalData.id, {comment: new_comment})
-      commentList(this.$route.params.id, this.modalData.id)
-      .then((response) => {
+      await commentCreate(this.$route.params.id, this.modalData.id, {
+        comment: new_comment
+      })
+      commentList(this.$route.params.id, this.modalData.id).then((response) => {
         console.log(response)
         this.comments = response.data
       })
-      this.comment=''
+      this.comment = ''
     },
     showModal(element) {
       this.$refs['my-modal'].show()
@@ -400,11 +407,9 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
-      commentList(this.$route.params.id, this.modalData.id)
-      .then((response) => {
+      commentList(this.$route.params.id, this.modalData.id).then((response) => {
         console.log(response)
         this.comments = response.data
-
       })
     },
     hideModal() {
@@ -438,6 +443,7 @@ export default {
         this.newTask.end_at = ''
         this.$refs['modal'].hide()
       }
+      this.$parent.calendarRefresh()
     },
     editModal() {
       this.edit = true
@@ -457,19 +463,22 @@ export default {
       this.updateData = []
       this.$router.go()
       this.$refs['my-modal'].hide()
+      this.$parent.calendarRefresh()
     },
-    todoUpdateDrag() {
+    async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
-      todoPutDrag(this.$route.params.id, this.updateData)
+      await todoPutDrag(this.$route.params.id, this.updateData)
       this.updateData = []
       len_back = this.arrBacklog.length
       len_in = this.arrInProgress.length
       len_done = this.arrDone.length
+      this.$parent.calendarRefresh()
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
       this.$router.go()
       this.$refs['my-modal'].hide()
+      this.$parent.calendarRefresh()
     },
     pick_id(ele) {
       drag_id = ele.id
