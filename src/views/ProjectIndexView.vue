@@ -195,11 +195,14 @@ export default {
   border: #D9D9D9 solid 0px;
   text-decoration: none;
   text-align : center;
-
   box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
   -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
 }
 
 .btn1:hover {
