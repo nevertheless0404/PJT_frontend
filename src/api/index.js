@@ -246,7 +246,7 @@ function commentList(pjt_pk, todo_pk) {
 //   })
 // }
 
-function  MemberList(project) {
+function MemberList(project) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${project}/`
   return axios.get(url, {
@@ -278,6 +278,6 @@ export {
   informList,
   InformPut,
   commentCreate,
-  commentList
+  commentList,
   MemberList
 }
