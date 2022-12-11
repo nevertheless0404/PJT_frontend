@@ -205,7 +205,6 @@ function informList(pjt_pk) {
 }
 
 function InformPut(project, informData) {
-  console.log(informData)
   // 요청할 URL
   const url = `http://127.0.0.1:8000/informs/${project}/detail`
   return axios.put(url, informData, {
@@ -257,6 +256,17 @@ function MemberList(project) {
   })
 }
 
+function changeLeader(pjt_pk, user_pk) {
+  console.log(pjt_pk, user_pk)
+  const url = `http://127.0.0.1:8000/changeleader/${pjt_pk}/${user_pk}/`
+  return axios.get(url, {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function memberPut(project, memberData) {
   console.log(memberData)
   // 요청할 URL
@@ -292,5 +302,6 @@ export {
   commentCreate,
   commentList,
   MemberList,
-  memberPut,
+  changeLeader,
+  memberPut
 }

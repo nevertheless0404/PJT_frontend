@@ -11,7 +11,7 @@
   <b-sidebar id="my-sidebar" title="알림" shadow>
     <div class="px-3 py-2">
       <p v-for="c in comment">
-        <router-link :to="{ name: 'projectdetail', params: {id: c[1]}}"><p @click="isRead" :data-id=c[2]>{{c[0]}} 님이 댓글을 달았습니다.</p></router-link>
+        <router-link :to="{ name: 'projectdetail', params: {id: c[1]}}"><p @click="isRead" :data-id=c[2] class="text-decoration-none"><span class="fw-bold">{{c[0]}}</span> 님이 <span class="fw-bold">{{c[3]}}</span> 프로젝트에 댓글을 달았습니다.</p></router-link>
       </p>
     </div>
   </b-sidebar>
@@ -34,19 +34,16 @@ import { isRead } from '@/api/index'
     created() {
       NotificationGet()
       .then((response) => {
-        console.log(response.data)
         this.noCnt = response.data.length
         for (let i=0; i < response.data.length; i++) {
-          this.comment.push([response.data[i].send_user.email, response.data[i].project.id, response.data[i].id])
-          console.log(this.comment)
+          this.comment.push([response.data[i].send_user.email, response.data[i].project.id, response.data[i].id, response.data[i].project.title])
+          console.log(response.data[i])
         }
       })
     },
     methods: {
       async isRead(event) {
         const dataId = event.target.getAttribute('data-id')
-        console.log(dataId)
-
         await isRead(dataId)
       }
     }

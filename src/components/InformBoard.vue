@@ -7,7 +7,8 @@
       align="center"
     >
       <b-card-text>
-        <p :key="id" v-for="(s, id) in informs" class="mb-0">{{s.name}}</p>
+        <p :key="id" v-if="informs" v-for="(s, id) in informs" class="mb-0">{{s.name}}</p>
+        <p v-if="!informs">공지사항이 없습니다</p>
       </b-card-text>
     </b-card>
   </div>
