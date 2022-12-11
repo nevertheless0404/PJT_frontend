@@ -7,6 +7,7 @@
           <div class="allmember">
             <div class="memberbox" :key="id" v-for="(member, id) in members">
               <span class="pjtmember">{{ member.user }}</span>
+              
             </div>
           </div>
         </div>
