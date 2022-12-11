@@ -33,6 +33,8 @@
         <div class='btn1box'>
           <button type="submit" class="btn1">다음</button>
         </div>
+        <!-- <button @click="submitinform" v-if="(responseLen===0)" type="submit" class="btn btn-primary">저장</button>
+        <button @click="putinform" v-if="responseLen" type="submit" class="btn btn-primary">수정</button> -->
       </form>
       <!-- <div v-html="memberHtml" v-if="isCreate" class="mb-3"></div> -->
     </div>
@@ -107,8 +109,8 @@ export default {
 
 <style scoped>
 
-.form1 {
-}
+/* .form1 {
+} */
 .btn1box {
   display: flex;
   width: 100%;
