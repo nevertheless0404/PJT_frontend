@@ -44,13 +44,14 @@
               </router-link>
             </div>
           </div>
-
-          <router-link :to="{ name: 'projectcreate' }" class="btn1"
-            >프로젝트 생성</router-link
-          >
+        
+          <router-link
+            :to="{ name: 'projectcreate' }"
+            class="btn1"
+            >프로젝트 생성</router-link>
+          <TodoList />
         </div>
       </div>
-      <TodoList />
     </div>
     <router-view></router-view>
   </div>
@@ -152,8 +153,13 @@ export default {
 
   box-shadow: inset 0px 0px 0px #3485ff;
   display: block;
-  -webkit-transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
-  transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.pjts-1:hover {
+  color: white;
+  box-shadow: inset 300px 0px 0px #3485FF;
 }
 
 .pjts-color-1 {
@@ -167,6 +173,7 @@ export default {
   color: white;
   box-shadow: inset 300px 0px 0px #3485ff;
 }
+
 
 .pjts-2 {
   background-color: white;
@@ -270,7 +277,8 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 500px;
+  height:800px;
+
 }
 
 .project_add {
