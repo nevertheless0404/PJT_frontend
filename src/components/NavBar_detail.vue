@@ -79,6 +79,16 @@
               >오늘 할 일</routerLink
               >
             </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <routerLink class="nav-link" :to="{ name: 'markdown' }"
+              >마크다운 생성</routerLink
+              >
+            </b-dropdown-item>
+            <b-dropdown-item v-if="user">
+              <routerLink class="nav-link" :to="{ name: 'projectmember' }"
+              >팀원 확인</routerLink
+              >
+            </b-dropdown-item>
             <div :v-if="(user.pk == resPk)">
               <b-dropdown-item v-if="user">
                 <routerLink
@@ -94,7 +104,7 @@
               </b-dropdown-item>
               <b-dropdown-item v-if="user">
                 <routerLink class="nav-link" :to="{ name: 'projectnotice' }"
-                  >공지사항</routerLink
+                  >공지사항 수정</routerLink
                 >
               </b-dropdown-item>
             </div>

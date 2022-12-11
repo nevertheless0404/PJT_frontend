@@ -8,6 +8,7 @@ import MemberCreateView from '../views/MemberCreateView.vue'
 import MarkdownView from '../views/MarkdownView.vue'
 import GoogleLogin from '../views/GoogleLogin.vue'
 import ProjectInformsView from '../views/ProjectInformsView.vue'
+import ProjectMemberView from '../views/ProjectMemberView.vue'
 
 Vue.use(VueRouter)
 
@@ -77,6 +78,11 @@ const routes = [
     path: '/project/:id/Informs',
     name: 'projectnotice',
     component: ProjectInformsView
+  },
+  {
+    path: '/project/:id/Member',
+    name: 'projectmember',
+    component: ProjectMemberView
   },
 ]
 

@@ -1,64 +1,114 @@
 <template>
   <div>
     <NavBar_detail />
-
-    <div class="notice container d-flex flex-column align-items-center">
-      <h1 class="title fw-bold my-5">Notice</h1>
-      <b-container fluid>
-        <b-row>
-          <b-col sm="1">
-            <label for="exampleInputInforms1" class="form-label">Notice:</label>
-          </b-col>
-          <b-col sm="10">
-            <b-form-textarea
-            id="notice"
-            placeholder="Put a notice"
-            rows="3"
-            max-rows="8"
-            ></b-form-textarea>
-          </b-col>
-        </b-row>
-      </b-container>
-      <div class="d-flex m-2">
-        <div id="exampleInputInforms1" class="me-2">
-          <b-button size="sm" variant="outline-primary" @click="addNotice"
-          ><i class="bi bi-plus-lg"></i> 추가</b-button
-          >
+    <div v-if="this.$router" class="container">
+      <form>
+        <div class="mb-3">
+          <div class="d-flex justify-content-between">
+            <label for="exampleFormControlInput1" class="form-label"
+              >공지사항</label
+            >
+            <div class="d-flex mb-2">
+              <div id="exampleFormControlInput1" class="me-2">
+                <b-button size="sm" variant="outline-primary" @click="addInform"
+                  ><i class="bi bi-plus-lg"></i> 추가</b-button
+                >
+              </div>
+              <div id="exampleFormControlInput1" class="">
+                <b-button
+                  size="sm"
+                  variant="outline-danger"
+                  @click="removeInform"
+                  ><i class="bi bi-dash-lg"></i> 삭제</b-button
+                >
+              </div>
+            </div>
+          </div>
+          <textarea
+            type="text"
+            class="form-control mb-3"
+            id="exampleFormControlInput1"
+            placeholder="Tech stack"
+            v-model="s.name"
+            :key="id"
+            v-for="(s, id) in inform"
+          />
         </div>
-        <div id="exampleInputInforms1" class="">
-          <b-button
-          size="sm"
-          variant="outline-danger"
-          @click="removeNotice"
-          ><i class="bi bi-dash-lg"></i> 삭제</b-button
-          >
-        </div>
-      </div>
+        <button @click="submitinform" v-if="(responseLen===0)" type="submit" class="btn btn-primary">저장</button>
+        <button @click="putinform" v-if="responseLen" type="submit" class="btn btn-primary">수정</button>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar_detail from '@/components/NavBar_detail.vue'
+import { informCreate } from '@/api/index'
+import { informList } from '@/api/index'
+import { InformPut } from '@/api/index'
+
 export default {
   components: { NavBar_detail },
   data() {
     return {
-      content: ''
+      content: '',
+      inform: [],
+      responseLen: 0
     }
   },
   setup() {},
-  created() {},
+  created() {
+    informList(this.$route.params.id)
+    .then((response) => {
+      this.responseLen = response.data.length
+      for (const resContent of response.data[0].content.split(' ')) {
+        this.inform.push({name: resContent})
+      }
+    })
+  },
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    async submitinform() {
+      let stringInform = ''
+      this.inform.forEach((ele) => {
+        stringInform += ele.name + ' '
+      })
+
+      const informData = {
+        id: this.$route.params.id,
+        content: stringInform
+      }
+      await informCreate(this.$route.params.id, informData)
+    },
+    async putinform() {
+      let stringContent = ''
+      this.inform.forEach((ele) => {
+        stringContent += ele.name + ' '
+      })
+      const informData = {
+        id: this.$route.params.id,
+        content: stringContent
+      }
+
+      await InformPut(this.$route.params.id, informData)
+      this.$router.push({ name: 'projectdetail', params: {id: this.$route.params.id} })
+    },
+    addInform() {
+      this.inform.push({
+        name: ''
+      })
+      console.log(this.inform)
+    },
+    removeInform() {
+      if (this.inform.length > 1) {
+        this.inform.splice(-1, 1)
+      } else {
+        this.inform.splice(-1, 1)
+        this.addInform()
+      }
+      console.log(this.inform)
+    }
+  }
 }
 </script>
-
-<style scoped>
-.title {
-  text-align: center;
-  font-family: 'Dela Gothic One', cursive;
-}
-
-</style>
