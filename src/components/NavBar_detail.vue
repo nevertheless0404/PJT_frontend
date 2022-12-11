@@ -71,7 +71,7 @@
             </template>
             <b-dropdown-item v-if="user">
               <routerLink class="nav-link" to="/project"
-                >프로젝트 정보 수정</routerLink
+                >전체 프로젝트</routerLink
               >
             </b-dropdown-item>
             <b-dropdown-item v-if="user">
