@@ -457,12 +457,15 @@ export default {
       this.updateData.complete = before_complete
       this.$refs['my-modal'].hide()
     },
-    todoUpdate() {
+    async todoUpdate() {
       this.updateData.complete = this.complete
-      todoPut(this.$route.params.id, this.updateData)
+      await todoPut(this.$route.params.id, this.updateData)
       this.updateData = []
       this.$router.go()
       this.$refs['my-modal'].hide()
+      len_back = this.arrBacklog.length
+      len_in = this.arrInProgress.length
+      len_done = this.arrDone.length
       this.$parent.calendarRefresh()
     },
     async todoUpdateDrag() {
@@ -485,25 +488,24 @@ export default {
       this.updateData.id = drag_id
       this.updateData.push({
         id: drag_id,
-        complete: 4,
+        complete: '',
         title: ele.title,
         content: ele.content,
         start_at: ele.start_at,
         end_at: ele.end_at
       })
-      this.updateData.complete = 8
     },
     refresh() {
       refresh_onetime += 1
       if (refresh_onetime < 2) {
         if (this.arrBacklog.length > len_back) {
-          this.complete = '0'
+          this.complete = 0
           this.todoUpdateDrag()
         } else if (this.arrInProgress.length > len_in) {
-          this.complete = '1'
+          this.complete = 1
           this.todoUpdateDrag()
         } else if (this.arrDone.length > len_done) {
-          this.complete = '2'
+          this.complete = 2
           this.todoUpdateDrag()
         }
       } else {
