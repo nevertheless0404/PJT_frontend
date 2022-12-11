@@ -2,8 +2,8 @@
   <div>
     <NavProject v-bind:childValue="pjtPk" />
     <div class="container mt-5">
-      <h1 class="title mb-3 text-center">Project markdown</h1>
-      <v-md-editor v-model="text" height="400px"></v-md-editor>
+      <h1 class="title mb-4 text-center">Project markdown</h1>
+      <v-md-editor v-model="text" height="750px"></v-md-editor>
       <button @click="[submitMd(), makeToast()]" class="btn1 float-end">수정</button>
     </div>
   </div>
