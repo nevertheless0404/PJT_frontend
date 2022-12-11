@@ -93,9 +93,7 @@ export default {
           center: 'title',
           right: 'dayGridMonth,timeGridWeek'
         },
-        events: [],
-        editable: true,
-        selectable: true
+        events: []
       }
     }
   },
