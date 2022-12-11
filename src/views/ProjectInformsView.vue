@@ -3,9 +3,42 @@
     <NavBar_detail />
     <div class="container">
       <form @submit.prevent="putinform" v-if="responseLen">
-        <div class="mb-3">
-          <div class="d-flex justify-content-between">
-            <h1 class="title text-center">Notice</h1>
+        <div class="m-3">
+          <h1 class="title text-center">Notice</h1>
+          <div class="d-flex justify-content-end">
+            <div class="d-flex m-2">
+              <div id="exampleFormControlInput1" class="me-2">
+                <b-button class="btn2" size="sm" variant="outline-primary" @click="addInform"
+                  ><i class="bi bi-plus-lg"></i> 추가</b-button
+                >
+              </div>
+              <div id="exampleFormControlInput1" class="">
+                <b-button
+                  class="btn3"
+                  size="sm"
+                  variant="outline-danger"
+                  @click="removeInform"
+                  ><i class="bi bi-dash-lg"></i> 삭제</b-button
+                >
+              </div>
+            </div>
+          </div>
+          <textarea
+            type="text"
+            class="form-control mb-3"
+            id="exampleFormControlInput1"
+            placeholder="Notice"
+            v-model="s.name"
+            :key="id"
+            v-for="(s, id) in inform"
+          />
+        </div>
+        <button type="submit" class="btn1 float-end">수정</button>
+      </form>
+      <form @submit.prevent="submitinform" v-if="(responseLen===0)">
+        <div class="m-3">
+          <h1 class="title text-center">Notice</h1>
+          <div class="d-flex justify-content-end">
             <div class="d-flex mb-2">
               <div id="exampleFormControlInput1" class="me-2">
                 <b-button class="btn2" size="sm" variant="outline-primary" @click="addInform"
@@ -33,41 +66,7 @@
             v-for="(s, id) in inform"
           />
         </div>
-        <button type="submit" class="btn btn-primary">수정</button>
-      </form>
-      <form @submit.prevent="submitinform" v-if="(responseLen===0)">
-        <div class="mb-3">
-          <div class="d-flex justify-content-between">
-            <label for="exampleFormControlInput1" class="form-label"
-              >공지사항</label
-            >
-            <div class="d-flex mb-2">
-              <div id="exampleFormControlInput1" class="me-2">
-                <b-button size="sm" variant="outline-primary" @click="addInform"
-                  ><i class="bi bi-plus-lg"></i> 추가</b-button
-                >
-              </div>
-              <div id="exampleFormControlInput1" class="">
-                <b-button
-                  size="sm"
-                  variant="outline-danger"
-                  @click="removeInform"
-                  ><i class="bi bi-dash-lg"></i> 삭제</b-button
-                >
-              </div>
-            </div>
-          </div>
-          <textarea
-            type="text"
-            class="form-control mb-3"
-            id="exampleFormControlInput1"
-            placeholder="Tech stack"
-            v-model="s.name"
-            :key="id"
-            v-for="(s, id) in inform"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">저장</button>
+        <button type="submit" class="btn1 float-end">저장</button>
       </form>
     </div>
   </div>
@@ -152,7 +151,7 @@ export default {
 }
 
 .btn1 {
-  margin-right: 10px;
+  margin-right: 20px;
   color: white;
   background-color: #3485FF;
   box-shadow: 5px 9px 16px 0px #3485FF;
