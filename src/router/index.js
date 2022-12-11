@@ -4,7 +4,6 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProjectCreateView from '../views/ProjectCreateView.vue'
 import ProjectUpdateView from '../views/ProjectUpdateView.vue'
-import MemberCreateView from '../views/MemberCreateView.vue'
 import MarkdownView from '../views/MarkdownView.vue'
 import GoogleLogin from '../views/GoogleLogin.vue'
 import ProjectInformsView from '../views/ProjectInformsView.vue'
@@ -57,11 +56,6 @@ const routes = [
     path: '/projectcreate',
     name: 'projectcreate',
     component: ProjectCreateView
-  },
-  {
-    path: '/project/:id/membercreate',
-    name: 'membercreate',
-    component: MemberCreateView
   },
   {
     path: '/project/:id/todo',

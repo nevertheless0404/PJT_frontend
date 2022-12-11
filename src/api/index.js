@@ -86,11 +86,10 @@ function markdownPut(project, update_markdown) {
 //   })
 // }
 
-function memberCreate(memberData) {
+function memberCreate(pjt_pk, memberEmail) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${memberData.id}/`
-  console.log('memberData :', memberData)
-  return axios.post(url, memberData, {
+  const url = `http://127.0.0.1:8000/memberadmin/${pjt_pk}/`
+  return axios.post(url, memberEmail, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -235,16 +234,6 @@ function commentList(pjt_pk, todo_pk) {
   })
 }
 
-// function MemberList(project, memberData) {
-//   const url = `http://127.0.0.1:8000/memberadmin/${project}/${memberData}/`
-//   return axios.get(url, {
-//     headers: {
-//       'Content-Type': 'applications/json',
-//       Authorization: 'Bearer' + localStorage.getItem('access_token')
-//     }
-//   })
-// }
-
 function MemberList(project) {
   // 요청할 URL
   const url = `http://127.0.0.1:8000/memberadmin/${project}/`
@@ -256,8 +245,18 @@ function MemberList(project) {
   })
 }
 
+function deleteMember(pjt_pk, user_pk) {
+  // 요청할 URL
+  const url = `http://127.0.0.1:8000/memberadmin/${pjt_pk}/${user_pk}`
+  return axios.delete(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function changeLeader(pjt_pk, user_pk) {
-  console.log(pjt_pk, user_pk)
   const url = `http://127.0.0.1:8000/changeleader/${pjt_pk}/${user_pk}/`
   return axios.get(url, {
       headers: {
@@ -267,17 +266,6 @@ function changeLeader(pjt_pk, user_pk) {
   })
 }
 
-function memberPut(project, memberData) {
-  console.log(memberData)
-  // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${project}/detail`
-  return axios.put(url, memberData, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + localStorage.getItem('access_token')
-    }
-  })
-}
 
 // 함수 export
 export {
@@ -302,6 +290,6 @@ export {
   commentCreate,
   commentList,
   MemberList,
-  changeLeader,
-  memberPut
+  deleteMember,
+  changeLeader
 }
