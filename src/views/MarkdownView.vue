@@ -2,10 +2,9 @@
   <div>
     <NavProject v-bind:childValue="pjtPk" />
     <div class="container mt-5">
-      <h1 class="mb-3 text-center">프로젝트 마크다운 생성기</h1>
+      <h1 class="title mb-3 text-center">Project markdown</h1>
       <v-md-editor v-model="text" height="400px"></v-md-editor>
-      <button @click="[submitMd(), makeToast()]" class="btn btn-primary mt-4 float-end">수정</button>
-
+      <button @click="[submitMd(), makeToast()]" class="btn1 float-end">수정</button>
     </div>
   </div>
 </template>
@@ -41,3 +40,31 @@ import { markdownPut } from '@/api/index'
     }
   };
 </script>
+<style scoped>
+
+.title{
+  font-family: 'Dela Gothic One', cursive;
+}
+.btn1 {
+  margin-top: 15px;
+  color: white;
+  background-color: #3485FF;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 50px;
+  height: 40px;
+  border-radius: 10px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.btn1:hover {
+
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+</style>
