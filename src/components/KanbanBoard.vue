@@ -7,15 +7,13 @@
           placeholder="Enter Task"
           @keyup.enter="add"
         ></b-form-input> -->
-        <b-button class="ms-2" variant="primary" v-b-modal.modal-prevent-closing
-          >Add</b-button
-        >
+        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>할 일 추가</div>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-md-4">
-        <div class="p-2 alert alert-secondary">
-          <h3>Backlog</h3>
+        <div class="p-2 alert alert-warning">
+          <h3>시작전</h3>
           <draggable
             class="list-group kanban-column"
             :list="arrBacklog"
@@ -45,7 +43,7 @@
       </div>
       <div class="col-md-4">
         <div class="p-2 alert alert-primary">
-          <h3>In Progress</h3>
+          <h3>진행중</h3>
           <draggable
             class="list-group kanban-column"
             :list="arrInProgress"
@@ -70,7 +68,7 @@
       </div>
       <div class="col-md-4">
         <div class="p-2 alert alert-success">
-          <h3>Done</h3>
+          <h3>완료됨</h3>
           <draggable
             class="list-group kanban-column"
             :list="arrDone"
@@ -542,5 +540,31 @@ export default {
 }
 .b-avatar .b-avatar-text {
   justify-content: flex-start !important;
+}
+
+
+.btn1 {
+  display: flex;
+  color: white;
+  background-color: #3485ff;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+}
+
+.btn1:hover {
+  box-shadow: inset 1600px 0px 0px 0px #ffc062;
 }
 </style>
