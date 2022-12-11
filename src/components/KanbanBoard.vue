@@ -31,13 +31,12 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex">
+                <div class="d-flex justify-content-between align-items-center">
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
-                  <!-- <div class="avatar">{{ user.email }}</div>
-                  <b-avatar style="background-color:lightgray;" :text="user.email"></b-avatar> -->
+                  <div class="avatar">{{ element.user_s }}</div>
                 </div>
-                {{ element.start_at }} - {{ element.end_at }}
+                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
               </button>
             </div>
           </draggable>
@@ -61,8 +60,12 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <p class="todoTitle">{{ element.title }}</p>
-                {{ element.start_at }} - {{ element.end_at }}
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="todoTitle">{{ element.title }}</p>
+                  <!-- 유저 이름 -->
+                  <div class="avatar">{{ element.user_s }}</div>
+                </div>
+                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
               </button>
             </div>
           </draggable>
@@ -86,8 +89,12 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <p class="todoTitle">{{ element.title }}</p>
-                {{ element.start_at }} - {{ element.end_at }}
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="todoTitle">{{ element.title }}</p>
+                  <!-- 유저 이름 -->
+                  <div class="avatar">{{ element.user_s }}</div>
+                </div>
+                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
               </button>
             </div>
           </draggable>
@@ -96,10 +103,19 @@
     </div>
     <div>
       <!-- 칸반보드 디테일 모달 -->
-      <b-modal ref="my-modal" hide-footer hide-header no-close-on-backdrop no-close-on-esc>
+      <b-modal
+        ref="my-modal"
+        hide-footer
+        hide-header
+        no-close-on-backdrop
+        no-close-on-esc
+      >
         <div class="d-block" v-if="!edit">
           <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center">
             <h3 class="m-0">{{ modalData.title }}</h3>
+              <p class="m-1 ms-4" style="font-weight:500;color:rgb(148 148 148);">{{modalData.user_s}}의 할 일</p>
+            </div>
             <i
               v-if="!edit"
               variant="outline-danger"
@@ -147,7 +163,7 @@
             <b-form-datepicker
               id="example-datepicker"
               v-model="updateData.start_at"
-              :max="end_at"
+              :max="updateData.end_at"
               class="mb-2"
             ></b-form-datepicker>
           </div>
@@ -156,7 +172,7 @@
             <b-form-datepicker
               id="example-datepicker2"
               v-model="updateData.end_at"
-              :min="start_at"
+              :min="updateData.start_at"
               class="mb-2"
             ></b-form-datepicker>
           </div>
@@ -186,7 +202,7 @@
             </button>
           </div>
         </form>
-        <div class="d-flex">
+        <div class="d-flex" v-if="user.email === modalData.user">
           <b-button
             size="sm"
             v-if="!edit"
@@ -209,7 +225,7 @@
         <div v-if="!edit">
           <hr />
           <p>댓글</p>
-          <form @submit.prevent="submitComment" class="row">
+          <form @submit.prevent="submitComment" class="row justify-content-end">
             <input
               type="text"
               v-model="comment"
@@ -219,7 +235,12 @@
               댓글
             </button>
           </form>
-          <div :key="id" v-for="(c, id) in comments" class="row" style="justify-content: flex-end;">
+          <div
+            :key="id"
+            v-for="(c, id) in comments"
+            class="row"
+            style="justify-content: flex-end"
+          >
             <p class="col">{{ c.user }}</p>
             <p class="col">{{ c.comment }}</p>
             <p class="col">{{ c.created_at }}</p>
@@ -262,7 +283,7 @@
             <b-form-datepicker
               id="example-datepicker"
               v-model="newTask.start_at"
-              :max="end_at"
+              :max="newTask.end_at"
               class="mb-2"
             ></b-form-datepicker>
           </div>
@@ -271,7 +292,7 @@
             <b-form-datepicker
               id="example-datepicker2"
               v-model="newTask.end_at"
-              :min="start_at"
+              :min="newTask.start_at"
               class="mb-2"
             ></b-form-datepicker>
           </div>
@@ -314,6 +335,7 @@ export default {
   data() {
     return {
       complete: '',
+      user_s: '',
       newTask: {
         title: '',
         content: '',
@@ -329,7 +351,9 @@ export default {
           title: '',
           content: '',
           start_at: '',
-          end_at: ''
+          end_at: '',
+          user_s: '',
+          user: ''
         }
       ],
       updateData: [],
@@ -356,6 +380,8 @@ export default {
               content: ele.content,
               start_at: ele.start_at,
               end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
               complete: 0
             })
             this.complete = ele.complete
@@ -367,6 +393,8 @@ export default {
               content: ele.content,
               start_at: ele.start_at,
               end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
               complete: 1
             })
             this.complete = ele.complete
@@ -378,6 +406,8 @@ export default {
               content: ele.content,
               start_at: ele.start_at,
               end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
               complete: 2
             })
             this.complete = ele.complete
@@ -518,7 +548,7 @@ export default {
       }
     }
   },
-    computed: {
+  computed: {
     ...mapGetters(['user'])
   }
 }
@@ -533,12 +563,18 @@ export default {
   font-size: 18px;
   font-weight: 600;
   margin: 8px 0px;
+  color: rgb(54, 54, 54);
 }
 
-.b-avatar {
-  padding-left: 5px;
+.avatar {
+  font-size: 13px;
+  color: gray;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  padding: 0px 5px;
 }
-.b-avatar .b-avatar-text {
-  justify-content: flex-start !important;
+
+.todo {
+  overflow: hidden;
 }
 </style>
