@@ -5,7 +5,7 @@
       <InformBoard />
       <!-- <ProjectCalender /> -->
       <FullCalendar v-bind:options="calendarOptions" />
-      <KanbanBoard />
+      <KanbanBoard :key="componentKey"/>
     </div>
   </div>
 </template>
@@ -42,6 +42,7 @@ export default {
   components: { NavProject, KanbanBoard, InformBoard, FullCalendar },
   data() {
     return {
+      componentKey : 0,
       pjtPk: this.$route.params.id,
       calendarOptions: reactive ({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
@@ -84,6 +85,9 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    forceRerender() {
+      this.componentKey += 1
+    },
     calendarRefresh() {
       this.calendarOptions.events = []
       todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.

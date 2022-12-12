@@ -7,7 +7,9 @@
           placeholder="Enter Task"
           @keyup.enter="add"
         ></b-form-input> -->
-        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing><i class="bi bi-plus-lg"></i>&nbsp;할 일 추가</div>
+        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>
+          <i class="bi bi-plus-lg"></i>&nbsp;할 일 추가
+        </div>
       </div>
     </div>
     <div class="row mt-3">
@@ -30,7 +32,10 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between " style="margin: 8px 0px;">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -61,7 +66,10 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between" style="margin: 8px 0px;">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -92,7 +100,10 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between" style="margin: 8px 0px;">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -118,7 +129,9 @@
         <div class="d-block" v-if="!edit">
           <div class="d-flex justify-content-between">
             <div class="">
-              <h3 class="m-0" style="word-break: break-all;">{{ modalData.title }}</h3>
+              <h3 class="m-0" style="word-break: break-all">
+                {{ modalData.title }}
+              </h3>
               <p
                 class="mt-1 mb-0"
                 style="font-weight: 500; color: rgb(110 110 110)"
@@ -277,8 +290,8 @@
               :state="validation"
             />
             <b-form-invalid-feedback :state="validation">
-        제목은 30자 이내로 작성해 주세요.
-      </b-form-invalid-feedback>
+              제목은 30자 이내로 작성해 주세요.
+            </b-form-invalid-feedback>
           </div>
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label"
@@ -430,7 +443,7 @@ export default {
             // this.modalData.complete = ele.complete
           }
         })
-        console.log('제발스',this.complete)
+        console.log('제발스', this.complete)
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
         len_done = this.arrDone.length
@@ -453,6 +466,7 @@ export default {
       this.comment = ''
     },
     showModal(element) {
+      console.log('element.id :', element.id)
       this.$refs['my-modal'].show()
       this.modalData = element
       this.updateData = element
@@ -462,11 +476,14 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
+      console.log('modalData.id :', this.modalData.id)
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
         console.log(response)
         this.comments = response.data
       })
-      console.log('업데이트데이터',this.updateData)
+      console.log('modalData.id after :', this.modalData.id)
+      console.log('업데이트데이터', this.updateData)
+      this.$parent.forceRerender()
     },
     hideModal() {
       this.$refs['my-modal'].hide()
@@ -524,73 +541,23 @@ export default {
       len_in = this.arrInProgress.length
       len_done = this.arrDone.length
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
       await todoPutDrag(this.$route.params.id, this.updateData)
-       todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
-      .then((response) => {
-        response.data.forEach((ele) => {
-          if (ele.complete === 0) {
-            this.arrBacklog.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.complete
-          } else if (ele.complete === 1) {
-            this.arrInProgress.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.complete
-          } else {
-            this.arrDone.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.complete
-          }
-        })
-        len_back = this.arrBacklog.length
-        len_in = this.arrInProgress.length
-        len_done = this.arrDone.length
-      }) // 성공하면 json 객체를 받아온다.
-      .catch((error) => console.log(error))
-      this.arrBacklog = [],
-      this.arrInProgress = [],
-      this.arrDone = [],
-      this.updateData = []
       len_back = this.arrBacklog.length
       len_in = this.arrInProgress.length
       len_done = this.arrDone.length
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
       this.$router.go()
       this.$refs['my-modal'].hide()
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     pick_id(ele) {
       drag_id = ele.id
@@ -625,7 +592,7 @@ export default {
       } else {
         refresh_onetime = 0
       }
-    },
+    }
     // cursor(element) {
     //   if (this.user.email != element.user){
     //     this.isCursor = true
@@ -640,8 +607,8 @@ export default {
   computed: {
     ...mapGetters(['user']),
     validation() {
-        return this.newTask.title.length < 30
-      }
+      return this.newTask.title.length < 30
+    }
   }
 }
 </script>
@@ -688,8 +655,8 @@ export default {
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  -webkit-transition: all 1.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 1.8s cubic-bezier(.5, .24, 0, 1);
+  -webkit-transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn1:hover {
