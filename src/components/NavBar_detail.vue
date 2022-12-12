@@ -75,11 +75,6 @@
               >
             </b-dropdown-item>
             <b-dropdown-item v-if="user">
-              <routerLink class="nav-link" :to="{ name: 'todo_project' }"
-              >오늘 할 일</routerLink
-              >
-            </b-dropdown-item>
-            <b-dropdown-item v-if="user">
               <routerLink class="nav-link" :to="{ name: 'markdown' }"
               >마크다운 생성</routerLink
               >
@@ -147,7 +142,7 @@ export default {
     return {
       pjtPk: this.childValue,
       resPk: "",
-  
+
     }
   },
   methods: {
