@@ -493,7 +493,7 @@ export default {
   background-color: #3485ff;
   color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 10px 0px 0px 10px;
   border: #3485ff;
   border-width: 4px;
   border-style: solid;
@@ -530,7 +530,7 @@ export default {
   background-color: #ffc062;
   color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 10px 0px 0px 10px;
   border: #ffc062;
   border-width: 4px;
   border-style: solid;
@@ -566,7 +566,7 @@ export default {
   background-color: #f24e1e;
   color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 20px 0px 0px 20px;
+  border-radius: 10px 0px 0px 10px;
   border: #f24e1e;
   border-width: 4px;
   border-style: solid;
@@ -577,44 +577,5 @@ export default {
   white-space: nowrap;
 }
 
-.btn1 {
-  display: flex;
-  color: white;
-  background-color: #9e9e9e;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  width: 300px;
-  height: 30px;
-  border-radius: 10px 10px 0px 0px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: inset 0px 0px 0px #adb5bd;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
 
-.btn2 {
-  display: flex;
-  color: white;
-  background-color: #9e9e9e;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  margin-bottom: 5px;
-  width: 300px;
-  height: 30px;
-  border-radius: 0px 0px 10px 10px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: inset 0px 0px 0px #adb5bd;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-}
 </style>
