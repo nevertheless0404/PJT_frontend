@@ -1,13 +1,13 @@
 <template>
   <div>
-    
+
     <!--todos 리스트 데이터에 체크된 인덱스 번호를 todo_lst에 저장하여 추후에 todos에 인덱스로 접근하여 complete 상태 변환해서 보내기-->
-    
+
       <div class="card-body cb1">
           <div class='todoli'>
             <div style="font-size: 40px my-5" class="btn1" >할 일 목록</div>
             </div>
-          </div> 
+          </div>
             <div v-for="(todo, idx) in todos"  v-if="todo.complete === 0">
               <div class="ms-3" v-if="todo.project.color === 1" style="font-size: 15px">
               <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
@@ -23,7 +23,7 @@
             </div>
             <div style="font-size: 40px my-5" class="btn2" ></div>
       </div>
-    
+
   </div>
 </template>
 
@@ -86,7 +86,7 @@ export default {
   display: flex;
   align-items: center;
   margin: 10px;
-  
+
 }
 
 .allprogress {
@@ -100,16 +100,15 @@ export default {
 }
 
 #progress {
-    appearance: none;
+  appearance: none;
 }
 #progress::-webkit-progress-bar {
-    background: #FFC062;
-    border-radius:4px;
-   
+  background: #FFC062;
+  border-radius:4px;
 }
 #progress::-webkit-progress-value {
-    border-radius:4px;
-     background:#3485FF;
+  border-radius:4px;
+  background:#3485FF;
 }
 
 .listbox {
@@ -125,7 +124,7 @@ export default {
   white-space: wrap;
   min-width: 80px;
   width: auto;
-  
+
 }
 
 .listbox:hover * {
@@ -148,7 +147,7 @@ export default {
   padding:5px;
   border-radius: 0px 10px 10px 0px;
   border: #F24E1E;;
-  
+
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -168,7 +167,7 @@ export default {
   padding:5px;
   border-radius: 10px 0px 0px 10px;
   border: #F24E1E;
- 
+
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -216,11 +215,4 @@ export default {
   justify-content: center;
   font-weight: 600;
 }
-
-
-
-
-
-
-
 </style>
