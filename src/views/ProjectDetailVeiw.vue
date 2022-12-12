@@ -58,6 +58,7 @@ export default {
   created() {
     todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
+        console.log(response)
         let idx = 0
         for (let ele of response.data) {
           console.log(ele)

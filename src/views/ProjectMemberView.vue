@@ -4,11 +4,13 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
-        <form @submit.prevent="postmember" class='form1 mb-5'>
+        <form @submit.prevent="postmember" class='form1 mb-5 input-wrap'>
           <div class="w-100 d-flex">
-            <input type="email" class="form-control" placeholder="Email" v-model="memberInput">
-            <button type="submit" class="btn btn-primary">추가</button>
+            <input @keyup="searchEmail" type="email" class="search_input" placeholder="Email" v-model="memberInput">
+            <button type="submit" class="search_btn btn btn-primary">추가</button>
           </div>
+          <ejs-autocomplete>
+          </ejs-autocomplete>
         </form>
         <div class="allmember">
           <div class="memberbox" :key="id" v-for="(member, id) in members">
@@ -35,7 +37,11 @@ import { MemberList } from '@/api/index'
 import { changeLeader } from '@/api/index'
 import { deleteMember } from '@/api/index'
 import { memberCreate } from '@/api/index'
+import { userList } from '@/api/index'
 
+let search_input = document.querySelector(".search_input")
+let suggestions_pannel = document.querySelector(".suggestions_pannel")
+let search_btn = document.getElementById("search_btn")
 export default {
   components: { NavBar_detail },
   data() {
@@ -47,7 +53,8 @@ export default {
           leader: false
         }
       ],
-      teamLeader: ''
+      teamLeader: '',
+      userList: []
     }
   },
   setup() {},
@@ -60,11 +67,33 @@ export default {
           this.teamLeader = response.data[i].user
         }
       }
+    }),
+    userList()
+    .then((response) => {
+      this.userList = response.data
+      console.log(this.userList)
     })
   },
   mounted() {},
   unmounted() {},
   methods: {
+    searchEmail() {
+      if (window.event.keyCode === 13) {
+        window.event.preventDefault()
+        search_btn.click()
+      }
+      console.log(this.memberInput)
+      console.log(this.userList)
+      for (let i=0; i<this.userList.length; i++) {
+        if (this.userList[i].email.startsWith(this.memberInput) === true) {
+          let div = document.createElement('div')
+          div.insertAdjacentHTML('beforeend', `<p>${this.userList[i].email}<p>`)
+          console.log(div)
+          suggestions_pannel.appendChild(div)
+          console.log(suggestions_pannel)
+        }
+      }
+    },
     async changeleader() {
       const meberId = event.target.getAttribute('data-id')
       await changeLeader(this.$route.params.id, meberId)
@@ -110,6 +139,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .title {
   text-align: center;
@@ -160,5 +190,4 @@ export default {
   flex-direction: column;
   width: 80%;
 }
-
 </style>
