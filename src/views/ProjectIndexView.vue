@@ -110,7 +110,6 @@ export default {
   components: {
     // ProjectCalender,
     ProjectIndexNav,
-    TodoList,
     FullCalendar
   },
   data() {
