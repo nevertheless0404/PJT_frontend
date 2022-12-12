@@ -1,29 +1,28 @@
 <template>
   <div>
-    
-    <!--todos 리스트 데이터에 체크된 인덱스 번호를 todo_lst에 저장하여 추후에 todos에 인덱스로 접근하여 complete 상태 변환해서 보내기-->
-    
-      <div class="card-body cb1">
-          <div class='todoli'>
-            <div style="font-size: 40px my-5" class="btn1" >할 일 목록</div>
-            </div>
-          </div> 
-            <div v-for="(todo, idx) in todos"  v-if="todo.complete === 0">
-              <div class="ms-3" v-if="todo.project.color === 1" style="font-size: 15px">
-              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-              </div>
-
-              <div class="ms-3" v-if="todo.project.color === 2" style="font-size: 15px">
-              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-              </div>
-
-              <div class=" listbox" v-else style="font-size: 15px" >
-              <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
-              </div>
-            </div>
-            <div style="font-size: 40px my-5" class="btn2" ></div>
+  
+  <!--todos 리스트 데이터에 체크된 인덱스 번호를 todo_lst에 저장하여 추후에 todos에 인덱스로 접근하여 complete 상태 변환해서 보내기-->
+  
+    <div class="card-body cb1">
+      <div class='todoli'>
+        <div style="font-size: 40px my-5" class="btn1" >할 일 목록</div>
       </div>
-    
+    </div> 
+      <div v-for="(todo, idx) in todos"  v-if="todo.complete === 0">
+        <div class="ms-3" v-if="todo.project.color === 1" style="font-size: 15px">
+          <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+        </div>
+
+        <div class="ms-3" v-if="todo.project.color === 2" style="font-size: 15px">
+          <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+        </div>
+
+        <div class=" listbox" v-else style="font-size: 15px" >
+          <div class="todo2 font1">{{ todo.project }}</div><div class="todo1 font1">{{ todo.title }}</div>
+        </div>
+      </div>
+      <div style="font-size: 40px my-5" class="btn2" ></div>
+    </div>  
   </div>
 </template>
 
@@ -105,11 +104,11 @@ export default {
 #progress::-webkit-progress-bar {
     background: #FFC062;
     border-radius:4px;
-   
+
 }
 #progress::-webkit-progress-value {
     border-radius:4px;
-     background:#3485FF;
+    background:#3485FF;
 }
 
 .listbox {

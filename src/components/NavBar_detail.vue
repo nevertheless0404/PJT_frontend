@@ -146,7 +146,8 @@ export default {
   data() {
     return {
       pjtPk: this.childValue,
-      resPk: ""
+      resPk: "",
+  
     }
   },
   methods: {
