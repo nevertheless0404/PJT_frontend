@@ -29,7 +29,6 @@ export default {
       for (const content of response.data[0].content.split(' ')) {
         this.informs.push({name: content})
         this.informsLen = this.informs.length
-        console.log(informsLen)
       }
     })
   },

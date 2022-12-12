@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post('login/', {
+      const response = await axios.post('api/accounts/v1/login/', {
         email: this.email,
         password: this.password
       })
