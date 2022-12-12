@@ -77,7 +77,7 @@
               placeholder="E-mail"
               v-model="email"
             />
-            <div id="emailHelp" class="form-text">
+            <div id="emailHelp" class="form-text ms-3">
               We'll never share your email with anyone else.
             </div>
           </div>
@@ -142,8 +142,7 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      console.log('핸들 서브밋')
-      const response = await axios
+      await axios
         .post('api/accounts/v1/login/', {
           email: this.email,
           password: this.password
@@ -214,6 +213,8 @@ export default {
 
 .left-box {
   background-color: #eef0f3;
+  position: relative;
+  top: -60px;
 }
 
 .bottom-title {
