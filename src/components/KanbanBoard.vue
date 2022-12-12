@@ -121,7 +121,7 @@
               <h3 class="m-0" style="word-break: break-all;">{{ modalData.title }}</h3>
               <p
                 class="mt-1 mb-0"
-                style="font-weight: 500; color: rgb(110 110 110);"
+                style="font-weight: 500; color: rgb(110 110 110)"
               >
                 {{ modalData.user_s }}의 할 일
               </p>
@@ -436,7 +436,7 @@ export default {
         len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
-    todoUpdate(this.$route.params.id)
+    // todoUpdate(this.$route.params.id)
   },
   mounted() {},
   unmounted() {},
@@ -616,6 +616,11 @@ export default {
         } else if (this.arrDone.length > len_done) {
           this.complete = 2
           this.todoUpdateDrag()
+        } else if (
+          this.arrBacklog.length === len_back &&
+          this.arrBacklog.length === len_back &&
+          this.arrBacklog.length === len_back
+        ) {
         }
       } else {
         refresh_onetime = 0
@@ -666,7 +671,6 @@ export default {
   overflow: hidden;
 }
 
-
 .btn1 {
   display: flex;
   color: white;
@@ -677,8 +681,8 @@ export default {
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
+  text-align: center;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
   display: flex;
   align-items: center;

@@ -17,6 +17,7 @@ import NavProject from '@/components/NavBar_detail.vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
 import InformBoard from '@/components/InformBoard.vue'
 // 캘린터 임포트
+import { reactive } from 'vue'
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -42,7 +43,7 @@ export default {
   data() {
     return {
       pjtPk: this.$route.params.id,
-      calendarOptions: {
+      calendarOptions: reactive ({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -51,7 +52,7 @@ export default {
           right: 'dayGridMonth,timeGridWeek'
         },
         events: []
-      }
+      })
     }
   },
   setup() {},
