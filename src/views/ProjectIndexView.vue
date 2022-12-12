@@ -59,6 +59,7 @@ import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 // import ProjectCalender from '@/components/ProjectCalender.vue'
 import TodoList from '@/components/TodoList.vue'
 // 캘린터 임포트
+import { reactive } from 'vue'
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -98,7 +99,7 @@ export default {
         { end_at: '' },
         { color: '' }
       ],
-      calendarOptions: {
+      calendarOptions: reactive ({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -107,7 +108,7 @@ export default {
           right: 'dayGridMonth,timeGridWeek'
         },
         events: []
-      }
+      })
     }
   },
   computed() {},
