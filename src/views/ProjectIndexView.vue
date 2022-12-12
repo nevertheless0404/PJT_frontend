@@ -13,10 +13,10 @@
           <!-- 할 일 목록 블럭 -->
           <div class="card-body cb1">
             <div class="todoli">
-              <div style="font-size: 40px my-5" class="btn1">할 일 목록</div>
+              <h1 style="font-size: 40px my-5">To Do</h1>
               <div :key="idx" v-for="(todo, idx) in todos">
                 <div
-                  class="ms-3 listbox1"
+                  class="listbox1"
                   v-if="todo.color === 1"
                   style="font-size: 15px"
                 >
@@ -29,7 +29,7 @@
                 </div>
 
                 <div
-                  class="ms-3 listbox2"
+                  class="listbox2"
                   v-if="todo.color === 2"
                   style="font-size: 15px"
                 >
@@ -49,7 +49,6 @@
                   </div>
                 </div>
               </div>
-              <div style="font-size: 40px my-5" class="btn2"></div>
             </div>
             <div class="pjtindex">
               <div
@@ -308,7 +307,7 @@ export default {
 }
 
 .pjtindex {
-  margin-top: 50px;
+  margin-top: 30px;
   width: 300px;
   overflow: auto;
   display: flex;
@@ -325,6 +324,7 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 800px;
+  
 }
 
 .project_add {
@@ -363,6 +363,11 @@ export default {
 .todoli {
   display: flex;
   flex-direction: column;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 1px;
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .progressbar {
@@ -396,7 +401,7 @@ export default {
 .listbox1 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -404,7 +409,7 @@ export default {
 .listbox2 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -412,7 +417,7 @@ export default {
 .listbox3 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -421,48 +426,48 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+  
 }
 
 .listbox1:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #3485ff;
+  
+  color: rgb(0, 0, 0);
+  box-shadow: inset 0px -5px 0px 0px #3485ff;
 }
 
 .listbox2:hover {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+  
 }
 
 .listbox2:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #ffc062;
+  
+  color: rgb(0, 0, 0);
+  box-shadow: inset 0px -5px 0px 0px #ffc062;
 }
 
 .listbox3:hover {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+  
 }
 
 .listbox3:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #f24e1e;
+  
+  color: rgb(0, 0, 0);
+  box-shadow: inset 0px -5px 0px 0px #f24e1e;
 }
 
 .todo1 {
@@ -470,8 +475,10 @@ export default {
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #3485ff;
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 
   width: 200px;
   overflow: hidden;
@@ -487,10 +494,12 @@ export default {
 .todo2 {
   margin-bottom: 5px;
   background-color: #3485ff;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 20px 0px 0px 20px;
   border: #3485ff;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
@@ -503,8 +512,10 @@ export default {
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #ffc062;
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 
   width: 200px;
   overflow: hidden;
@@ -520,10 +531,12 @@ export default {
 .todo4 {
   margin-bottom: 5px;
   background-color: #ffc062;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 20px 0px 0px 20px;
   border: #ffc062;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
@@ -536,9 +549,10 @@ export default {
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #f24e1e;
-
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -553,10 +567,12 @@ export default {
 .todo6 {
   margin-bottom: 5px;
   background-color: #f24e1e;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 5px;
-  border-radius: 10px 0px 0px 10px;
+  border-radius: 20px 0px 0px 20px;
   border: #f24e1e;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
