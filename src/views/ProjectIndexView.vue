@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProjectIndexNav />
-    <div class="container mt-4">
+    <div class="container mt-5">
       <div class="d-flex justify-content-evenly row">
         <!-- <ProjectCalender v-bind:childValue="projects" class="col-12 col-lg-8" /> -->
         <div class="col-12 col-lg-8">
@@ -9,14 +9,14 @@
         </div>
         <!-- <p>{{ this.projects }}</p> -->
 
-        <div class="allpjtindex col col-4 col-xs-12">
+        <div class="allpjtindex col col-4 col-xs-12 mt-5">
           <!-- 할 일 목록 블럭 -->
-          <div class="card-body cb1">
+          <div class="card-body cb1 scrollspy-example-2">
             <div class="todoli">
-              <h1 style="font-size: 40px my-5">To Do</h1>
+              <h1 class="todoTitle mb-4">To Do List</h1>
               <div :key="idx" v-for="(todo, idx) in todos">
                 <div
-                  class="listbox1"
+                  class="listbox1 mb-1"
                   v-if="todo.color === 1"
                   style="font-size: 15px"
                 >
@@ -37,7 +37,7 @@
                     {{ todo.title }}
                   </div>
                   <div class="todo3 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
                 <div class="listbox3" v-else style="font-size: 15px">
@@ -51,6 +51,7 @@
               </div>
             </div>
             <div class="pjtindex">
+              <h1 class="todoTitle mb-4">Project</h1>
               <div
                 v-for="(project, id) in projects"
                 :key="id"
@@ -281,6 +282,7 @@ export default {
   box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
   height: 40px;
+  margin-top: 35px;
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
@@ -306,15 +308,21 @@ export default {
 
 .pjtindex {
   margin-top: 30px;
-  width: 300px;
+  width: 100%;
+  padding: 30px;
+  border-radius: 15px;
   overflow: auto;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
+  position:relative; 
+  height:300px; 
+  overflow-y:scroll;
+  box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
 }
 
 .pjtindex::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+  display: none;
 }
 
 .allpjtindex {
@@ -354,18 +362,30 @@ export default {
 }
 
 .font1 {
-  font-family: 'Dela Gothic One';
-  font-weight: bold;
+  /* font-family: 'Dela Gothic One'; */
+  font-weight: 500;
+  color: white;
 }
 
 .todoli {
   display: flex;
   flex-direction: column;
-  border: #9f9f9f;
-  border-style: solid;
-  border-width: 1px;
-  padding: 20px;
-  border-radius: 10px;
+  box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
+  padding: 30px;
+  border-radius: 15px;
+  position:relative; 
+  height:300px; 
+  overflow-y:scroll;  
+}
+
+.todoli::-webkit-scrollbar {
+  display: none;
+}
+
+
+.todoTitle{
+  font-family: 'Dela Gothic One';
+  font-size: 30px;
 }
 
 .progressbar {
@@ -431,8 +451,6 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
-  color: rgb(0, 0, 0);
   box-shadow: inset 0px -5px 0px 0px #3485ff;
 }
 
@@ -447,8 +465,6 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
-  color: rgb(0, 0, 0);
   box-shadow: inset 0px -5px 0px 0px #ffc062;
 }
 
@@ -457,14 +473,12 @@ export default {
   white-space: wrap;
   min-width: 80px;
   
-}
+} 
 
 .listbox3:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
-  color: rgb(0, 0, 0);
   box-shadow: inset 0px -5px 0px 0px #f24e1e;
 }
 
@@ -492,7 +506,7 @@ export default {
 .todo2 {
   margin-bottom: 5px;
   background-color: #3485ff;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #3485ff;
@@ -506,7 +520,7 @@ export default {
 }
 
 .todo3 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: white;
   color: black;
   padding: 5px;
@@ -527,9 +541,9 @@ export default {
 }
 
 .todo4 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: #ffc062;
-  color: rgb(0, 0, 0);
+  color: white;
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #ffc062;
@@ -543,7 +557,7 @@ export default {
 }
 
 .todo5 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: white;
   color: black;
   padding: 5px;
@@ -563,9 +577,9 @@ export default {
 }
 
 .todo6 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: #f24e1e;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #f24e1e;
