@@ -82,14 +82,14 @@
                 </router-link>
               </div>
             </div>
-          <router-link
-            :to="{ name: 'projectcreate' }"
-            class="btn1"
-            ><i class="bi bi-plus-lg"></i>&nbsp;프로젝트 생성</router-link>
-          <TodoList />
+            <router-link :to="{ name: 'projectcreate' }" class="btn1"
+              ><i class="bi bi-plus-lg"></i>&nbsp;프로젝트 생성</router-link
+            >
+            <TodoList />
+          </div>
         </div>
+        <router-view></router-view>
       </div>
-      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -123,7 +123,7 @@ export default {
         { end_at: '' },
         { color: '' }
       ],
-      calendarOptions: reactive ({
+      calendarOptions: reactive({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
