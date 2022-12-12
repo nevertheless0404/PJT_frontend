@@ -36,7 +36,14 @@
     <div class="signup col-12 col-lg-7 d-flex align-items-center">
       <div class="login-box w-100 d-flex flex-column align-items-center">
         <img
+          v-if="login_status === 'success'"
           src="@/assets/images/rocket_1.png"
+          class="rocket col-12 p-0"
+          style="z-index: 2"
+        />
+        <img
+          v-if="login_status === 'fail'"
+          src="@/assets/images/boom.png"
           class="rocket col-12 p-0"
           style="z-index: 2"
         />
@@ -82,9 +89,6 @@
               placeholder="Password"
               v-model="password"
             />
-            <div class="form-text" v-if="errors">
-              {{ e}}
-            </div>
           </div>
           <button type="submit" class="btn w-100 my-3 shadow btn-login">
             로그인
@@ -93,8 +97,24 @@
             <a style="color: gray" :href="signupUrl">계정이 없으신가요?</a>
           </p>
           <GoogleLogin />
-          <!-- 결과 메시지 출력 -->
-          <p>{{ msg }}</p>
+          <!-- 경고 메시지 출력 -->
+          <b-alert
+            :show="dismissCountDown"
+            variant="warning"
+            @dismissed="dismissCountDown = 0"
+            @dismiss-count-down="countDownChanged"
+            v-if="err"
+          >
+            <p>
+              {{ err }}
+            </p>
+            <b-progress
+              variant="warning"
+              :max="dismissSecs"
+              :value="dismissCountDown"
+              height="4px"
+            ></b-progress>
+          </b-alert>
         </form>
       </div>
     </div>
@@ -105,10 +125,15 @@
 import axios from 'axios'
 import GoogleLogin from '../components/GoogleLogin.vue'
 
+let cnt = 0
 export default {
   components: { GoogleLogin },
   data() {
     return {
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      err: null,
+      login_status: 'success',
       email: '',
       password: '',
       msg: '',
@@ -117,18 +142,49 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post('api/accounts/v1/login/', {
-        email: this.email,
-        password: this.password
-      })
-      localStorage.setItem('access_token', response.data.access_token)
-      localStorage.setItem('refresh_token', response.data.refresh_token)
-      this.$store.dispatch('user', response.data.user)
-      this.$router.push('/project')
+      console.log('핸들 서브밋')
+      const response = await axios
+        .post('api/accounts/v1/login/', {
+          email: this.email,
+          password: this.password
+        })
+        .then((response) => {
+          localStorage.setItem('access_token', response.data.access_token)
+          localStorage.setItem('refresh_token', response.data.refresh_token)
+          this.$store.dispatch('user', response.data.user)
+          this.$router.push('/project')
+        })
+        .catch((error) => {
+          console.log('에러 리스폰스', error.response)
+          if (error.response.status === 400) {
+            this.login_status = 'fail'
+            // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+            this.err = '아이디 혹은 비밀번호를 확인해 주세요 🥹'
+            this.showAlert()
+            if (this.dismissSecs === 0) {
+              this.login_status = 'success'
+            }
+          }
+        })
+    },
+    countDownChanged(dismissCountDown) {
+      cnt += 1
+      this.dismissCountDown = dismissCountDown
+      if (cnt > 5) {
+        console.log('cnt:', cnt)
+        this.login_status = 'success'
+        cnt = 0
+      }
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
+    changeLoginStatus() {
+      console.log('실행')
+      this.login_status = 'success'
     }
   }
 }
-
 </script>
 
 <style scoped>

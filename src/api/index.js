@@ -266,6 +266,15 @@ function changeLeader(pjt_pk, user_pk) {
   })
 }
 
+function searchEmail(search) {
+  const url = `userlist/${search}`
+  return axios.get(url, {
+      headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
 
 // 함수 export
 export {
@@ -291,5 +300,6 @@ export {
   commentList,
   MemberList,
   deleteMember,
-  changeLeader
+  changeLeader,
+  searchEmail
 }
