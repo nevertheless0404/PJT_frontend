@@ -85,7 +85,7 @@ export default {
   display: flex;
   align-items: center;
   margin: 10px;
-  
+
 }
 
 .allprogress {
@@ -99,7 +99,7 @@ export default {
 }
 
 #progress {
-    appearance: none;
+  appearance: none;
 }
 #progress::-webkit-progress-bar {
     background: #FFC062;
@@ -124,7 +124,7 @@ export default {
   white-space: wrap;
   min-width: 80px;
   width: auto;
-  
+
 }
 
 .listbox:hover * {
@@ -147,7 +147,7 @@ export default {
   padding:5px;
   border-radius: 0px 10px 10px 0px;
   border: #F24E1E;;
-  
+
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -167,7 +167,7 @@ export default {
   padding:5px;
   border-radius: 10px 0px 0px 10px;
   border: #F24E1E;
- 
+
   width: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -215,11 +215,4 @@ export default {
   justify-content: center;
   font-weight: 600;
 }
-
-
-
-
-
-
-
 </style>
