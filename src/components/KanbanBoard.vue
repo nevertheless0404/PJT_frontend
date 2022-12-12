@@ -36,7 +36,9 @@
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
                 </div>
-                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
+                <p class="m-0" style="font-size: 14px">
+                  {{ element.start_at }} - {{ element.end_at }}
+                </p>
               </button>
             </div>
           </draggable>
@@ -65,7 +67,9 @@
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
                 </div>
-                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
+                <p class="m-0" style="font-size: 14px">
+                  {{ element.start_at }} - {{ element.end_at }}
+                </p>
               </button>
             </div>
           </draggable>
@@ -94,7 +98,9 @@
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
                 </div>
-                <p class="m-0" style="font-size:14px;">{{ element.start_at }} - {{ element.end_at }}</p>
+                <p class="m-0" style="font-size: 14px">
+                  {{ element.start_at }} - {{ element.end_at }}
+                </p>
               </button>
             </div>
           </draggable>
@@ -112,9 +118,14 @@
       >
         <div class="d-block" v-if="!edit">
           <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex justify-content-between align-items-center">
-            <h3 class="m-0">{{ modalData.title }}</h3>
-              <p class="m-1 ms-4" style="font-weight:500;color:rgb(148 148 148);">{{modalData.user_s}}의 할 일</p>
+            <div class="">
+              <h3 class="m-0">{{ modalData.title }}</h3>
+              <p
+                class="mt-1 mb-0"
+                style="font-weight: 500; color: rgb(110 110 110);"
+              >
+                {{ modalData.user_s }}의 할 일
+              </p>
             </div>
             <i
               v-if="!edit"
@@ -568,8 +579,8 @@ export default {
 
 .avatar {
   font-size: 13px;
-  color: gray;
-  font-weight: 500;
+  color: #ababab;
+  font-weight: 600;
   letter-spacing: -0.5px;
   padding: 0px 5px;
 }
