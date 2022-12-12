@@ -89,9 +89,6 @@
               placeholder="Password"
               v-model="password"
             />
-            <div class="form-text" v-if="errors">
-              {{ e }}
-            </div>
           </div>
           <button type="submit" class="btn w-100 my-3 shadow btn-login">
             로그인
@@ -150,6 +147,12 @@ export default {
         .post('api/accounts/v1/login/', {
           email: this.email,
           password: this.password
+        })
+        .then((response) => {
+          localStorage.setItem('access_token', response.data.access_token)
+          localStorage.setItem('refresh_token', response.data.refresh_token)
+          this.$store.dispatch('user', response.data.user)
+          this.$router.push('/project')
         })
         .catch((error) => {
           console.log('에러 리스폰스', error.response)
