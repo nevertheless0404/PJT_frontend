@@ -4,22 +4,25 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
-        <form @submit.prevent="postmember" class='form1 mb-5'>
+        <form @submit.prevent="postmember" class='form1 mb-5 input-wrap'>
           <div class="w-100 d-flex">
-            <input type="email" class="form-control" placeholder="Email" v-model="memberInput">
-            <button type="submit" class="btn4">추가</button>
+            <input @keyup="searchEmail" type="email" class="search_input" placeholder="Email" v-model="memberInput" autocomplete="off">
+            <button type="submit" class="search_btn btn btn-primary">추가</button>
+          </div>
+          <div id="suggestions_pannel" v-for="(user, idx) in userList" :key="idx">
+            <p @click="updateInput(user.email)">{{user.email}}</p>
           </div>
         </form>
         <div class="allmember">
           <div class="memberbox" :key="id" v-for="(member, id) in members">
             <span class="pjtmember">{{ member.user }}</span>
-            <span v-if="(member.leader===true)"> 팀장</span>
-            <span v-if="(member.leader===false)"> 팀원
-              <button @click="deletemember" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn2 float-end">
-                팀원 삭제
-              </button>
-              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn3 float-end">
+            <span v-if="(member.leader===true)">팀장</span>
+            <span v-if="(member.leader===false)">팀원
+              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-dark">
                 팀장 위임
+              </button>
+              <button @click="deletemember" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-danger">
+                팀원 삭제
               </button>
             </span>
           </div>
@@ -35,6 +38,7 @@ import { MemberList } from '@/api/index'
 import { changeLeader } from '@/api/index'
 import { deleteMember } from '@/api/index'
 import { memberCreate } from '@/api/index'
+import { searchEmail } from '@/api/index'
 
 export default {
   components: { NavBar_detail },
@@ -47,7 +51,9 @@ export default {
           leader: false
         }
       ],
-      teamLeader: ''
+      teamLeader: '',
+      userList: [],
+      memberInput: ''
     }
   },
   setup() {},
@@ -65,6 +71,17 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    updateInput(email) {
+      this.memberInput = email
+      this.userList = []
+    },
+    async searchEmail() {
+      let memberInputSubmit = this.memberInput
+      await searchEmail(memberInputSubmit)
+      .then((response) => {
+        this.userList = response.data
+      })
+    },
     async changeleader() {
       const meberId = event.target.getAttribute('data-id')
       await changeLeader(this.$route.params.id, meberId)
@@ -110,7 +127,9 @@ export default {
   }
 }
 </script>
+
 <style scoped>
+
 .title {
   text-align: center;
   font-family: 'Dela Gothic One', cursive;
@@ -123,7 +142,7 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
-  border: #D9D9D9 solid 1px;
+  border: #D9D9D9 solid 2px;
 }
 
 .pjtmember {
@@ -134,25 +153,23 @@ export default {
 .btn1 {
   margin: auto;
   color: white;
-  background-color: #3485ff;
-  box-shadow: 5px 9px 16px 0px #0d224216;
+  background-color: #3485FF;
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  border: #d9d9d9 solid 0px;
+  border: #D9D9D9 solid 0px;
   text-decoration: none;
   text-align : center;
+
+
   box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
   -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
 .btn1:hover {
+
   box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 
@@ -163,80 +180,32 @@ export default {
   width: 80%;
 }
 
-.btn2{
-  color: white;
-  background-color: #e34444;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 75px;
-  height: 30px;
-  border-radius: 10px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-}
-.btn2:hover {
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
+.search_input {
+    width: 100%;
+    height: 42px;
+    font-size: 16px;
+    color: #777;
+    line-height: 40px;
+    border: none;
+    background: none;
 }
 
-
-.btn3{
-  color: white;
-  margin-right: 8px;
-  background-color: #383838;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 75px;
-  height: 30px;
-  border-radius: 10px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+.case_search_btn {
+    width: 20px;
+    height: 20px;
+    margin-right: 16px;
+    margin-left: 16px;
 }
 
-.btn3:hover {
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
+.suggestions {
+    border-top: 0.5px solid;
 }
-
-.btn4 {
-  margin-left: 10px;
-  color: white;
-  margin-right: 8px;
-  background-color: #3485FF;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 75px;
-  height: 50px;
-  border-radius: 10px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+.suggestions > div {
+    padding: 5px;
+    border-top: 1px solid #888;
+    cursor: pointer;
 }
-
-.btn4:hover {
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
+.suggestions > div:hover {
+    background-color: rgb(207, 204, 204);
 }
-
-
 </style>
