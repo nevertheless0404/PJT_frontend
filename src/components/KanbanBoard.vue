@@ -13,7 +13,7 @@
     <div class="row mt-3">
       <div class="col-md-4">
         <div class="p-2 alert alert-warning">
-          <h3>시작전</h3>
+          <h3>시작 전</h3>
           <draggable
             class="list-group kanban-column"
             :list="arrBacklog"
@@ -22,6 +22,7 @@
             @change="refresh"
             ><div v-for="element in arrBacklog" :key="element.id">
               <!-- 칸반보드 요소들 -->
+              <!-- <div class="sdfsdf" @mouseenter="cursor(element)" :class="{cursorNot : isCursor}"> -->
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
                 id="show-btn"
@@ -29,7 +30,7 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between " style="margin: 8px 0px;">
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -60,7 +61,7 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between" style="margin: 8px 0px;">
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -91,7 +92,7 @@
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between" style="margin: 8px 0px;">
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -117,7 +118,7 @@
         <div class="d-block" v-if="!edit">
           <div class="d-flex justify-content-between">
             <div class="">
-              <h3 class="m-0">{{ modalData.title }}</h3>
+              <h3 class="m-0" style="word-break: break-all;">{{ modalData.title }}</h3>
               <p
                 class="mt-1 mb-0"
                 style="font-weight: 500; color: rgb(110 110 110);"
@@ -191,7 +192,7 @@
             <b-form-group label="할 일 상태" v-slot="{ ariaDescribedby }">
               <b-form-radio-group
                 id="btn-radios-2"
-                v-model="complete"
+                v-model="updateData.complete"
                 :options="options"
                 :aria-describedby="ariaDescribedby"
                 button-variant="outline-success"
@@ -273,7 +274,11 @@
               id="exampleFormControlInput1"
               placeholder=""
               v-model="newTask.title"
+              :state="validation"
             />
+            <b-form-invalid-feedback :state="validation">
+        제목은 30자 이내로 작성해 주세요.
+      </b-form-invalid-feedback>
           </div>
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label"
@@ -343,13 +348,15 @@ export default {
   components: { draggable },
   data() {
     return {
+      isCursor: false,
       complete: '',
       user_s: '',
       newTask: {
         title: '',
         content: '',
         start_at: '',
-        end_at: ''
+        end_at: '',
+        user: ''
       },
       arrBacklog: [],
       arrInProgress: [],
@@ -362,7 +369,8 @@ export default {
           start_at: '',
           end_at: '',
           user_s: '',
-          user: ''
+          user: '',
+          complete: ''
         }
       ],
       updateData: [],
@@ -391,9 +399,9 @@ export default {
               end_at: ele.end_at,
               user_s: ele.user.split('@')[0],
               user: ele.user,
-              complete: 0
+              complete: ele.complete
             })
-            this.complete = ele.complete
+            // this.modalData.complete = ele.complete
           } else if (ele.complete === 1) {
             this.arrInProgress.push({
               id: ele.id,
@@ -404,9 +412,9 @@ export default {
               end_at: ele.end_at,
               user_s: ele.user.split('@')[0],
               user: ele.user,
-              complete: 1
+              complete: ele.complete
             })
-            this.complete = ele.complete
+            // this.modalData.complete = ele.
           } else {
             this.arrDone.push({
               id: ele.id,
@@ -417,11 +425,12 @@ export default {
               end_at: ele.end_at,
               user_s: ele.user.split('@')[0],
               user: ele.user,
-              complete: 2
+              complete: ele.complete
             })
-            this.complete = ele.complete
+            // this.modalData.complete = ele.complete
           }
         })
+        console.log('제발스',this.complete)
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
         len_done = this.arrDone.length
@@ -457,6 +466,7 @@ export default {
         console.log(response)
         this.comments = response.data
       })
+      console.log('업데이트데이터',this.updateData)
     },
     hideModal() {
       this.$refs['my-modal'].hide()
@@ -467,13 +477,14 @@ export default {
       this.updateData.start_at = ''
       this.updateData.end_at = ''
       this.updateData.complete = ''
-      if (this.newTask) {
+      if (this.newTask && this.newTask.title.length < 30) {
         this.arrBacklog.push({
           project: this.$route.params.id,
           title: this.newTask.title,
           content: this.newTask.content,
           start_at: this.newTask.start_at,
-          end_at: this.newTask.end_at
+          end_at: this.newTask.end_at,
+          user_s: this.user.email.split('@')[0]
         })
         const new_data = {
           title: this.newTask.title,
@@ -504,7 +515,7 @@ export default {
       // this.$refs['my-modal'].hide()
     },
     async todoUpdate() {
-      this.updateData.complete = this.complete
+      // this.updateData[0].complete = this.complete
       await todoPut(this.$route.params.id, this.updateData)
       this.updateData = []
       this.$router.go()
@@ -517,6 +528,58 @@ export default {
     async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
       await todoPutDrag(this.$route.params.id, this.updateData)
+       todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
+      .then((response) => {
+        response.data.forEach((ele) => {
+          if (ele.complete === 0) {
+            this.arrBacklog.push({
+              id: ele.id,
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
+              complete: ele.complete
+            })
+            // this.modalData.complete = ele.complete
+          } else if (ele.complete === 1) {
+            this.arrInProgress.push({
+              id: ele.id,
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
+              complete: ele.complete
+            })
+            // this.modalData.complete = ele.complete
+          } else {
+            this.arrDone.push({
+              id: ele.id,
+              project: ele.project,
+              title: ele.title,
+              content: ele.content,
+              start_at: ele.start_at,
+              end_at: ele.end_at,
+              user_s: ele.user.split('@')[0],
+              user: ele.user,
+              complete: ele.complete
+            })
+            // this.modalData.complete = ele.complete
+          }
+        })
+        len_back = this.arrBacklog.length
+        len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
+      }) // 성공하면 json 객체를 받아온다.
+      .catch((error) => console.log(error))
+      this.arrBacklog = [],
+      this.arrInProgress = [],
+      this.arrDone = [],
       this.updateData = []
       len_back = this.arrBacklog.length
       len_in = this.arrInProgress.length
@@ -557,10 +620,23 @@ export default {
       } else {
         refresh_onetime = 0
       }
-    }
+    },
+    // cursor(element) {
+    //   if (this.user.email != element.user){
+    //     this.isCursor = true
+    //     console.log('어케되는거니?', this.isCursor)
+    //   }
+    //   else {
+    //     this.isCursor = false
+    //     console.log('어케되는거니?', this.isCursor)
+    //   }
+    // }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    validation() {
+        return this.newTask.title.length < 30
+      }
   }
 }
 </script>
@@ -573,7 +649,8 @@ export default {
 .todoTitle {
   font-size: 18px;
   font-weight: 600;
-  margin: 8px 0px;
+  word-break: break-all;
+  /* margin: 8px 0px; */
   color: rgb(54, 54, 54);
 }
 
@@ -582,7 +659,7 @@ export default {
   color: #ababab;
   font-weight: 600;
   letter-spacing: -0.5px;
-  padding: 0px 5px;
+  padding: 3px 5px;
 }
 
 .todo {
@@ -613,5 +690,9 @@ export default {
 
 .btn1:hover {
   box-shadow: inset 1600px 0px 0px 0px #ffc062;
+}
+
+.cursorNot {
+  cursor: not-allowed;
 }
 </style>

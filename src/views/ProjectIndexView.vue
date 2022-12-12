@@ -116,6 +116,7 @@ export default {
     projectIndex() // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
         this.projects = response.data
+        console.log('나와라',this.projects)
         let idx = 0
         for (const pjt of this.projects) {
           if (pjt.color === 1) {
