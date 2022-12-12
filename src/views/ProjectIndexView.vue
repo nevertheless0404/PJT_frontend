@@ -81,11 +81,10 @@
                 </router-link>
               </div>
             </div>
-          <router-link
-            :to="{ name: 'projectcreate' }"
-            class="btn1"
-            ><i class="bi bi-plus-lg"></i>&nbsp;프로젝트 생성</router-link>
-          <TodoList />
+            <router-link :to="{ name: 'projectcreate' }" class="btn1">
+              프로젝트 생성
+            </router-link>
+          </div>
         </div>
       </div>
       <router-view></router-view>
@@ -97,7 +96,6 @@
 import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 // import ProjectCalender from '@/components/ProjectCalender.vue'
 // 캘린터 임포트
-import { reactive } from 'vue'
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -123,7 +121,7 @@ export default {
         { end_at: '' },
         { color: '' }
       ],
-      calendarOptions: reactive ({
+      calendarOptions: {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -132,7 +130,7 @@ export default {
           right: 'dayGridMonth,timeGridWeek'
         },
         events: []
-      })
+      }
     }
   },
   computed() {},
@@ -141,7 +139,6 @@ export default {
     projectIndex() // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
       .then((response) => {
         this.projects = response.data
-        let idx = 0
         for (const pjt of this.projects) {
           console.log('pjt:', pjt)
           if (pjt.color === 1) {
@@ -302,7 +299,7 @@ export default {
 }
 
 .pjtTitle {
-  font-weight: 500;
+  font-weight: bold;
   text-decoration: none;
 }
 
