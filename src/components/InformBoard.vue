@@ -1,16 +1,11 @@
 <template>
   <div class="mb-4">
-    <b-card
-      border-variant="secondary"
-      header="Notice"
-      header-border-variant="secondary"
-      align="center"
-    >
+    <div class="inform-head">
       <b-card-text>
-        <p :key="id" v-if="informs" v-for="(s, id) in informs" class="mb-0">{{s.name}}</p>
+        <p :key="id" v-if="informs" v-for="(s, id) in informs" class="mb-0">✔{{s.name}}</p>
         <p v-if="(informsLen===0)">공지사항이 없습니다</p>
       </b-card-text>
-    </b-card>
+    </div>
   </div>
 </template>
 
@@ -36,3 +31,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.inform-head {
+  width: 100%;
+  background-color: aliceblue;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+
+}
+</style>
