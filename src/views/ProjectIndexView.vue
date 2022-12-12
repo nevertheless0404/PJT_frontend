@@ -96,7 +96,6 @@
 <script>
 import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 // import ProjectCalender from '@/components/ProjectCalender.vue'
-import TodoList from '@/components/TodoList.vue'
 // 캘린터 임포트
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
