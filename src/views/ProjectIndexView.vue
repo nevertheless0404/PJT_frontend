@@ -45,7 +45,7 @@
           <router-link
             :to="{ name: 'projectcreate' }"
             class="btn1"
-            >프로젝트 생성</router-link>
+            ><i class="bi bi-plus-lg"></i>&nbsp;프로젝트 생성</router-link>
           <TodoList />
         </div>
       </div>
@@ -291,7 +291,7 @@ export default {
 }
 
 .pjtTitle {
-  font-weight: bold;
+  font-weight: 500;
   text-decoration: none;
 }
 

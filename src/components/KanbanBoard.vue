@@ -7,7 +7,7 @@
           placeholder="Enter Task"
           @keyup.enter="add"
         ></b-form-input> -->
-        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>할 일 추가</div>
+        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing><i class="bi bi-plus-lg"></i>&nbsp;할 일 추가</div>
       </div>
     </div>
     <div class="row mt-3">
@@ -115,7 +115,7 @@
         no-close-on-esc
       >
         <div class="d-block" v-if="!edit">
-          <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex justify-content-between">
             <div class="">
               <h3 class="m-0">{{ modalData.title }}</h3>
               <p
@@ -130,7 +130,7 @@
               variant="outline-danger"
               block
               @click="hideModal"
-              class="bi bi-x-lg"
+              class="bi bi-x-lg ms-3"
               style="font-size: 25px; cursor: pointer"
             ></i>
           </div>
@@ -595,7 +595,7 @@ export default {
   color: white;
   background-color: #3485ff;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 100%;
+  width: 150px;
   height: 40px;
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
@@ -607,8 +607,8 @@ export default {
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  -webkit-transition: all 1.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 1.8s cubic-bezier(.5, .24, 0, 1);
 }
 
 .btn1:hover {
