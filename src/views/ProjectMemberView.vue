@@ -15,13 +15,13 @@
         <div class="allmember">
           <div class="memberbox" :key="id" v-for="(member, id) in members">
             <span class="pjtmember">{{ member.user }}</span>
-            <span v-if="(member.leader===true)">팀장</span>
-            <span v-if="(member.leader===false)">팀원
-              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-dark">
-                팀장 위임
-              </button>
-              <button @click="deletemember" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn btn-danger">
+            <span v-if="(member.leader===true)"> 팀장</span>
+            <span v-if="(member.leader===false)"> 팀원
+              <button @click="deletemember" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn2 float-end">
                 팀원 삭제
+              </button>
+              <button @click="changeleader" :data-id="member.id" v-if="(user.email===teamLeader)" class="btn3 float-end">
+                팀장 위임
               </button>
             </span>
           </div>
@@ -153,7 +153,7 @@ export default {
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 30px;
-  border: #D9D9D9 solid 2px;
+  border: #D9D9D9 solid 1px;
 }
 
 .pjtmember {
@@ -164,23 +164,25 @@ export default {
 .btn1 {
   margin: auto;
   color: white;
-  background-color: #3485FF;
+  background-color: #3485ff;
+  box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  border: #D9D9D9 solid 0px;
+  border: #d9d9d9 solid 0px;
   text-decoration: none;
   text-align : center;
-
-
   box-shadow: inset 0px 0px 0px #FFC062;
   display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
   -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
 }
 
 .btn1:hover {
-
   box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 
@@ -189,5 +191,80 @@ export default {
   align-items: center;
   flex-direction: column;
   width: 80%;
+}
+
+.btn2{
+  color: white;
+  background-color: #e34444;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 75px;
+  height: 30px;
+  border-radius: 10px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+}
+.btn2:hover {
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+
+
+.btn3{
+  color: white;
+  margin-right: 8px;
+  background-color: #383838;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 75px;
+  height: 30px;
+  border-radius: 10px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+}
+
+.btn3:hover {
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+
+.btn4 {
+  margin-left: 10px;
+  color: white;
+  margin-right: 8px;
+  background-color: #3485FF;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 75px;
+  height: 50px;
+  border-radius: 10px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+}
+
+.btn4:hover {
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 </style>

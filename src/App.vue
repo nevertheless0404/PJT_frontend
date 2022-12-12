@@ -24,8 +24,7 @@ export default {
 </script>
 <style>
 * {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', 'IBM Plex Sans KR';
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -82,6 +82,9 @@
               placeholder="Password"
               v-model="password"
             />
+            <div class="form-text" v-if="errors">
+              {{ e}}
+            </div>
           </div>
           <button type="submit" class="btn w-100 my-3 shadow btn-login">
             로그인
@@ -125,6 +128,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
