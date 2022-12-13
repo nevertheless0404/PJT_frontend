@@ -140,12 +140,14 @@ export default {
       // API 요청시 전달할 userData 객체
       let stringSkill = ''
       this.skill.forEach((ele) => {
-        stringSkill += ele.name + ' '
+        stringSkill += ele.name + ';'
       })
+      stringSkill = stringSkill.substr(0, stringSkill.length-1)
       let stringFunction = ''
       this.functions.forEach((ele) => {
-        stringFunction += ele.content + ' '
+        stringFunction += ele.content + ';'
       })
+      stringFunction = stringFunction.substr(0, stringFunction.length-1)
       const projectData = {
         id: this.id,
         title: this.title,
@@ -163,7 +165,6 @@ export default {
       this.skill.push({
         name: ''
       })
-      console.log(this.skill)
     },
     removeSkill() {
       if (this.skill.length > 1) {
@@ -172,13 +173,11 @@ export default {
         this.skill.splice(-1, 1)
         this.addSkill()
       }
-      console.log(this.skill)
     },
     addfunc() {
       this.functions.push({
         content: ''
       })
-      console.log(this.functions)
     },
     removefunc() {
       if (this.functions.length > 1) {
@@ -187,7 +186,6 @@ export default {
         this.functions.splice(-1, 1)
         this.addfunc()
       }
-      console.log(this.functions)
     }
   }
 }

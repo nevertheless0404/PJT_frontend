@@ -65,7 +65,6 @@ export default {
           response.data[i].id,
           response.data[i].project.title
         ])
-        console.log(response.data[i])
       }
     })
   },

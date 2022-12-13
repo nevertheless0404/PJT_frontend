@@ -21,7 +21,7 @@ export default {
   created() {
     informList(this.$route.params.id)
     .then((response) => {
-      for (const content of response.data[0].content.split(' ')) {
+      for (const content of response.data[0].content.split(';')) {
         this.informs.push({name: content})
         this.informsLen = this.informs.length
       }

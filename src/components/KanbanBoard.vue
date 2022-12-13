@@ -134,7 +134,7 @@
               </h3>
               <p
                 class="mt-1 mb-0"
-                style="font-weight: 500; color: rgb(110 110 110);"
+                style="font-weight: 500; color: rgb(110 110 110)"
               >
                 {{ modalData.user_s }}의 할 일
               </p>
@@ -259,14 +259,43 @@
             </button>
           </form>
           <div
-            :key="id"
-            v-for="(c, id) in comments"
+            :key="idx"
+            v-for="(content, idx) in comments"
             class="row"
             style="justify-content: flex-end"
           >
-            <p class="col">{{ c.user }}</p>
-            <p class="col">{{ c.comment }}</p>
-            <p class="col">{{ c.created_at }}</p>
+            <!-- <p class="col">{{ content.user }}</p>
+            <p class="col">{{ content.comment }}</p>
+            <p class="col">{{ content.created_at }}</p> -->
+            <div class="my-1">
+              <b-card sub-title class="shadow-sm">
+                <div style="font-size: 20px; font-weight: 400">
+                  {{ content.comment }}
+                </div>
+                <div v-if="editComment && idx == updateCommentIdx">
+                  <form @submit.prevent="commentPut(content)">
+                    <input type="text" v-model="updateComment" />
+                    <button type="submit">저장</button>
+                  </form>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div style="font-size: 10px">
+                    작성자 | {{ content.user }} <br />
+                    작성일 | {{ content.created_at }}
+                  </div>
+                  <div>
+                    <a @click="commentPutBtn(content, idx)" class="card-link"
+                      >수정</a
+                    >
+                    <b-link
+                      @click="commentDelBtn(content, idx)"
+                      class="card-link danger"
+                      >삭제</b-link
+                    >
+                  </div>
+                </div>
+              </b-card>
+            </div>
           </div>
         </div>
       </b-modal>
@@ -342,7 +371,9 @@ import {
   todoPutDrag,
   todoDel,
   commentCreate,
-  commentList
+  commentList,
+  commentUpdate,
+  commentDelete
 } from '@/api/index'
 
 let before_title,
@@ -361,6 +392,9 @@ export default {
   components: { draggable },
   data() {
     return {
+      updateComment: '',
+      updateCommentIdx: '',
+      editComment: false,
       isCursor: false,
       complete: '',
       user_s: '',
@@ -443,13 +477,11 @@ export default {
             // this.modalData.complete = ele.complete
           }
         })
-        console.log('제발스', this.complete)
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
         len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
-    todoUpdate(this.$route.params.id)
   },
   mounted() {},
   unmounted() {},
@@ -460,13 +492,11 @@ export default {
         comment: new_comment
       })
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
       this.comment = ''
     },
     showModal(element) {
-      console.log('element.id :', element.id)
       this.$refs['my-modal'].show()
       this.modalData = element
       this.updateData = element
@@ -476,13 +506,9 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
-      console.log('modalData.id :', this.modalData.id)
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
-      console.log('modalData.id after :', this.modalData.id)
-      console.log('업데이트데이터', this.updateData)
     },
     hideModal() {
       this.$refs['my-modal'].hide()
@@ -510,7 +536,6 @@ export default {
           end_at: this.newTask.end_at
         }
         await todoCreate(this.$route.params.id, new_data)
-        console.log('이번 user :')
         this.newTask.title = ''
         this.newTask.content = ''
         this.newTask.start_at = ''
@@ -588,6 +613,36 @@ export default {
         refresh_onetime = 0
       }
       this.$parent.forceRerender()
+    },
+    commentPutBtn(content, idx) {
+      this.updateComment = content.comment
+      this.updateCommentIdx = idx
+      this.editComment = true
+    },
+    async commentPut(content) {
+      console.log('content 요청보내기', content)
+      content.comment = this.updateComment
+      await commentUpdate(
+        this.$route.params.id,
+        this.modalData.id,
+        content.id,
+        content
+      )
+      this.editComment = false
+      this.updateComment = ''
+      await commentList(this.$route.params.id, this.modalData.id).then(
+        (response) => {
+          this.comments = response.data
+        }
+      )
+    },
+    async commentDelBtn(content) {
+      await commentDelete(this.$route.params.id, this.modalData.id, content.id)
+      await commentList(this.$route.params.id, this.modalData.id).then(
+        (response) => {
+          this.comments = response.data
+        }
+      )
     }
   },
   computed: {
@@ -624,7 +679,6 @@ export default {
   overflow: hidden;
 }
 
-
 .btn1 {
   display: flex;
   color: white;
@@ -635,8 +689,8 @@ export default {
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
+  text-align: center;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
   display: flex;
   align-items: center;

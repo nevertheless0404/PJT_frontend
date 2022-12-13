@@ -8,7 +8,7 @@
           <div class="w-100 d-flex">
             <input
               @keyup="searchEmail"
-              @blur="isSearch = true"
+              @blur="isSearch = false"
               type="email"
               class="search_input"
               placeholder="Email"
@@ -141,9 +141,9 @@ export default {
       })
     },
     async postmember() {
-      console.log(this.memberInput)
-      await memberCreate(this.$route.params.id, { user: this.memberInput })
-      MemberList(this.$route.params.id).then((response) => {
+      await memberCreate(this.$route.params.id, {user:this.memberInput})
+      MemberList(this.$route.params.id)
+      .then((response) => {
         this.members = response.data
         for (let i = 0; i < response.data.length; i++) {
           if (response.data[i].leader == true) {

@@ -54,7 +54,6 @@ function projectUpdate(project, projectData) {
 
 function markdownGet(project) {
   // 요청할 URL
-  console.log('웨 안 뒈 마 크 다 운')
   const url = `${project}/markdown/`
   return axios.get(url, {
     headers: {
@@ -111,15 +110,13 @@ function NotificationGet() {
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/`
-  console.log('뉴데이터 : ', new_data)
   return (
     axios.post(url, new_data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('post 요청 후 데이터 :', new_data)
+    })
   )
 }
 
@@ -160,21 +157,19 @@ function todoPut(pjt_pk, update_data) {
 function todoDel(pjt_pk, update_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/${update_data.id}/`
-  console.log('del 데이터 : ', update_data)
   return (
     axios.delete(url, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('del 요청 후 데이터 :', update_data)
+    })
   )
 }
 
 function isRead(notificationPk) {
   // 요청할 URL
-  const url = `isread/${notificationPk}`
+  const url = `isread/${notificationPk}/`
   return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -244,6 +239,19 @@ function commentList(pjt_pk, todo_pk) {
   })
 }
 
+function commentDelete(pjt_pk, todo_pk, comment_pk) {
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/${comment_pk}/`
+  return (
+    axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    }),
+    console.log('del 요청 후 데이터 :', update_data)
+  )
+}
+
 function MemberList(project) {
   // 요청할 URL
   const url = `memberadmin/${project}/`
@@ -269,7 +277,7 @@ function deleteMember(pjt_pk, user_pk) {
 function changeLeader(pjt_pk, user_pk) {
   const url = `changeleader/${pjt_pk}/${user_pk}/`
   return axios.get(url, {
-      headers: {
+    headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
     }
@@ -279,7 +287,7 @@ function changeLeader(pjt_pk, user_pk) {
 function searchEmail(search) {
   const url = `userlist/${search}`
   return axios.get(url, {
-      headers: {
+    headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
     }
@@ -309,6 +317,7 @@ export {
   commentCreate,
   commentUpdate,
   commentList,
+  commentDelete,
   MemberList,
   deleteMember,
   changeLeader,

@@ -92,7 +92,7 @@ export default {
     informList(this.$route.params.id)
     .then((response) => {
       this.responseLen = response.data.length
-      for (const resContent of response.data[0].content.split(' ')) {
+      for (const resContent of response.data[0].content.split(';')) {
         this.inform.push({name: resContent})
       }
     })
@@ -103,8 +103,9 @@ export default {
     async submitinform() {
       let stringInform = ''
       this.inform.forEach((ele) => {
-        stringInform += ele.name + ' '
+        stringInform += ele.name + ';'
       })
+      stringInform = stringInform.substr(0, stringInform.length-1)
 
       const informData = {
         id: this.$route.params.id,
@@ -114,11 +115,11 @@ export default {
       this.$router.push({ name: 'projectdetail', params: {id: this.$route.params.id} })
     },
     async putinform() {
-      console.log('putinform 작동')
       let stringContent = ''
       this.inform.forEach((ele) => {
-        stringContent += ele.name + ' '
+        stringContent += ele.name + ';'
       })
+      stringContent = stringContent.substr(0, stringContent.length-1)
       const informData = {
         id: this.$route.params.id,
         content: stringContent

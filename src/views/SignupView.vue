@@ -125,7 +125,6 @@ export default {
             this.$router.push('/login')
           })
           .catch((error) => {
-            console.log('에러 리스폰스', error.response)
             if (error.response.status === 400) {
               this.signup_status = 'fail'
               // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
@@ -146,7 +145,6 @@ export default {
       this.password2 = ''
     },
     checkForm() {
-      console.log('체크폼 실행')
       this.errors = []
       if (this.email === '') {
         this.errors.push('Email required')
@@ -170,7 +168,6 @@ export default {
       cnt += 1
       this.dismissCountDown = dismissCountDown
       if (cnt > 5) {
-        console.log('cnt:', cnt)
         this.login_status = 'success'
         cnt = 0
       }
@@ -179,7 +176,6 @@ export default {
       this.dismissCountDown = this.dismissSecs
     },
     changeLoginStatus() {
-      console.log('실행')
       this.login_status = 'success'
     }
   }
