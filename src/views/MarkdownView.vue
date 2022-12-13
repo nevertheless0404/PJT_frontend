@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavProject v-bind:childValue="pjtPk" />
+    <NavProject />
     <div class="container mt-5">
       <h1 class="title mb-4 text-center">Project markdown</h1>
       <v-md-editor v-model="text" height="750px"></v-md-editor>
