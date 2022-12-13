@@ -173,8 +173,9 @@ function todoDel(pjt_pk, update_data) {
 }
 
 function isRead(notificationPk) {
+  console.log('통신완'+notificationPk)
   // 요청할 URL
-  const url = `isread/${notificationPk}`
+  const url = `isread/${notificationPk}/`
   return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
