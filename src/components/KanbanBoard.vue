@@ -248,14 +248,14 @@
         <div v-if="!edit">
           <hr />
           <p>댓글</p>
-          <form @submit.prevent="submitComment" class="row justify-content-end">
+          <form @submit.prevent="submitComment" class="d-flex justify-content-end">
             <input
               type="text"
               v-model="comment"
-              class="col-auto form-control mb-3"
+              class="form-control mb-3"
             />
-            <button type="submit" class="col-auto btn btn-primary mb-3">
-              댓글
+            <button type="submit" class="btn btn-primary mb-3 ms-2" style="width: 15%;">
+              추가
             </button>
           </form>
           <div
@@ -275,7 +275,7 @@
                 <div v-if="editComment && idx == updateCommentIdx">
                   <form @submit.prevent="commentPut(content)">
                     <input type="text" v-model="updateComment" />
-                    <button type="submit">저장</button>
+                    <button class="update_btn" type="submit">저장</button>
                   </form>
                 </div>
                 <div class="d-flex justify-content-between">
@@ -706,5 +706,20 @@ export default {
 
 .cursorNot {
   cursor: not-allowed;
+}
+
+.update_btn{
+  margin-left: 3px;
+  color: white;
+  background-color: #3485ff;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  height: 32px;
+  border-radius: 4px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: inset 0px 0px 0px #ffc062;
+  -webkit-transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 </style>
