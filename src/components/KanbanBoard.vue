@@ -559,10 +559,10 @@ export default {
       this.$parent.calendarRefresh()
       this.$parent.forceRerender()
     },
-    pick_id(ele) {
+    async pick_id(ele) {
       drag_id = ele.id
       this.updateData.id = drag_id
-      this.updateData.push({
+      await this.updateData.push({
         id: drag_id,
         complete: '',
         title: ele.title,
@@ -583,26 +583,12 @@ export default {
         } else if (this.arrDone.length > len_done) {
           this.complete = 2
           this.todoUpdateDrag()
-        } else if (
-          this.arrBacklog.length === len_back &&
-          this.arrBacklog.length === len_back &&
-          this.arrBacklog.length === len_back
-        ) {
         }
       } else {
         refresh_onetime = 0
       }
+      this.$parent.forceRerender()
     }
-    // cursor(element) {
-    //   if (this.user.email != element.user){
-    //     this.isCursor = true
-    //     console.log('어케되는거니?', this.isCursor)
-    //   }
-    //   else {
-    //     this.isCursor = false
-    //     console.log('어케되는거니?', this.isCursor)
-    //   }
-    // }
   },
   computed: {
     ...mapGetters(['user']),
