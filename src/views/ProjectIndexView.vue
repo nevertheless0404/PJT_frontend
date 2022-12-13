@@ -17,20 +17,20 @@
               <div :key="idx" v-for="(todo, idx) in todos">
                 <div
                   class="listbox1 mb-1"
-                  v-if="todo.color === 1"
+                  v-if="todo.color == 1"
                   style="font-size: 15px"
                 >
                   <div class="todo2 font1">
                     {{ todo.project }}
                   </div>
                   <div class="todo1 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
 
                 <div
                   class="listbox2"
-                  v-if="todo.color === 2"
+                  v-else-if="todo.color == 2"
                   style="font-size: 15px"
                 >
                   <div class="todo4 font1">
@@ -45,7 +45,7 @@
                     {{ todo.project }}
                   </div>
                   <div class="todo5 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
               </div>
