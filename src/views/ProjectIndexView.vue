@@ -142,7 +142,6 @@ export default {
       .then((response) => {
         this.projects = response.data
         for (const pjt of this.projects) {
-          console.log('pjt:', pjt)
           if (pjt.color === 1) {
             pjt_color = '#3485ff'
           } else if (pjt.color === 2) {
@@ -161,7 +160,6 @@ export default {
           todoList(pjt.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
             .then((response) => {
               response.data.forEach((ele) => {
-                console.log('ele data:', ele)
                 if (ele.complete != 2) {
                   this.todos.push({
                     project: ele.project,
@@ -334,7 +332,7 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 800px;
-  
+
 }
 
 .project_add {
@@ -452,7 +450,7 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
+
 }
 
 .listbox1:hover * {
@@ -466,7 +464,7 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
+
 }
 
 .listbox2:hover * {
@@ -480,8 +478,8 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  
-} 
+
+}
 
 .listbox3:hover * {
   overflow: visible;

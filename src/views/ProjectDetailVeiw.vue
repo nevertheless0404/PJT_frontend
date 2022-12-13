@@ -62,10 +62,7 @@ export default {
       .then((response) => {
         let idx = 0
         for (let ele of response.data) {
-          console.log(ele)
-          console.log('ele.user', ele.user)
           if (ele.complete === 0 || ele.complete === 1) {
-            console.log('조건문 내부')
             this.calendarOptions.events.push({
               title: ele.title,
               start: ele.start_at,
@@ -94,7 +91,6 @@ export default {
         .then((response) => {
           let idx = 0
           for (let ele of response.data) {
-            console.log(ele)
             if (ele.complete === 0 || ele.complete === 1) {
               this.calendarOptions.events.push({
                 title: ele.title,

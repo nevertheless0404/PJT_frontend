@@ -443,13 +443,11 @@ export default {
             // this.modalData.complete = ele.complete
           }
         })
-        console.log('제발스', this.complete)
         len_back = this.arrBacklog.length
         len_in = this.arrInProgress.length
         len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
-    todoUpdate(this.$route.params.id)
   },
   mounted() {},
   unmounted() {},
@@ -460,13 +458,11 @@ export default {
         comment: new_comment
       })
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
       this.comment = ''
     },
     showModal(element) {
-      console.log('element.id :', element.id)
       this.$refs['my-modal'].show()
       this.modalData = element
       this.updateData = element
@@ -476,13 +472,9 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
-      console.log('modalData.id :', this.modalData.id)
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
-      console.log('modalData.id after :', this.modalData.id)
-      console.log('업데이트데이터', this.updateData)
     },
     hideModal() {
       this.$refs['my-modal'].hide()
@@ -510,7 +502,6 @@ export default {
           end_at: this.newTask.end_at
         }
         await todoCreate(this.$route.params.id, new_data)
-        console.log('이번 user :')
         this.newTask.title = ''
         this.newTask.content = ''
         this.newTask.start_at = ''

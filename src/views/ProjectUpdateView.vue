@@ -168,7 +168,6 @@ export default {
       this.skill.push({
         name: ''
       })
-      console.log(this.skill)
     },
     removeSkill() {
       if (this.skill.length > 1) {
@@ -177,13 +176,11 @@ export default {
         this.skill.splice(-1, 1)
         this.addSkill()
       }
-      console.log(this.skill)
     },
     addfunc() {
       this.functions.push({
         content: ''
       })
-      console.log(this.functions)
     },
     removefunc() {
       if (this.functions.length > 1) {
@@ -192,7 +189,6 @@ export default {
         this.functions.splice(-1, 1)
         this.addfunc()
       }
-      console.log(this.functions)
     }
   }
 }

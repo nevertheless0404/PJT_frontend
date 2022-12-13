@@ -12,7 +12,6 @@ const store = new Vuex.Store({
   state,
   getters: {
     user: (state) => {
-      console.log('getters 내부 User :', state.user)
       return state.user
     }
   },

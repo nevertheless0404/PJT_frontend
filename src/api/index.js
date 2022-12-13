@@ -54,7 +54,6 @@ function projectUpdate(project, projectData) {
 
 function markdownGet(project) {
   // 요청할 URL
-  console.log('웨 안 뒈 마 크 다 운')
   const url = `${project}/markdown/`
   return axios.get(url, {
     headers: {
@@ -111,15 +110,13 @@ function NotificationGet() {
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/`
-  console.log('뉴데이터 : ', new_data)
   return (
     axios.post(url, new_data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('post 요청 후 데이터 :', new_data)
+    })
   )
 }
 
@@ -160,20 +157,17 @@ function todoPut(pjt_pk, update_data) {
 function todoDel(pjt_pk, update_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/${update_data.id}/`
-  console.log('del 데이터 : ', update_data)
   return (
     axios.delete(url, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('del 요청 후 데이터 :', update_data)
+    })
   )
 }
 
 function isRead(notificationPk) {
-  console.log('통신완'+notificationPk)
   // 요청할 URL
   const url = `isread/${notificationPk}/`
   return axios.put(url, {

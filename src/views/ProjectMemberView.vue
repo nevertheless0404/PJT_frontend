@@ -111,7 +111,6 @@ export default {
       })
     },
     async postmember() {
-      console.log(this.memberInput)
       await memberCreate(this.$route.params.id, {user:this.memberInput})
       MemberList(this.$route.params.id)
       .then((response) => {

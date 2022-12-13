@@ -39,12 +39,9 @@ export default {
     }
   },
   computed() {
-    console.log('created')
   },
   methods: {
     cal() {
-      console.log('calendar 함수 실행')
-      console.log('this.projects :', this.projects)
       for (const pjt of this.projects) {
         this.calendarOptions.events.push({
           title: pjt.title,
