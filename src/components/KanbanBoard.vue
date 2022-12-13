@@ -27,7 +27,7 @@
               <!-- <div class="sdfsdf" @mouseenter="cursor(element)" :class="{cursorNot : isCursor}"> -->
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                :id="'todo-'+element.id"
+                :id="'todo-' + element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
@@ -58,10 +58,14 @@
             v-model="arrInProgress"
             @change="refresh"
           >
-            <div v-for="element in arrInProgress" :key="element.id" :id="element.id">
+            <div
+              v-for="element in arrInProgress"
+              :key="element.id"
+              :id="element.id"
+            >
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                :id="'todo-'+element.id"
+                :id="'todo-' + element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
@@ -95,7 +99,7 @@
             <div v-for="element in arrDone" :key="element.id">
               <button
                 class="todoPk-${element.id} todo list-group-item text-start w-100 rounded-2"
-                :id="'todo-'+element.id"
+                :id="'todo-' + element.id"
                 data-id="element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
@@ -126,7 +130,6 @@
         hide-header
         no-close-on-backdrop
         no-close-on-esc
-
       >
         <div class="d-block" id="test1" v-if="!edit">
           <div class="d-flex justify-content-between">
@@ -250,13 +253,16 @@
         <div v-if="!edit">
           <hr />
           <p>댓글</p>
-          <form @submit.prevent="submitComment" class="d-flex justify-content-end">
-            <input
-              type="text"
-              v-model="comment"
-              class="form-control mb-3"
-            />
-            <button type="submit" class="btn btn-primary mb-3 ms-2" style="width: 15%;">
+          <form
+            @submit.prevent="submitComment"
+            class="d-flex justify-content-end"
+          >
+            <input type="text" v-model="comment" class="form-control mb-3" />
+            <button
+              type="submit"
+              class="btn btn-primary mb-3 ms-2"
+              style="width: 15%"
+            >
               추가
             </button>
           </form>
@@ -286,8 +292,10 @@
                     작성일 | {{ content.created_at }}
                   </div>
                   <div>
-                    <a @click="commentPutBtn(content, idx)" class="card-link"
-                      >수정</a
+                    <b-link
+                      @click="commentPutBtn(content, idx)"
+                      class="card-link"
+                      >수정</b-link
                     >
                     <b-link
                       @click="commentDelBtn(content, idx)"
@@ -485,20 +493,19 @@ export default {
         len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
-
   },
   unmounted() {},
-  mounted: function(){
+  mounted: function () {
     this.$nextTick(this.todoRoute)
   },
   methods: {
     todoRoute() {
-      if (this.$route.fullPath.includes('#')){
+      if (this.$route.fullPath.includes('#')) {
         const todoId = this.$route.fullPath.split('#')[1]
-        setTimeout(function() {
+        setTimeout(function () {
           const todoTop = document.querySelector(`#todo-${todoId}`)
           todoTop.scrollIntoView()
-        }, 700);
+        }, 700)
       }
     },
 
@@ -723,7 +730,7 @@ export default {
   cursor: not-allowed;
 }
 
-.update_btn{
+.update_btn {
   margin-left: 3px;
   color: white;
   background-color: #3485ff;
