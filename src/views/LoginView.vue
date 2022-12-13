@@ -1,5 +1,5 @@
 <template>
-  <div class="row w-100">
+  <div class="row w-100 justify-content-end m-0">
     <div class="col-0 col-lg-5 row left-box p-0">
       <h1
         class="title ms-5 mt-5"
@@ -49,7 +49,7 @@
         />
         <h1
           class="title mobile-title d-flex justify-content-center"
-          style="font-size: calc(7px + 6vw)"
+          style="font-size: calc(20px + 10vw)"
         >
           <span style="color: #3485ff; font-family: 'Dela Gothic One', cursive"
             >P</span
@@ -197,6 +197,7 @@ export default {
   }
   .mobile-title {
     display: contents;
+    margin-top: 70px;
   }
 }
 
@@ -205,16 +206,15 @@ export default {
     visibility: hidden;
     position: absolute;
   }
+  .left-box {
+    background-color: #eef0f3;
+    position: relative;
+    top: -60px;
+  }
 }
 .title {
   text-align: center;
   font-family: 'Dela Gothic One', cursive;
-}
-
-.left-box {
-  background-color: #eef0f3;
-  position: relative;
-  top: -60px;
 }
 
 .bottom-title {
