@@ -483,10 +483,10 @@ export default {
       })
       console.log('modalData.id after :', this.modalData.id)
       console.log('업데이트데이터', this.updateData)
-      this.$parent.forceRerender()
     },
     hideModal() {
       this.$refs['my-modal'].hide()
+      this.$parent.forceRerender()
     },
     async todoAdd() {
       this.updateData.title = ''
