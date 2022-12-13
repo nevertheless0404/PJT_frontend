@@ -224,6 +224,16 @@ function commentCreate(pjt_pk, todo_pk, new_comment) {
   })
 }
 
+function commentUpdate(pjt_pk, todo_pk, comment_pk, commentData) {
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/${comment_pk}/`
+  return axios.put(url, commentData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function commentList(pjt_pk, todo_pk) {
   const url = `${pjt_pk}/todo/${todo_pk}/comment/`
   return axios.get(url, {
@@ -297,6 +307,7 @@ export {
   informList,
   InformPut,
   commentCreate,
+  commentUpdate,
   commentList,
   MemberList,
   deleteMember,
