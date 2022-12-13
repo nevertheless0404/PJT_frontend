@@ -172,26 +172,7 @@ export default {
   transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
-.seach_btn{
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
-}
-.btn1 {
-  margin: auto;
-  color: white;
-  background-color: #3485FF;
-  width: 300px;
-  height: 50px;
-  border-radius: 10px;
-  border: #D9D9D9 solid 0px;
-  text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
-  display: block;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
-}
-
-.btn1:hover {
+.search_btn:hover{
   box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 
