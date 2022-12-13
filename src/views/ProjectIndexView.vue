@@ -168,7 +168,6 @@ export default {
                     color: pjt.color
                   })
                 }
-                console.log(' this.todos : ', this.todos)
               }) // 성공하면 json 객체를 받아온다.
             })
             .catch((error) => console.log(error))
@@ -317,8 +316,8 @@ export default {
   display: flex;
   /* align-items: center; */
   flex-direction: column;
-  position:relative; 
-  height:350px; 
+  position:relative;
+  height:350px;
   overflow-y:scroll;
   box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
 }
@@ -378,9 +377,9 @@ export default {
   margin-top: 30px;
   padding: 0 30px;
   border-radius: 15px;
-  position:relative; 
-  height:350px; 
-  overflow-y:scroll;  
+  position:relative;
+  height:350px;
+  overflow-y:scroll;
 }
 
 .todoli::-webkit-scrollbar {

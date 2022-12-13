@@ -27,15 +27,13 @@
         ></i>
         <hr />
         <div class="px-3 py-2">
-          <p :key="idx" v-for="(c, idx) in comment">
-            <router-link :to="{ name: 'projectdetail', params: { id: c[1] } }"
-              ><p @click="isRead" :data-id="c[2]" class="text-decoration-none">
-                <span class="fw-bold">{{ c[0] }}</span> 님이
-                <span class="fw-bold">{{ c[3] }}</span> 프로젝트에 댓글을
-                달았습니다.
-              </p></router-link
-            >
-          </p>
+          <div :key="idx" v-for="(c, idx) in comment">
+            <p @click="isRead" class="text-decoration-none" style="cursor:pointer">
+              <span class="fw-bold" :data-id="c[2]" :todo-id="c[4]">{{ c[0] }}</span> <span :data-id="c[1]" :todo-id="c[4]">님이 </span>
+              <span class="fw-bold" :data-id="c[2]" :todo-id="c[4]">{{ c[3] }}</span> <span :data-id="c[1]" :todo-id="c[4]"> 프로젝트에 댓글을</span>
+              <span :data-id="c[2]" :todo-id="c[4]"> 달았습니다.</span>
+            </p>
+          </div>
         </div>
       </div>
     </b-sidebar>
@@ -57,21 +55,34 @@ export default {
   },
   created() {
     NotificationGet().then((response) => {
+      console.log(response)
       this.noCnt = response.data.length
       for (let i = 0; i < response.data.length; i++) {
         this.comment.push([
           response.data[i].send_user.email,
           response.data[i].project.id,
           response.data[i].id,
-          response.data[i].project.title
+          response.data[i].project.title,
+          response.data[i].todo.id
         ])
       }
     })
   },
   methods: {
+    clickRouter(dataId, todoId) {
+      this.$router.push(
+        {
+          name: 'projectdetail',
+          params: {id:dataId},
+          hash: `#${todoId}`
+        }
+      )
+    },
     async isRead(event) {
       const dataId = event.target.getAttribute('data-id')
+      const todo = event.target.getAttribute('todo-id')
       await isRead(dataId)
+      this.clickRouter(dataId, todo)
     }
   }
 }
