@@ -140,12 +140,14 @@ export default {
       // API 요청시 전달할 userData 객체
       let stringSkill = ''
       this.skill.forEach((ele) => {
-        stringSkill += ele.name + ' '
+        stringSkill += ele.name + ';'
       })
+      stringSkill = stringSkill.substr(0, stringSkill.length-1)
       let stringFunction = ''
       this.functions.forEach((ele) => {
-        stringFunction += ele.content + ' '
+        stringFunction += ele.content + ';'
       })
+      stringFunction = stringFunction.substr(0, stringFunction.length-1)
       const projectData = {
         id: this.id,
         title: this.title,
