@@ -10,7 +10,10 @@
         <b-navbar-brand :to="{ name: 'projectindex' }"
           ><img src="@/assets/images/logo.png" width="120px"
         /></b-navbar-brand>
-        <div class="d-flex">
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav class="d-flex">
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
@@ -42,7 +45,7 @@
           >
             <AlarmBell />
           </div>
-        </div>
+        </b-collapse>
         <!-- </b-collapse> -->
       </b-navbar>
     </div>
