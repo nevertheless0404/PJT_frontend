@@ -8,7 +8,6 @@
           <div class="w-100 d-flex">
             <input
               @keyup="searchEmail"
-              @blur="isSearch = false"
               type="email"
               class="search_input"
               placeholder="Email"
@@ -17,14 +16,14 @@
             />
             <button type="submit" class="search_btn">추가</button>
           </div>
-          <div class="pannel" v-if="isSearch">
+          <div class="pannel" v-if="userList.length">
             <div
               id="suggestions_pannel"
               v-for="(user, idx) in userList"
               :key="idx"
               class="pannelItem"
             >
-              <p @click="updateInput(user.email)">
+              <p @click="updateInput(user.email)" style="cursor:pointer">
                 {{ user.email }}
               </p>
             </div>
@@ -101,6 +100,9 @@ export default {
   mounted() {},
   unmounted() {},
   methods: {
+    test() {
+      console.log('testclick')
+    },
     updateInput(email) {
       this.memberInput = email
       this.userList = []
