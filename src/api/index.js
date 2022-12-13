@@ -107,6 +107,17 @@ function NotificationGet() {
   })
 }
 
+function NotificationTodo(todo_pk) {
+  // 요청할 URL
+  const url = `notification/${todo_pk}`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/`
@@ -247,8 +258,7 @@ function commentDelete(pjt_pk, todo_pk, comment_pk) {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('del 요청 후 데이터 :', update_data)
+    })
   )
 }
 
@@ -305,6 +315,7 @@ export {
   projectUpdate,
   memberCreate,
   NotificationGet,
+  NotificationTodo,
   todoCreate,
   todoList,
   todoPut,

@@ -76,8 +76,7 @@ export default {
             idx += 1
           }
         }
-      }) // 성공하면 json 객체를 받아온다.
-      .catch((error) => console.log(error))
+      }).catch((error) => console.log(error))
   },
   mounted() {},
   unmounted() {},

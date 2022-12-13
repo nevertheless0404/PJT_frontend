@@ -27,7 +27,7 @@
               <!-- <div class="sdfsdf" @mouseenter="cursor(element)" :class="{cursorNot : isCursor}"> -->
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                :id="'todo-'+element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
@@ -58,10 +58,10 @@
             v-model="arrInProgress"
             @change="refresh"
           >
-            <div v-for="element in arrInProgress" :key="element.id">
+            <div v-for="element in arrInProgress" :key="element.id" :id="element.id">
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                :id="'todo-'+element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
@@ -94,8 +94,9 @@
           >
             <div v-for="element in arrDone" :key="element.id">
               <button
-                class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                class="todoPk-${element.id} todo list-group-item text-start w-100 rounded-2"
+                :id="'todo-'+element.id"
+                data-id="element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
@@ -125,8 +126,9 @@
         hide-header
         no-close-on-backdrop
         no-close-on-esc
+
       >
-        <div class="d-block" v-if="!edit">
+        <div class="d-block" id="test1" v-if="!edit">
           <div class="d-flex justify-content-between">
             <div class="">
               <h3 class="m-0" style="word-break: break-all">
@@ -373,7 +375,8 @@ import {
   commentCreate,
   commentList,
   commentUpdate,
-  commentDelete
+  commentDelete,
+  NotificationTodo
 } from '@/api/index'
 
 let before_title,
@@ -482,10 +485,23 @@ export default {
         len_done = this.arrDone.length
       }) // 성공하면 json 객체를 받아온다.
       .catch((error) => console.log(error))
+
   },
-  mounted() {},
   unmounted() {},
+  mounted: function(){
+    this.$nextTick(this.todoRoute)
+  },
   methods: {
+    todoRoute() {
+      if (this.$route.fullPath.includes('#')){
+        const todoId = this.$route.fullPath.split('#')[1]
+        setTimeout(function() {
+          const todoTop = document.querySelector(`#todo-${todoId}`)
+          todoTop.scrollIntoView()
+        }, 700);
+      }
+    },
+
     async submitComment() {
       const new_comment = this.comment
       await commentCreate(this.$route.params.id, this.modalData.id, {
@@ -620,7 +636,6 @@ export default {
       this.editComment = true
     },
     async commentPut(content) {
-      console.log('content 요청보내기', content)
       content.comment = this.updateComment
       await commentUpdate(
         this.$route.params.id,
