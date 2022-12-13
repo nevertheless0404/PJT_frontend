@@ -10,10 +10,10 @@
         <b-navbar-brand :to="{ name: 'projectindex' }"
           ><img src="@/assets/images/logo.png" width="120px"
         /></b-navbar-brand>
+        <!--
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle> -->
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-        <b-collapse id="nav-collapse" is-nav class="d-flex">
+        <b-collapse id="nav-collapse" is-nav class="d-flex justify-content-end">
           <b-navbar-nav class="ml-auto">
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
