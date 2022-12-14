@@ -1,4 +1,5 @@
-ㄱ<template>
+ㄱ
+<template>
   <div class="mt-4">
     <div class="row">
       <div class="col d-flex">
@@ -397,7 +398,9 @@ let before_title,
   len_in,
   len_done,
   refresh_onetime = 0,
-  user_s
+  user_s,
+  userCheck,
+  userCheckStatus = true
 
 export default {
   components: { draggable },
@@ -595,12 +598,16 @@ export default {
     },
     async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
-      await todoPutDrag(this.$route.params.id, this.updateData)
-      len_back = this.arrBacklog.length
-      len_in = this.arrInProgress.length
-      len_done = this.arrDone.length
-      this.$parent.calendarRefresh()
-      this.$parent.forceRerender()
+      if (userCheckStatus == true) {
+        await todoPutDrag(this.$route.params.id, this.updateData)
+        len_back = this.arrBacklog.length
+        len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
+        this.$parent.calendarRefresh()
+        this.$parent.forceRerender()
+      } else {
+        alert('본인이 작성한 카드만 수정할 수 있습니다')
+      }
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
@@ -611,6 +618,12 @@ export default {
     },
     async pick_id(ele) {
       drag_id = ele.id
+      if (ele.user === this.user.email) {
+        userCheckStatus = true
+        userCheck = ele.user
+      } else {
+        userCheckStatus = false
+      }
       this.updateData.id = drag_id
       await this.updateData.push({
         id: drag_id,
