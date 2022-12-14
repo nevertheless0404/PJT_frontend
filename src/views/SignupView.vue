@@ -37,8 +37,45 @@
         />
       </div>
       <button type="submit" class="btn w-75 my-3 btn-signup">회원가입</button>
-      <!-- 결과 메시지 출력 -->
-      <p>{{ logMessage }}</p>
+      <!-- <p v-if="errors.length > 0">
+        Please correct the following error(s):
+        <ul>
+          <li :key="idx" v-for="(error, idx) in errors">{{ error }}</li>
+        </ul>
+      </p> -->
+      <div class="mt-3">
+        <div :key="idx" v-for="(error, idx) in errors" class="w-100">
+          <b-alert
+            v-model="showDismissibleAlert"
+            variant="danger"
+            class="w-100"
+          >
+            {{ error }}
+          </b-alert>
+        </div>
+      </div>
+      <!-- 경고 메시지 출력 -->
+      <b-alert
+        :show="dismissCountDown"
+        variant="warning"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+        v-if="err"
+      >
+        <p>
+          {{ err }}
+        </p>
+        <b-progress
+          variant="warning"
+          :max="dismissSecs"
+          :value="dismissCountDown"
+          height="4px"
+        ></b-progress>
+      </b-alert>
+
+      <!-- <b-button @click="showDismissibleAlert=true" variant="info" class="m-1">
+        Show dismissible alert ({{ showDismissibleAlert ? 'visible' : 'hidden' }})
+      </b-button> -->
     </form>
   </div>
 </template>
@@ -46,6 +83,7 @@
 <script>
 import { registerUser } from '@/api/index'
 
+let cnt = 0
 export default {
   data() {
     return {
@@ -54,29 +92,91 @@ export default {
       password1: '',
       password2: '',
       // log
-      logMessage: ''
+      logMessage: '',
+      errors: [],
+      showDismissibleAlert: false,
+      // error
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      err: null,
+      signup_status: 'success'
     }
   },
   methods: {
+    countDownChanged(dismissCountDown) {
+      this.dismissCountDown = dismissCountDown
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
     async submitForm() {
+      this.checkForm()
       // API 요청시 전달할 userData 객체
-      const userData = {
-        email: this.email,
-        password1: this.password1,
-        password2: this.password2
+      if (this.errors.length < 1) {
+        const userData = {
+          email: this.email,
+          password1: this.password1,
+          password2: this.password2
+        }
+        await registerUser(userData)
+          .then((response) => {
+            // 가입 후 폼 초기화
+            this.initForm()
+            this.$router.push('/login')
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              this.signup_status = 'fail'
+              // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+              this.err = '아이디/비밀번호를 다시 확인해주세요 😀'
+              this.showAlert()
+              if (this.dismissSecs === 0) {
+                this.signup_status = 'success'
+              }
+            }
+          })
+      } else {
+        this.showDismissibleAlert = true
       }
-      const { data } = await registerUser(userData)
-
-      this.logMessage = `${data.email} 님이 가입되었습니다.`
-
-      // 가입 후 폼 초기화
-      this.initForm()
-      this.$router.push('/login')
     },
     initForm() {
       this.email = ''
       this.password1 = ''
       this.password2 = ''
+    },
+    checkForm() {
+      this.errors = []
+      if (this.email === '') {
+        this.errors.push('Email required')
+      }
+      if (this.email.split('@')[0].length < 4) {
+        this.errors.push(
+          "Too short you email length. Please length +3 before '@'"
+        )
+      }
+      if (this.password1 === '') {
+        this.errors.push('Password required')
+      }
+      if (this.password1.length < 8) {
+        this.errors.push('Too short you password length. Please password +7')
+      }
+      if (this.password1 != this.password2) {
+        this.errors.push('Password does not matching')
+      }
+    },
+    countDownChanged(dismissCountDown) {
+      cnt += 1
+      this.dismissCountDown = dismissCountDown
+      if (cnt > 5) {
+        this.login_status = 'success'
+        cnt = 0
+      }
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
+    changeLoginStatus() {
+      this.login_status = 'success'
     }
   }
 }

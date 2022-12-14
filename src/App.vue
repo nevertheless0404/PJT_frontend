@@ -12,8 +12,7 @@ import axios from 'axios'
 
 export default {
   async created() {
-    console.log(localStorage.getItem('access_token'))
-    const response = await axios.get('user/', {
+    const response = await axios.get('api/accounts/v1/user/', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
@@ -24,8 +23,7 @@ export default {
 </script>
 <style>
 * {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat', 'IBM Plex Sans KR';
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -46,5 +44,19 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+input[type="radio"] {
+  display: none !important;
+}
+
+.breadcrumb li a {
+  text-decoration: none;
+  color: rgb(169, 169, 169);
+}
+
+.breadcrumb li span {
+  color: rgb(75, 75, 75);
+  font-weight: 500;
 }
 </style>

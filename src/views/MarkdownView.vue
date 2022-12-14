@@ -1,11 +1,12 @@
 <template>
   <div>
-    <NavProject v-bind:childValue="pjtPk" />
-    <div class="container mt-5">
-      <h1 class="mb-3 text-center">프로젝트 마크다운 생성기</h1>
-      <v-md-editor v-model="text" height="400px"></v-md-editor>
-      <button @click="[submitMd(), makeToast()]" class="btn btn-primary mt-4 float-end">수정</button>
-
+    <NavProject />
+    <div class="container mt-5 mb-5">
+      <b-breadcrumb :items="items"></b-breadcrumb>
+      <h1 class="title mb-4 text-center">Project markdown</h1>
+      <v-md-editor v-model="message" height="750px"></v-md-editor>
+      <button @click="[submitMd(), makeToast()]" class="btn1 ms-2 mb-5 float-end">수정</button>
+      <button type="button" @click="doCopy" class="btn1 float-end">복사</button>
     </div>
   </div>
 </template>
@@ -19,25 +20,71 @@ import { markdownPut } from '@/api/index'
     components: { NavProject },
     data() {
       return {
-        text: '',
+        items: [
+          {
+            text: 'Home',
+            to: { name: 'projectindex' }
+          },
+          {
+            text: 'Project',
+            to: { name: 'projectdetail' }
+          },
+          {
+            text: 'Markdown',
+            active: true
+          }
+        ],
+        message: '',
       };
     },
     created() {
       markdownGet(this.$route.params.id).then((response) => {
-        this.text = response.data.content
+        this.message = response.data.content
       })
     },
     methods: {
+      doCopy: function () {
+        this.$copyText(this.message).then(function (e) {
+          alert('클립보드에 복사했습니다')
+        }, function (e) {
+          alert('클립보드에 복사에 실패했습니다')
+        })
+      },
       async submitMd() {
-        const update_markdown = {content: this.text}
+        const update_markdown = {content: this.message}
         await markdownPut(this.$route.params.id, update_markdown)
       },
       makeToast(append = false) {
-        this.$bvToast.toast(`마크다운이 수정되었습니다`, {
-          autoHideDelay: 555555555000,
-          appendToast: append
-        })
+        alert(' 수정되었습니다')
       }
     }
   };
 </script>
+<style scoped>
+
+.title{
+  font-family: 'Dela Gothic One', cursive;
+}
+.btn1 {
+  margin-top: 15px;
+  color: white;
+  background-color: #3485FF;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 50px;
+  height: 40px;
+  border-radius: 10px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
+.btn1:hover {
+
+  box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
+</style>

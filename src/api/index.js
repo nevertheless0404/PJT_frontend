@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function registerUser(userData) {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/api/accounts/v1/registration/'
+  const url = 'api/accounts/v1/registration/'
   return axios.post(url, userData, {
     'Content-Type': 'application/json'
   })
@@ -10,7 +10,7 @@ function registerUser(userData) {
 
 function projectIndex() {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/'
+  const url = 'project/'
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ function projectIndex() {
 
 function projectCreate(projectData) {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/'
+  const url = 'project/'
   return axios.post(url, projectData, {
     headers: {
       'Content-Type': 'application/json',
@@ -32,8 +32,19 @@ function projectCreate(projectData) {
 
 function projectGet(project) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/project/${project}/`
+  const url = `project/${project}/`
   return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function projectDelete(project) {
+  // 요청할 URL
+  const url = `project/${project}/`
+  return axios.delete(url, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -43,7 +54,7 @@ function projectGet(project) {
 
 function projectUpdate(project, projectData) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/project/${project}/`
+  const url = `project/${project}/`
   return axios.put(url, projectData, {
     headers: {
       'Content-Type': 'application/json',
@@ -54,8 +65,7 @@ function projectUpdate(project, projectData) {
 
 function markdownGet(project) {
   // 요청할 URL
-  console.log('웨 안 뒈 마 크 다 운')
-  const url = `http://127.0.0.1:8000/${project}/markdown/`
+  const url = `${project}/markdown/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -66,7 +76,7 @@ function markdownGet(project) {
 
 function markdownPut(project, update_markdown) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${project}/markdown/`
+  const url = `${project}/markdown/`
   return axios.put(url, update_markdown, {
     headers: {
       'Content-Type': 'application/json',
@@ -76,7 +86,7 @@ function markdownPut(project, update_markdown) {
 }
 // function projectPk() {
 //   // 요청할 URL
-//   const url = 'http://127.0.0.1:8000/recent_project/'
+//   const url = 'recent_project/'
 //   // console.log('projectData :', projectData)
 //   return axios.get(url, {
 //     headers: {
@@ -86,11 +96,10 @@ function markdownPut(project, update_markdown) {
 //   })
 // }
 
-function memberCreate(memberData) {
+function memberCreate(pjt_pk, memberEmail) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${memberData.id}/`
-  console.log('memberData :', memberData)
-  return axios.post(url, memberData, {
+  const url = `memberadmin/${pjt_pk}/`
+  return axios.post(url, memberEmail, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -100,7 +109,18 @@ function memberCreate(memberData) {
 
 function NotificationGet() {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/notification`
+  const url = `notification`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function NotificationTodo(todo_pk) {
+  // 요청할 URL
+  const url = `notification/${todo_pk}`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -111,22 +131,20 @@ function NotificationGet() {
 
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
-  console.log('뉴데이터 : ', new_data)
+  const url = `${pjt_pk}/todo/`
   return (
     axios.post(url, new_data, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('post 요청 후 데이터 :', new_data)
+    })
   )
 }
 
 function todoList(pjt_pk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
+  const url = `${pjt_pk}/todo/`
   // console.log('projectData :', projectData)
   return axios.get(url, {
     headers: {
@@ -138,7 +156,7 @@ function todoList(pjt_pk) {
 
 function todoPutDrag(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   return axios.put(url, update_data[0], {
     headers: {
       'Content-Type': 'application/json',
@@ -149,7 +167,7 @@ function todoPutDrag(pjt_pk, update_data) {
 
 function todoPut(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   return axios.put(url, update_data, {
     headers: {
       'Content-Type': 'application/json',
@@ -160,22 +178,20 @@ function todoPut(pjt_pk, update_data) {
 
 function todoDel(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
-  console.log('del 데이터 : ', update_data)
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   return (
     axios.delete(url, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
-    }),
-    console.log('del 요청 후 데이터 :', update_data)
+    })
   )
 }
 
 function isRead(notificationPk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
+  const url = `isread/${notificationPk}/`
   return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -185,7 +201,7 @@ function isRead(notificationPk) {
 }
 
 function informCreate(pjt_pk, new_inform) {
-  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  const url = `informs/${pjt_pk}/`
   return axios.post(url, new_inform, {
     headers: {
       'Content-Type': 'application/json',
@@ -195,7 +211,7 @@ function informCreate(pjt_pk, new_inform) {
 }
 
 function informList(pjt_pk) {
-  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  const url = `informs/${pjt_pk}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -205,9 +221,8 @@ function informList(pjt_pk) {
 }
 
 function InformPut(project, informData) {
-  console.log(informData)
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/informs/${project}/detail`
+  const url = `informs/${project}/detail`
   return axios.put(url, informData, {
     headers: {
       'Content-Type': 'application/json',
@@ -217,7 +232,7 @@ function InformPut(project, informData) {
 }
 
 function commentCreate(pjt_pk, todo_pk, new_comment) {
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/`
   return axios.post(url, new_comment, {
     headers: {
       'Content-Type': 'application/json',
@@ -226,8 +241,18 @@ function commentCreate(pjt_pk, todo_pk, new_comment) {
   })
 }
 
+function commentUpdate(pjt_pk, todo_pk, comment_pk, commentData) {
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/${comment_pk}/`
+  return axios.put(url, commentData, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function commentList(pjt_pk, todo_pk) {
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -236,19 +261,21 @@ function commentList(pjt_pk, todo_pk) {
   })
 }
 
-// function MemberList(project, memberData) {
-//   const url = `http://127.0.0.1:8000/memberadmin/${project}/${memberData}/`
-//   return axios.get(url, {
-//     headers: {
-//       'Content-Type': 'applications/json',
-//       Authorization: 'Bearer' + localStorage.getItem('access_token')
-//     }
-//   })
-// }
+function commentDelete(pjt_pk, todo_pk, comment_pk) {
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/${comment_pk}/`
+  return (
+    axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+      }
+    })
+  )
+}
 
 function MemberList(project) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${project}/`
+  const url = `memberadmin/${project}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -257,11 +284,30 @@ function MemberList(project) {
   })
 }
 
-function memberPut(project, memberData) {
-  console.log(memberData)
+function deleteMember(pjt_pk, user_pk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${project}/detail`
-  return axios.put(url, memberData, {
+  const url = `memberadmin/${pjt_pk}/${user_pk}`
+  return axios.delete(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function changeLeader(pjt_pk, user_pk) {
+  const url = `changeleader/${pjt_pk}/${user_pk}/`
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
+function searchEmail(search) {
+  const url = `userlist/${search}`
+  return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + localStorage.getItem('access_token')
@@ -274,12 +320,14 @@ export {
   registerUser,
   projectIndex,
   projectCreate,
+  projectDelete,
   markdownGet,
   markdownPut,
   projectGet,
   projectUpdate,
   memberCreate,
   NotificationGet,
+  NotificationTodo,
   todoCreate,
   todoList,
   todoPut,
@@ -290,7 +338,11 @@ export {
   informList,
   InformPut,
   commentCreate,
+  commentUpdate,
   commentList,
+  commentDelete,
   MemberList,
-  memberPut,
+  deleteMember,
+  changeLeader,
+  searchEmail
 }
