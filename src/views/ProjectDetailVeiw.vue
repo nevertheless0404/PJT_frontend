@@ -48,9 +48,9 @@ export default {
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek'
+          left: 'title',
+          center: '',
+          right: 'prev,next',
         },
         events: []
       })
