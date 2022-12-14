@@ -443,9 +443,9 @@ export default {
       updateData: [],
       edit: false,
       options: [
-        { text: 'Backlog', value: 0 },
-        { text: 'In Progress', value: 1 },
-        { text: 'Done', value: 2 }
+        { text: '시작 전', value: 0 },
+        { text: '진행중', value: 1 },
+        { text: '완료됨', value: 2 }
       ],
       comment: '',
       comments: []
