@@ -2,6 +2,7 @@
   <div>
     <NavProject v-bind:childValue="pjtPk" />
     <div class="container mt-4">
+      <b-breadcrumb :items="items"></b-breadcrumb>
       <InformBoard />
       <!-- <ProjectCalender /> -->
       <FullCalendar v-bind:options="calendarOptions" />
@@ -42,6 +43,16 @@ export default {
   components: { NavProject, KanbanBoard, InformBoard, FullCalendar },
   data() {
     return {
+      items: [
+          {
+            text: 'Home',
+            to: { name: 'projectindex' }
+          },
+          {
+            text: 'Project',
+            active: true
+          }
+        ],
       componentKey: 0,
       pjtPk: this.$route.params.id,
       calendarOptions: reactive({
@@ -50,7 +61,7 @@ export default {
         headerToolbar: {
           left: 'title',
           center: '',
-          right: 'prev,next',
+          right: 'prev,next'
         },
         events: []
       })

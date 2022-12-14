@@ -2,6 +2,7 @@
   <div>
     <NavProject />
     <div class="container mt-5 mb-5">
+      <b-breadcrumb :items="items"></b-breadcrumb>
       <h1 class="title mb-4 text-center">Project markdown</h1>
       <v-md-editor v-model="message" height="750px"></v-md-editor>
       <button @click="[submitMd(), makeToast()]" class="btn1 ms-2 mb-5 float-end">수정</button>
@@ -19,6 +20,20 @@ import { markdownPut } from '@/api/index'
     components: { NavProject },
     data() {
       return {
+        items: [
+          {
+            text: 'Home',
+            to: { name: 'projectindex' }
+          },
+          {
+            text: 'Project',
+            to: { name: 'projectdetail' }
+          },
+          {
+            text: 'Markdown',
+            active: true
+          }
+        ],
         message: '',
       };
     },
