@@ -514,7 +514,7 @@ export default {
         setTimeout(function () {
           const todoTop = document.querySelector(`#todo-${todoId}`)
           todoTop.scrollIntoView()
-        }, 700)
+        }, 1000)
       }
     },
 
