@@ -2,8 +2,14 @@
   <div class="mb-4">
     <div class="inform-head">
       <b-card-text>
-        <p :key="id" v-if="informs" v-for="(s, id) in informs" class="mb-0">✔ {{s.name}}</p>
-        <p v-if="(informsLen===0)">공지사항이 없습니다</p>
+        <div v-if="resInforms !== ''">
+          <div :key="id" v-for="(s, id) in informs">
+            <p class="mb-0" v-if="s.name">✔ {{ s.name }}</p>
+          </div>
+        </div>
+        <div v-else>
+        <p class="mb-0">공지사항이 없습니다</p>
+        </div>
       </b-card-text>
     </div>
   </div>
@@ -14,21 +20,23 @@ import { informList } from '@/api/index'
 export default {
   data() {
     return {
-      informs: [],
-      informsLen: 0
+      informs: [{name: ''}],
+      informsLen: 0,
+      resInforms: ''
     }
   },
   created() {
-    informList(this.$route.params.id)
-    .then((response) => {
+    informList(this.$route.params.id).then((response) => {
+      this.resInforms = response.data[0].content
       for (const content of response.data[0].content.split(';')) {
-        this.informs.push({name: content})
-        this.informsLen = this.informs.length
+        if (content) {
+          this.informs.push({ name: content })
+          this.informsLen = this.informs.length
+        }
       }
     })
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
@@ -39,6 +47,5 @@ export default {
   text-align: center;
   border-radius: 5px;
   padding: 5px;
-
 }
 </style>
