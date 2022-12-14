@@ -115,7 +115,6 @@ export default {
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].leader == true) {
           this.teamLeader = response.data[i].user
-          console.log('리더즈',response.data[i])
           leaderIdx = response.data[i]
           this.members.splice(i, 1)
         }
@@ -183,6 +182,9 @@ export default {
     },
     async postmember() {
       await memberCreate(this.$route.params.id, {user:this.memberInput})
+      .catch((error) => {
+      alert('PJT에 가입된 유저만 추가 가능합니다')
+    })
       MemberList(this.$route.params.id).then((response) => {
       this.members = response.data
       this.teamLeader = []
