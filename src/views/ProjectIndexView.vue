@@ -3,7 +3,7 @@
     <ProjectIndexNav />
     <div class="container mt-5">
       <b-breadcrumb class="ms-2">
-        <b-breadcrumb-item active style="font-weight:500;" href="#home">
+        <b-breadcrumb-item active style="font-weight: 500" href="#home">
           <b-icon
             icon="house-fill"
             scale="1.25"
@@ -15,12 +15,36 @@
       </b-breadcrumb>
       <div class="justify-content-evenly row">
         <!-- <ProjectCalender v-bind:childValue="projects" class="col-12 col-lg-8" /> -->
-        <div class="col-12 col-lg-8 row" style="height:750px;">
+        <div class="col-12 col-lg-8 row" style="height: 750px">
           <FullCalendar v-bind:options="calendarOptions" />
         </div>
         <!-- <p>{{ this.projects }}</p> -->
-
-        <div class="allpjtindex col-12 col-lg-4">
+        <div class="allpjtindex col-12 col-lg-4 mt-4">
+          <!-- P to J progress bar-->
+          <div class="w-100">
+            <div
+              class="d-flex justify-content-between"
+              style="text-align: left; font-size: calc(7px + 3vw)"
+            >
+              <div
+                style="color: #3485ff; font-family: 'Dela Gothic One', cursive"
+              >
+                P
+              </div>
+              <div
+                style="color: #ffc062; font-family: 'Dela Gothic One', cursive"
+              >
+                J
+              </div>
+            </div>
+            <b-progress
+              variant="info"
+              :value="ptj_value"
+              :max="max"
+              show-progress
+              animated
+            ></b-progress>
+          </div>
           <!-- 할 일 목록 블럭 -->
           <div class="card-body cb1 scrollspy-example-2">
             <div class="todoli">
@@ -116,8 +140,12 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import { projectIndex, todoList } from '@/api/index'
+import { mapGetters } from 'vuex'
 
 let pjt_color
+let p_value = 0
+let j_value = 0
+
 export default {
   components: {
     // ProjectCalender,
@@ -126,13 +154,15 @@ export default {
   },
   data() {
     return {
-            items: [
-          {
-            text: 'Home',
-            active: true
-          }
-        ],
+      items: [
+        {
+          text: 'Home',
+          active: true
+        }
+      ],
       todos: [],
+      ptj_value: 0,
+      max: 100,
       projects: [
         { id: '' },
         { title: '' },
@@ -146,7 +176,7 @@ export default {
         headerToolbar: {
           left: 'title',
           center: '',
-          right: 'prev,next',
+          right: 'prev,next'
         },
         events: []
       }
@@ -177,23 +207,37 @@ export default {
           todoList(pjt.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
             .then((response) => {
               response.data.forEach((ele) => {
-                if (ele.complete != 2) {
-                  this.todos.push({
-                    project: ele.project,
-                    title: ele.title,
-                    content: ele.content,
-                    color: pjt.color
-                  })
+                if (ele.user === this.user.email) {
+                  if (ele.complete != 2) {
+                    p_value += 1
+                    this.todos.push({
+                      project: ele.project,
+                      title: ele.title,
+                      content: ele.content,
+                      color: pjt.color
+                    })
+                  } else {
+                    j_value += 1
+                  }
                 }
-              }) // 성공하면 json 객체를 받아온다.
+              })
+              this.PtJ()
             })
             .catch((error) => console.log(error))
         }
+        // 성공하면 json 객체를 받아온다.
       })
   },
   mounted() {},
   unmounted() {},
-  methods: {}
+  methods: {
+    PtJ() {
+      this.ptj_value = (j_value / (p_value + j_value)) * 100
+    }
+  },
+  computed: {
+    ...mapGetters(['user'])
+  }
 }
 </script>
 
@@ -321,7 +365,7 @@ export default {
 .pjtTitle {
   font-weight: bold;
   text-decoration: none;
-    padding: 30px 0px 18px;
+  padding: 30px 0px 18px;
 }
 
 .pjtindex {
@@ -333,9 +377,9 @@ export default {
   display: flex;
   /* align-items: center; */
   flex-direction: column;
-  position:relative;
-  height:350px;
-  overflow-y:scroll;
+  position: relative;
+  height: 270px;
+  overflow-y: scroll;
   box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
 }
 
@@ -348,7 +392,6 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 800px;
-
 }
 
 .project_add {
@@ -394,17 +437,16 @@ export default {
   margin-top: 30px;
   padding: 0 30px;
   border-radius: 15px;
-  position:relative;
-  height:350px;
-  overflow-y:scroll;
+  position: relative;
+  height: 270px;
+  overflow-y: scroll;
 }
 
 .todoli::-webkit-scrollbar {
   display: none;
 }
 
-
-.todoTitle{
+.todoTitle {
   font-family: 'Dela Gothic One';
   font-size: 30px;
   padding: 30px 0px 18px;
@@ -466,7 +508,6 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-
 }
 
 .listbox1:hover * {
@@ -480,7 +521,6 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-
 }
 
 .listbox2:hover * {
@@ -494,7 +534,6 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-
 }
 
 .listbox3:hover * {
@@ -614,7 +653,7 @@ export default {
   white-space: nowrap;
 }
 
-@media ( max-width: 1199px ) {
+@media (max-width: 1199px) {
   .pjts-1 {
     width: 230px;
   }
@@ -635,7 +674,7 @@ export default {
   }
 }
 
-@media ( max-width: 991px ) {
+@media (max-width: 991px) {
   .todo1 {
     width: 530px;
   }
@@ -665,7 +704,7 @@ export default {
   }
 }
 
-@media ( max-width: 767px ) {
+@media (max-width: 767px) {
   .pjts-1 {
     width: 435px;
   }
