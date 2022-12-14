@@ -41,6 +41,17 @@ function projectGet(project) {
   })
 }
 
+function projectDelete(project) {
+  // 요청할 URL
+  const url = `project/${project}/`
+  return axios.delete(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function projectUpdate(project, projectData) {
   // 요청할 URL
   const url = `project/${project}/`
@@ -309,6 +320,7 @@ export {
   registerUser,
   projectIndex,
   projectCreate,
+  projectDelete,
   markdownGet,
   markdownPut,
   projectGet,
