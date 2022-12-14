@@ -1,15 +1,22 @@
-ㄱ
 <template>
   <div class="mt-4">
     <div class="row">
-      <div class="col d-flex">
-        <!-- <b-form-input
-          v-model="newTask.title"
-          placeholder="Enter Task"
-          @keyup.enter="add"
-        ></b-form-input> -->
+      <div class="col d-flex justify-content-between">
         <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>
           <i class="bi bi-plus-lg"></i>&nbsp;할 일 추가
+        </div>
+        <div class="float-right">
+          <b-form-group  label="" v-slot="{ ariaDescribedby }">
+            <b-form-radio-group
+              @change="filterTodo"
+              id="btn-radios-1"
+              v-model="selected"
+              :options="filterOptions"
+              :aria-describedby="ariaDescribedby"
+              name="radios-btn-default"
+              buttons
+            ></b-form-radio-group>
+          </b-form-group>
         </div>
       </div>
     </div>
@@ -384,6 +391,7 @@ import draggable from 'vuedraggable'
 import {
   todoCreate,
   todoList,
+  todoListFilter,
   todoPut,
   todoPutDrag,
   todoDel,
@@ -448,63 +456,127 @@ export default {
         { text: '완료됨', value: 2 }
       ],
       comment: '',
-      comments: []
+      comments: [],
+      selected: 0,
+      filterOptions : [
+        { text: '팀의 할 일', value: 0},
+        { text: '나의 할 일', value: 1},
+      ]
     }
   },
   setup() {},
   created() {
-    todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
-      .then((response) => {
-        response.data.forEach((ele) => {
-          if (ele.complete === 0) {
-            this.arrBacklog.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.complete
-          } else if (ele.complete === 1) {
-            this.arrInProgress.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.
-          } else {
-            this.arrDone.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: ele.complete
-            })
-            // this.modalData.complete = ele.complete
-          }
-        })
-        len_back = this.arrBacklog.length
-        len_in = this.arrInProgress.length
-        len_done = this.arrDone.length
-      }) // 성공하면 json 객체를 받아온다.
-      .catch((error) => console.log(error))
+    this.filterTodo()
   },
   unmounted() {},
   methods: {
+    async filterTodo() {
+      this.arrBacklog = []
+      this.arrInProgress = []
+      this.arrDone = []
+      if (this.selected == 0) {
+        await todoList(this.$route.params.id)
+          .then((response) => {
+            response.data.forEach((ele) => {
+              if (ele.complete === 0) {
+                this.arrBacklog.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              } else if (ele.complete === 1) {
+                this.arrInProgress.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.
+              } else {
+                this.arrDone.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              }
+            })
+            len_back = this.arrBacklog.length
+            len_in = this.arrInProgress.length
+            len_done = this.arrDone.length
+          }) // 성공하면 json 객체를 받아온다.
+        .catch((error) => console.log(error))
+        }
+      else {
+        await todoListFilter(this.$route.params.id)
+          .then((response) => {
+            response.data.forEach((ele) => {
+              if (ele.complete === 0) {
+                this.arrBacklog.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              } else if (ele.complete === 1) {
+                this.arrInProgress.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.
+              } else {
+                this.arrDone.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              }
+            })
+            len_back = this.arrBacklog.length
+            len_in = this.arrInProgress.length
+            len_done = this.arrDone.length
+          }) // 성공하면 json 객체를 받아온다.
+        .catch((error) => console.log(error))
+      }
+    },
     async submitComment() {
       const new_comment = this.comment
       await commentCreate(this.$route.params.id, this.modalData.id, {

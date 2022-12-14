@@ -154,6 +154,18 @@ function todoList(pjt_pk) {
   })
 }
 
+function todoListFilter(pjt_pk) {
+  // 요청할 URL
+  const url = `${pjt_pk}/todo/filter`
+  // console.log('projectData :', projectData)
+  return axios.get(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    }
+  })
+}
+
 function todoPutDrag(pjt_pk, update_data) {
   // 요청할 URL
   const url = `${pjt_pk}/todo/${update_data.id}/`
@@ -330,6 +342,7 @@ export {
   NotificationTodo,
   todoCreate,
   todoList,
+  todoListFilter,
   todoPut,
   todoPutDrag,
   todoDel,
