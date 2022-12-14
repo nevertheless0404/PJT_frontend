@@ -653,9 +653,14 @@ export default {
       this.$parent.forceRerender()
     },
     commentPutBtn(content, idx) {
-      this.updateComment = content.comment
-      this.updateCommentIdx = idx
-      this.editComment = true
+      console.log('5555555', content)
+      if (content.user === this.user.email){
+        this.updateComment = content.comment
+        this.updateCommentIdx = idx
+        this.editComment = true
+      } else{
+        alert('본인이 작성한 댓글만 수정 가능합니다')
+      }
     },
     async commentPut(content) {
       content.comment = this.updateComment
@@ -674,12 +679,16 @@ export default {
       )
     },
     async commentDelBtn(content) {
-      await commentDelete(this.$route.params.id, this.modalData.id, content.id)
-      await commentList(this.$route.params.id, this.modalData.id).then(
-        (response) => {
-          this.comments = response.data
-        }
-      )
+      if (content.user === this.user.email){
+        await commentDelete(this.$route.params.id, this.modalData.id, content.id)
+        await commentList(this.$route.params.id, this.modalData.id).then(
+          (response) => {
+            this.comments = response.data
+          }
+        )
+      } else{
+        alert('본인이 작성한 댓글만 삭제 가능합니다')
+      }
     }
   },
   computed: {
