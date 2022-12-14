@@ -504,20 +504,7 @@ export default {
       .catch((error) => console.log(error))
   },
   unmounted() {},
-  mounted: function () {
-    this.$nextTick(this.todoRoute)
-  },
   methods: {
-    todoRoute() {
-      if (this.$route.fullPath.includes('#')) {
-        const todoId = this.$route.fullPath.split('#')[1]
-        setTimeout(function () {
-          const todoTop = document.querySelector(`#todo-${todoId}`)
-          todoTop.scrollIntoView()
-        }, 1000)
-      }
-    },
-
     async submitComment() {
       const new_comment = this.comment
       await commentCreate(this.$route.params.id, this.modalData.id, {

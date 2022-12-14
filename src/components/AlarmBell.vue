@@ -28,11 +28,13 @@
         <hr />
         <div class="px-3 py-2">
           <div :key="idx" v-for="(c, idx) in comment">
-            <p @click="isRead" class="text-decoration-none" style="cursor:pointer">
-              <span class="fw-bold" :data-id="c[2]" :todo-id="c[4]">{{ c[0] }}</span> <span :data-id="c[1]" :todo-id="c[4]">님이 </span>
-              <span class="fw-bold" :data-id="c[2]" :todo-id="c[4]">{{ c[3] }}</span> <span :data-id="c[1]" :todo-id="c[4]"> 프로젝트에 댓글을</span>
-              <span :data-id="c[2]" :todo-id="c[4]"> 달았습니다.</span>
-            </p>
+            <router-link :to="{ name: 'projectdetail', params: { id: c[1] } }"
+              ><p @click="isRead" :data-id="c[2]" class="text-decoration-none">
+                <span class="fw-bold">{{ c[0] }}</span> 님이
+                <span class="fw-bold">{{ c[3] }}</span> 프로젝트에 댓글을
+                달았습니다.
+              </p></router-link
+            >
           </div>
         </div>
       </div>
@@ -79,9 +81,7 @@ export default {
     },
     async isRead(event) {
       const dataId = event.target.getAttribute('data-id')
-      const todo = event.target.getAttribute('todo-id')
       await isRead(dataId)
-      this.clickRouter(dataId, todo)
     }
   }
 }
