@@ -157,8 +157,8 @@ export default {
       if (this.password1 === '') {
         this.errors.push('Password required')
       }
-      if (this.password1.length < 9) {
-        this.errors.push('Too short you password length. Please password +8')
+      if (this.password1.length < 8) {
+        this.errors.push('Too short you password length. Please password +7')
       }
       if (this.password1 != this.password2) {
         this.errors.push('Password does not matching')
