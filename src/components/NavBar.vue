@@ -64,7 +64,7 @@ export default {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       this.$store.dispatch('user', null)
-      this.$router.push('/')
+      this.$router.push('/login')
     },
     btnClick() {
       const pTag = document.querySelector('#ptag')
