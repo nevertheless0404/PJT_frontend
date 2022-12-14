@@ -405,7 +405,8 @@ let before_title,
   len_done,
   refresh_onetime = 0,
   user_s,
-  userCheckStatus = true
+  userCheckStatus = true,
+  userCheck
 
 export default {
   components: { draggable },
