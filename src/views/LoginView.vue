@@ -96,7 +96,6 @@
           <p class="my-1">
             <a style="color: gray" :href="signupUrl">계정이 없으신가요?</a>
           </p>
-          <GoogleLogin />
           <!-- 경고 메시지 출력 -->
           <b-alert
             :show="dismissCountDown"
@@ -123,11 +122,9 @@
 
 <script>
 import axios from 'axios'
-import GoogleLogin from '../components/GoogleLogin.vue'
 
 let cnt = 0
 export default {
-  components: { GoogleLogin },
   data() {
     return {
       dismissSecs: 5,
