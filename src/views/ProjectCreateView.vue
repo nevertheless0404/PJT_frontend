@@ -81,7 +81,7 @@
             <label for="exampleInputEmail1" class="form-label">주요 기능</label>
             <div class="d-flex mb-2">
               <div id="emailHelp" class="me-2">
-                <div class="btn2" @click="addfunc"
+                <div class="btn2" @click="addfunc" 
                   ><i class="bi bi-plus-lg"></i> 추가</div
                 >
               </div>

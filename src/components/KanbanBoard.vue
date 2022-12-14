@@ -1,3 +1,4 @@
+ㄱ
 <template>
   <div class="mt-4">
     <div class="row">
@@ -291,17 +292,23 @@
                     작성자 | {{ content.user }} <br />
                     작성일 | {{ content.created_at }}
                   </div>
-                  <div>
-                    <b-link
+                  <div v-if="content.user == user.email">
+                    <b-button
+                      size="sm"
                       @click="commentPutBtn(content, idx)"
                       class="card-link"
-                      >수정</b-link
-                    >
-                    <b-link
+                      style="text-decoration: none"
+                      variant="outline-primary"
+                      ><i class="bi bi-pencil"></i
+                    ></b-button>
+                    <b-button
+                      size="sm"
                       @click="commentDelBtn(content, idx)"
-                      class="card-link danger"
-                      >삭제</b-link
-                    >
+                      class="card-link"
+                      style="text-decoration: none"
+                      variant="outline-danger"
+                      ><i class="bi bi-trash3"></i
+                    ></b-button>
                   </div>
                 </div>
               </b-card>
@@ -397,7 +404,8 @@ let before_title,
   len_in,
   len_done,
   refresh_onetime = 0,
-  user_s
+  user_s,
+  userCheckStatus = true
 
 export default {
   components: { draggable },
@@ -550,7 +558,8 @@ export default {
           content: this.newTask.content,
           start_at: this.newTask.start_at,
           end_at: this.newTask.end_at,
-          user_s: this.user.email.split('@')[0]
+          user_s: this.user.email.split('@')[0],
+          user: this.user
         })
         const new_data = {
           title: this.newTask.title,
@@ -566,6 +575,7 @@ export default {
         this.$refs['modal'].hide()
       }
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     editModal() {
       this.edit = true
@@ -593,12 +603,16 @@ export default {
     },
     async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
-      await todoPutDrag(this.$route.params.id, this.updateData)
-      len_back = this.arrBacklog.length
-      len_in = this.arrInProgress.length
-      len_done = this.arrDone.length
-      this.$parent.calendarRefresh()
-      this.$parent.forceRerender()
+      if (userCheckStatus == true) {
+        await todoPutDrag(this.$route.params.id, this.updateData)
+        len_back = this.arrBacklog.length
+        len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
+        this.$parent.calendarRefresh()
+        this.$parent.forceRerender()
+      } else {
+        alert('본인이 작성한 카드만 수정할 수 있습니다')
+      }
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
@@ -609,6 +623,12 @@ export default {
     },
     async pick_id(ele) {
       drag_id = ele.id
+      if (ele.user === this.user.email) {
+        userCheckStatus = true
+        userCheck = ele.user
+      } else {
+        userCheckStatus = false
+      }
       this.updateData.id = drag_id
       await this.updateData.push({
         id: drag_id,
@@ -638,9 +658,14 @@ export default {
       this.$parent.forceRerender()
     },
     commentPutBtn(content, idx) {
-      this.updateComment = content.comment
-      this.updateCommentIdx = idx
-      this.editComment = true
+      console.log('5555555', content)
+      if (content.user === this.user.email) {
+        this.updateComment = content.comment
+        this.updateCommentIdx = idx
+        this.editComment = true
+      } else {
+        alert('본인이 작성한 댓글만 수정 가능합니다')
+      }
     },
     async commentPut(content) {
       content.comment = this.updateComment
@@ -659,12 +684,20 @@ export default {
       )
     },
     async commentDelBtn(content) {
-      await commentDelete(this.$route.params.id, this.modalData.id, content.id)
-      await commentList(this.$route.params.id, this.modalData.id).then(
-        (response) => {
-          this.comments = response.data
-        }
-      )
+      if (content.user === this.user.email) {
+        await commentDelete(
+          this.$route.params.id,
+          this.modalData.id,
+          content.id
+        )
+        await commentList(this.$route.params.id, this.modalData.id).then(
+          (response) => {
+            this.comments = response.data
+          }
+        )
+      } else {
+        alert('본인이 작성한 댓글만 삭제 가능합니다')
+      }
     }
   },
   computed: {

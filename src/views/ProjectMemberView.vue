@@ -4,7 +4,12 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
-        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap" v-if="(teamLeader.user===user.email)">
+//        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap" v-if="(teamLeader.user===user.email)">
+        <form
+          @submit.prevent="postmember"
+          v-click-outside="pannelHide"
+          class="form1 mb-5 input-wrap"
+        >
           <div class="w-100 d-flex">
             <input
               @keyup="searchEmail"
@@ -23,7 +28,7 @@
               :key="idx"
               class="pannelItem"
             >
-              <p @click="updateInput(user.email)" style="cursor:pointer">
+              <p @click="updateInput(user.email)" style="cursor: pointer">
                 {{ user.email }}
               </p>
             </div>
@@ -74,7 +79,7 @@ import { changeLeader } from '@/api/index'
 import { deleteMember } from '@/api/index'
 import { memberCreate } from '@/api/index'
 import { searchEmail } from '@/api/index'
-
+import ClickOutside from 'vue-click-outside'
 export default {
   components: { NavBar_detail },
   data() {
@@ -97,19 +102,30 @@ export default {
   created() {
     MemberList(this.$route.params.id).then((response) => {
       this.members = response.data
-      this.teamLeader = []
-      this.teamMember = []
+//      this.teamLeader = []
+//      this.teamMember = []
+//      for (let i = 0; i < response.data.length; i++) {
+//        if (response.data[i].leader == true) {
+//          this.teamLeader = response.data[i]
+//        }
+//        else {
+//          this.teamMember.push(response.data[i])
+      let leaderIdx
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].leader == true) {
-          this.teamLeader = response.data[i]
-        }
-        else {
-          this.teamMember.push(response.data[i])
+          this.teamLeader = response.data[i].user
+          console.log('리더즈',response.data[i])
+          leaderIdx = response.data[i]
+          this.members.splice(i, 1)
         }
       }
+      this.members.unshift(leaderIdx)
     })
   },
   mounted() {},
+  directives: {
+    ClickOutside
+  },
   unmounted() {},
   methods: {
     updateInput(email) {
@@ -120,12 +136,13 @@ export default {
       let memberInputSubmit = this.memberInput
       await searchEmail(memberInputSubmit).then((response) => {
         this.userList = response.data
-      })
-      if (this.userList.length  == 0) {
-        this.isSearch = false
-      } else {
-        this.isSearch = true
-      }
+      }).catch((error) => {
+        this.userList = []
+            })
+    },
+    pannelHide() {
+      this.isSearch = false
+      this.userList = []
     },
     async changeleader() {
       const meberId = event.target.getAttribute('data-id')
@@ -138,11 +155,13 @@ export default {
         if (response.data[i].leader == true) {
           this.teamLeader = response.data[i]
         }
-        else {
-          this.teamMember.push(response.data[i])
-        }
-      }
-    })
+//        else {
+//          this.teamMember.push(response.data[i])
+//        }
+//      }
+//    })
+        forceRerender()
+      })
     },
     async deletemember() {
       const meberId = event.target.getAttribute('data-id')
@@ -335,7 +354,7 @@ export default {
   /* border: 0.5px lightgray solid; */
 }
 
-@media ( max-width: 530px ) {
+@media (max-width: 530px) {
   .search_input {
     width: 200px;
   }
