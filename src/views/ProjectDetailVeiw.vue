@@ -5,7 +5,7 @@
       <InformBoard />
       <!-- <ProjectCalender /> -->
       <FullCalendar v-bind:options="calendarOptions" />
-      <KanbanBoard :key="componentKey"/>
+      <KanbanBoard :key="componentKey" />
     </div>
   </div>
 </template>
@@ -42,9 +42,9 @@ export default {
   components: { NavProject, KanbanBoard, InformBoard, FullCalendar },
   data() {
     return {
-      componentKey : 0,
+      componentKey: 0,
       pjtPk: this.$route.params.id,
-      calendarOptions: reactive ({
+      calendarOptions: reactive({
         plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -76,7 +76,8 @@ export default {
             idx += 1
           }
         }
-      }).catch((error) => console.log(error))
+      })
+      .catch((error) => console.log(error))
   },
   mounted() {},
   unmounted() {},
@@ -108,7 +109,7 @@ export default {
         .catch((error) => console.log(error))
     }
   },
-    computed: {
+  computed: {
     ...mapGetters(['user'])
   }
 }
