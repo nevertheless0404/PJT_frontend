@@ -4,6 +4,7 @@
     <div v-if="this.$router" class="container">
       <form @submit.prevent="putpjt">
         <div class="mt-5 mb-3">
+          <b-breadcrumb :items="items"></b-breadcrumb>
           <label for="exampleFormControlInput1" class="form-label"
             >프로젝트 제목</label
           >
@@ -52,13 +53,14 @@
             >
             <div class="d-flex mb-2">
               <div id="exampleFormControlInput1" class="me-2">
-                <div class="btn2" @click="addSkill"
-                  ><i class="bi bi-plus-lg"></i> 추가</div>
+                <div class="btn2" @click="addSkill">
+                  <i class="bi bi-plus-lg"></i> 추가
+                </div>
               </div>
               <div id="exampleFormControlInput1" class="">
-                <div class="btn3"
-                  @click="removeSkill"
-                  ><i class="bi bi-dash-lg"></i> 삭제</div>
+                <div class="btn3" @click="removeSkill">
+                  <i class="bi bi-dash-lg"></i> 삭제
+                </div>
               </div>
             </div>
           </div>
@@ -77,14 +79,14 @@
             <label for="exampleInputEmail1" class="form-label">주요 기능</label>
             <div class="d-flex mb-2">
               <div id="emailHelp" class="me-2">
-                <div class="btn2" @click="addfunc"
-                  ><i class="bi bi-plus-lg"></i> 추가</div
-                >
+                <div class="btn2" @click="addfunc">
+                  <i class="bi bi-plus-lg"></i> 추가
+                </div>
               </div>
               <div id="emailHelp" class="">
-                <div class="btn3" @click="removefunc"
-                  ><i class="bi bi-dash-lg"></i> 삭제</div
-                >
+                <div class="btn3" @click="removefunc">
+                  <i class="bi bi-dash-lg"></i> 삭제
+                </div>
               </div>
             </div>
           </div>
@@ -99,8 +101,10 @@
             v-for="(func, id) in functions"
           />
         </div>
-        <div class='btn1box'>
-          <button @click="deleteProject" class="btn-delete mb-5">프로젝트 삭제</button>
+        <div class="btn1box">
+          <button @click="deleteProject" class="btn-delete mb-5">
+            프로젝트 삭제
+          </button>
           <button type="submit" class="btn1 ms-3 mb-5">수정</button>
         </div>
       </form>
@@ -123,19 +127,33 @@ export default {
       this.end_at = response.data.end_at
       this.goal = response.data.goal
       for (const resSkill of response.data.skill.split(' ')) {
-        this.skill.push({name: resSkill})
+        this.skill.push({ name: resSkill })
       }
       for (const resFunctions of response.data.functions.split(' ')) {
-        this.functions.push({content: resFunctions})
+        this.functions.push({ content: resFunctions })
       }
     })
   },
   data() {
     return {
-      title: "",
-      start_at: "",
-      end_at: "",
-      goal: "",
+      items: [
+        {
+          text: 'Home',
+          to: { name: 'projectindex' }
+        },
+        {
+          text: 'Project',
+          to: { name: 'projectdetail' }
+        },
+        {
+          text: 'Edit',
+          active: true
+        }
+      ],
+      title: '',
+      start_at: '',
+      end_at: '',
+      goal: '',
       skill: [],
       functions: [],
       pjtPk: this.$route.params.id
@@ -166,7 +184,10 @@ export default {
       }
 
       await projectUpdate(this.$route.params.id, projectData)
-      this.$router.push({ name: 'projectdetail', params: {id: this.$route.params.id} })
+      this.$router.push({
+        name: 'projectdetail',
+        params: { id: this.$route.params.id }
+      })
     },
     addSkill() {
       this.skill.push({
@@ -206,7 +227,6 @@ export default {
 </script>
 
 <style scoped>
-
 .btn1box {
   display: flex;
   width: 100%;
@@ -215,92 +235,86 @@ export default {
 
 .btn1 {
   color: white;
-  background-color: #3485FF;
+  background-color: #3485ff;
   box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  border: #D9D9D9 solid 0px;
+  border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
+  text-align: center;
 
-  box-shadow: inset 0px 0px 0px #FFC062;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+  -webkit-transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn-delete {
   color: white;
-  background-color: #F24E1E;
+  background-color: #f24e1e;
   box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
   height: 50px;
   border-radius: 10px;
-  border: #D9D9D9 solid 0px;
+  border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
+  text-align: center;
 
-  box-shadow: inset 0px 0px 0px #FFC062;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+  -webkit-transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn1:hover {
-
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
+  box-shadow: inset 300px 0px 0px 0px #ffc062;
 }
 
 .btn-delete:hover {
-
-box-shadow: inset 300px 0px 0px 0px #FFC062;
+  box-shadow: inset 300px 0px 0px 0px #ffc062;
 }
 
 .btn2 {
   color: white;
-  background-color: #3485FF;
+  background-color: #3485ff;
   width: 70px;
   height: 31px;
   border-radius: 3px;
-  border: #D9D9D9 solid 0px;
+  border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
+  text-align: center;
   padding: 5px;
 
-  box-shadow: inset 0px 0px 0px #FFC062;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.2s cubic-bezier(.5, .24, 0, 1)
+  -webkit-transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 0.2s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn2:hover {
-
-  box-shadow: inset 70px 0px 0px 0px #FFC062;
+  box-shadow: inset 70px 0px 0px 0px #ffc062;
 }
-
 
 .btn3 {
   color: white;
-  background-color: #F24E1E;
-  box-shadow: 5px 9px 16px 0px #F24E1E;
+  background-color: #f24e1e;
+  box-shadow: 5px 9px 16px 0px #f24e1e;
   width: 70px;
   height: 31px;
   border-radius: 3px;
-  border: #D9D9D9 solid 0px;
+  border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
+  text-align: center;
   padding: 5px;
 
-  box-shadow: inset 0px 0px 0px #FFC062;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.2s cubic-bezier(.5, .24, 0, 1)
+  -webkit-transition: all 0.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 0.2s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn3:hover {
-
-  box-shadow: inset 300px 0px 0px 0px #FFC062;
+  box-shadow: inset 300px 0px 0px 0px #ffc062;
 }
 </style>
-
