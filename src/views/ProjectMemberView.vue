@@ -141,7 +141,7 @@ export default {
             this.teamLeader = response.data[i].user
           }
         }
-        forceRerender()
+        this.$router.push()
       })
     },
     async deletemember() {
