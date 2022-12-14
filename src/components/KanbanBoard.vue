@@ -529,6 +529,7 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
+      console.log(this.modalData)
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
         this.comments = response.data
       })
@@ -550,7 +551,8 @@ export default {
           content: this.newTask.content,
           start_at: this.newTask.start_at,
           end_at: this.newTask.end_at,
-          user_s: this.user.email.split('@')[0]
+          user_s: this.user.email.split('@')[0],
+          user: this.user
         })
         const new_data = {
           title: this.newTask.title,
