@@ -2,6 +2,7 @@
   <div>
     <ProjectIndexNav />
     <div class="container mt-5">
+      <b-breadcrumb :items="items"></b-breadcrumb>
       <div class="justify-content-evenly row">
         <!-- <ProjectCalender v-bind:childValue="projects" class="col-12 col-lg-8" /> -->
         <div class="col-12 col-lg-8 row mt-5" style="height: 750px">
@@ -144,6 +145,20 @@ export default {
   },
   data() {
     return {
+      items: [
+          {
+            text: 'Home',
+            href: '#'
+          },
+          {
+            text: 'Manage',
+            href: '#'
+          },
+          {
+            text: 'Library',
+            active: true
+          }
+        ],
       todos: [],
       ptj_value: 0,
       max: 100,
