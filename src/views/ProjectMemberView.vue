@@ -104,7 +104,6 @@ export default {
         }
       }
       this.members.unshift(leaderIdx)
-      console.log('멤버스',this.members)
     })
   },
   mounted() {},
@@ -142,6 +141,7 @@ export default {
             this.teamLeader = response.data[i].user
           }
         }
+        forceRerender()
       })
     },
     async deletemember() {
