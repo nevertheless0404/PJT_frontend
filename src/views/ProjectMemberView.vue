@@ -9,6 +9,7 @@
           @submit.prevent="postmember"
           v-click-outside="pannelHide"
           class="form1 mb-5 input-wrap"
+          v-if="(teamLeader===user.email)"
         >
           <div class="w-100 d-flex">
             <input
@@ -50,7 +51,7 @@
                 <button
                   @click="deletemember"
                   :data-id="member.id"
-                  v-if="(user.email === teamLeader.user)"
+                  v-if="(user.email === teamLeader)"
                   class="btn2 float-end"
                 >
                   팀원 삭제
@@ -58,7 +59,7 @@
                 <button
                   @click="changeleader"
                   :data-id="member.id"
-                  v-if="user.email === teamLeader.user"
+                  v-if="user.email === teamLeader"
                   class="btn3 float-end"
                 >
                   팀장 위임
@@ -160,7 +161,6 @@ export default {
 //        }
         }
         this.$router.go()
-
       })
     },
     async deletemember() {
@@ -178,6 +178,7 @@ export default {
           this.teamMember.push(response.data[i])
         }
       }
+      this.$router.go()
     })
     },
     async postmember() {
@@ -194,6 +195,7 @@ export default {
           this.teamMember.push(response.data[i])
         }
       }
+      this.$router.go()
     })
     }
   },
