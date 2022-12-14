@@ -292,17 +292,23 @@
                     작성자 | {{ content.user }} <br />
                     작성일 | {{ content.created_at }}
                   </div>
-                  <div>
-                    <b-link
+                  <div v-if="content.user == user.email">
+                    <b-button
+                      size="sm"
                       @click="commentPutBtn(content, idx)"
                       class="card-link"
-                      >수정</b-link
-                    >
-                    <b-link
+                      style="text-decoration: none"
+                      variant="outline-primary"
+                      ><i class="bi bi-pencil"></i
+                    ></b-button>
+                    <b-button
+                      size="sm"
                       @click="commentDelBtn(content, idx)"
-                      class="card-link danger"
-                      >삭제</b-link
-                    >
+                      class="card-link"
+                      style="text-decoration: none"
+                      variant="outline-danger"
+                      ><i class="bi bi-trash3"></i
+                    ></b-button>
                   </div>
                 </div>
               </b-card>
@@ -399,7 +405,6 @@ let before_title,
   len_done,
   refresh_onetime = 0,
   user_s,
-  userCheck,
   userCheckStatus = true
 
 export default {
@@ -654,11 +659,11 @@ export default {
     },
     commentPutBtn(content, idx) {
       console.log('5555555', content)
-      if (content.user === this.user.email){
+      if (content.user === this.user.email) {
         this.updateComment = content.comment
         this.updateCommentIdx = idx
         this.editComment = true
-      } else{
+      } else {
         alert('본인이 작성한 댓글만 수정 가능합니다')
       }
     },
@@ -679,14 +684,18 @@ export default {
       )
     },
     async commentDelBtn(content) {
-      if (content.user === this.user.email){
-        await commentDelete(this.$route.params.id, this.modalData.id, content.id)
+      if (content.user === this.user.email) {
+        await commentDelete(
+          this.$route.params.id,
+          this.modalData.id,
+          content.id
+        )
         await commentList(this.$route.params.id, this.modalData.id).then(
           (response) => {
             this.comments = response.data
           }
         )
-      } else{
+      } else {
         alert('본인이 작성한 댓글만 삭제 가능합니다')
       }
     }
