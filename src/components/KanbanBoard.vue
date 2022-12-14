@@ -1,4 +1,4 @@
-<template>
+ㄱ<template>
   <div class="mt-4">
     <div class="row">
       <div class="col d-flex">
@@ -529,7 +529,6 @@ export default {
       before_start_at = this.modalData.start_at
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
-      console.log(this.modalData)
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
         this.comments = response.data
       })
@@ -568,6 +567,7 @@ export default {
         this.$refs['modal'].hide()
       }
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     editModal() {
       this.edit = true
