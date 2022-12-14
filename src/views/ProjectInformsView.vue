@@ -132,6 +132,7 @@ export default {
       this.inform.push({
         name: ''
       })
+      console.log('add되는거 아님?', this.inform)
     },
     removeInform() {
       if (this.inform.length > 1) {
