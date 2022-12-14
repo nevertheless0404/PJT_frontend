@@ -155,7 +155,7 @@ export default {
         if (response.data[i].leader == true) {
           this.teamLeader = response.data[i]
         }
-        this.$router.push()
+        this.$router.go()
       })
     },
     async deletemember() {
