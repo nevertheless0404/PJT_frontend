@@ -4,7 +4,7 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
-//        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap" v-if="(teamLeader.user===user.email)">
+<!-- //        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap" v-if="(teamLeader.user===user.email)"> -->
         <form
           @submit.prevent="postmember"
           v-click-outside="pannelHide"
@@ -35,13 +35,13 @@
           </div>
         </form>
         <div class="allmember">
-          <div class="memberbox">
+          <!-- <div class="memberbox">
             <span class="pjtmember">{{ teamLeader.user }}</span>
             <div class="member">
               <span class="memLeader">팀장</span>
             </div>
-          </div>
-          <div class="memberbox" :key="id" v-for="(member, id) in teamMember">
+          </div> -->
+          <div class="memberbox" :key="id" v-for="(member, id) in members">
             <span class="pjtmember">{{ member.user }}</span>
             <div class="member">
               <span class="memLeader" v-if="member.leader === true">팀장</span>
@@ -155,7 +155,12 @@ export default {
         if (response.data[i].leader == true) {
           this.teamLeader = response.data[i]
         }
+//        else {
+//          this.teamMember.push(response.data[i])
+//        }
+        }
         this.$router.go()
+
       })
     },
     async deletemember() {
