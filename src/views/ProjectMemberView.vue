@@ -159,7 +159,8 @@ export default {
 //          this.teamMember.push(response.data[i])
 //        }
         }
-        forceRerender()
+        this.$router.go()
+
       })
     },
     async deletemember() {
