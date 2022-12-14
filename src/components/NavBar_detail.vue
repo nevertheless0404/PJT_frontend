@@ -149,7 +149,7 @@ export default {
     handleClick() {
       localStorage.removeItem('access_token')
       this.$store.dispatch('user', null)
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   },
   computed: {
