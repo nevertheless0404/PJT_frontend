@@ -100,7 +100,8 @@
           />
         </div>
         <div class='btn1box'>
-          <button type="submit" class="btn1 mb-5">수정</button>
+          <button @click="deleteProject" class="btn-delete mb-5">프로젝트 삭제</button>
+          <button type="submit" class="btn1 ms-3 mb-5">수정</button>
         </div>
       </form>
     </div>
@@ -110,6 +111,7 @@
 <script>
 import { projectGet } from '@/api/index'
 import { projectUpdate } from '@/api/index'
+import { projectDelete } from '@/api/index'
 import { mapGetters } from 'vuex'
 import NavProject from '@/components/NavBar_detail.vue'
 export default {
@@ -140,6 +142,10 @@ export default {
     }
   },
   methods: {
+    async deleteProject() {
+      await projectDelete(this.$route.params.id)
+      this.$router.push({ name: 'projectindex' })
+    },
     async putpjt() {
       // API 요청시 전달할 ProjectData 객체
       let stringSkill = ''
@@ -224,11 +230,32 @@ export default {
   transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
 }
 
+.btn-delete {
+  color: white;
+  background-color: #F24E1E;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  width: 300px;
+  height: 50px;
+  border-radius: 10px;
+  border: #D9D9D9 solid 0px;
+  text-decoration: none;
+  text-align : center;
+
+  box-shadow: inset 0px 0px 0px #FFC062;
+  display: block;
+  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  transition: all 0.8s cubic-bezier(.5, .24, 0, 1)
+}
+
 .btn1:hover {
 
   box-shadow: inset 300px 0px 0px 0px #FFC062;
 }
 
+.btn-delete:hover {
+
+box-shadow: inset 300px 0px 0px 0px #FFC062;
+}
 
 .btn2 {
   color: white;
