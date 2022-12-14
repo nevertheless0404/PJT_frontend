@@ -190,19 +190,16 @@ export default {
           todoList(pjt.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
             .then((response) => {
               response.data.forEach((ele) => {
-                console.log('ele:', ele)
-                if (ele.complete != 2) {
-                  if (ele.user === this.user.email) {
+                if (ele.user === this.user.email) {
+                  if (ele.complete != 2) {
                     p_value += 1
-                  }
-                  this.todos.push({
-                    project: ele.project,
-                    title: ele.title,
-                    content: ele.content,
-                    color: pjt.color
-                  })
-                } else {
-                  if (ele.user === this.user.email) {
+                    this.todos.push({
+                      project: ele.project,
+                      title: ele.title,
+                      content: ele.content,
+                      color: pjt.color
+                    })
+                  } else {
                     j_value += 1
                   }
                 }
