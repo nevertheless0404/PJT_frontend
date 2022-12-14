@@ -4,6 +4,7 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
+//        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap" v-if="(teamLeader.user===user.email)">
         <form
           @submit.prevent="postmember"
           v-click-outside="pannelHide"
@@ -34,7 +35,13 @@
           </div>
         </form>
         <div class="allmember">
-          <div class="memberbox" :key="id" v-for="(member, id) in members">
+          <div class="memberbox">
+            <span class="pjtmember">{{ teamLeader.user }}</span>
+            <div class="member">
+              <span class="memLeader">팀장</span>
+            </div>
+          </div>
+          <div class="memberbox" :key="id" v-for="(member, id) in teamMember">
             <span class="pjtmember">{{ member.user }}</span>
             <div class="member">
               <span class="memLeader" v-if="member.leader === true">팀장</span>
@@ -43,7 +50,7 @@
                 <button
                   @click="deletemember"
                   :data-id="member.id"
-                  v-if="user.email === teamLeader"
+                  v-if="(user.email === teamLeader.user)"
                   class="btn2 float-end"
                 >
                   팀원 삭제
@@ -51,7 +58,7 @@
                 <button
                   @click="changeleader"
                   :data-id="member.id"
-                  v-if="user.email === teamLeader"
+                  v-if="user.email === teamLeader.user"
                   class="btn3 float-end"
                 >
                   팀장 위임
@@ -85,6 +92,7 @@ export default {
         }
       ],
       teamLeader: '',
+      teamMember: [],
       userList: [],
       memberInput: '',
       isSearch: false
@@ -94,6 +102,14 @@ export default {
   created() {
     MemberList(this.$route.params.id).then((response) => {
       this.members = response.data
+//      this.teamLeader = []
+//      this.teamMember = []
+//      for (let i = 0; i < response.data.length; i++) {
+//        if (response.data[i].leader == true) {
+//          this.teamLeader = response.data[i]
+//        }
+//        else {
+//          this.teamMember.push(response.data[i])
       let leaderIdx
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].leader == true) {
@@ -112,9 +128,6 @@ export default {
   },
   unmounted() {},
   methods: {
-    test() {
-      console.log('testclick')
-    },
     updateInput(email) {
       this.memberInput = email
       this.userList = []
@@ -135,11 +148,12 @@ export default {
       const meberId = event.target.getAttribute('data-id')
       await changeLeader(this.$route.params.id, meberId)
       MemberList(this.$route.params.id).then((response) => {
-        this.members = response.data
-        for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].leader == true) {
-            this.teamLeader = response.data[i].user
-          }
+      this.members = response.data
+      this.teamLeader = []
+      this.teamMember = []
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].leader == true) {
+          this.teamLeader = response.data[i]
         }
         this.$router.push()
       })
@@ -148,25 +162,34 @@ export default {
       const meberId = event.target.getAttribute('data-id')
       await deleteMember(this.$route.params.id, meberId)
       MemberList(this.$route.params.id).then((response) => {
-        this.members = response.data
-        for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].leader == true) {
-            this.teamLeader = response.data[i].user
-          }
+      this.members = response.data
+      this.teamLeader = []
+      this.teamMember = []
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].leader == true) {
+          this.teamLeader = response.data[i]
         }
-      })
+        else {
+          this.teamMember.push(response.data[i])
+        }
+      }
+    })
     },
     async postmember() {
       await memberCreate(this.$route.params.id, {user:this.memberInput})
-      MemberList(this.$route.params.id)
-      .then((response) => {
-        this.members = response.data
-        for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].leader == true) {
-            this.teamLeader = response.data[i].user
-          }
+      MemberList(this.$route.params.id).then((response) => {
+      this.members = response.data
+      this.teamLeader = []
+      this.teamMember = []
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].leader == true) {
+          this.teamLeader = response.data[i]
         }
-      })
+        else {
+          this.teamMember.push(response.data[i])
+        }
+      }
+    })
     }
   },
   computed: {

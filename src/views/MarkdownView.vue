@@ -1,10 +1,11 @@
 <template>
   <div>
     <NavProject />
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
       <h1 class="title mb-4 text-center">Project markdown</h1>
-      <v-md-editor v-model="text" height="750px"></v-md-editor>
-      <button @click="[submitMd(), makeToast()]" class="btn1 float-end">수정</button>
+      <v-md-editor v-model="message" height="750px"></v-md-editor>
+      <button @click="[submitMd(), makeToast()]" class="btn1 ms-2 mb-5 float-end">수정</button>
+      <button type="button" @click="doCopy" class="btn1 float-end">복사</button>
     </div>
   </div>
 </template>
@@ -18,24 +19,28 @@ import { markdownPut } from '@/api/index'
     components: { NavProject },
     data() {
       return {
-        text: '',
+        message: '',
       };
     },
     created() {
       markdownGet(this.$route.params.id).then((response) => {
-        this.text = response.data.content
+        this.message = response.data.content
       })
     },
     methods: {
+      doCopy: function () {
+        this.$copyText(this.message).then(function (e) {
+          alert('클립보드에 복사했습니다')
+        }, function (e) {
+          alert('클립보드에 복사에 실패했습니다')
+        })
+      },
       async submitMd() {
-        const update_markdown = {content: this.text}
+        const update_markdown = {content: this.message}
         await markdownPut(this.$route.params.id, update_markdown)
       },
       makeToast(append = false) {
-        this.$bvToast.toast(`마크다운이 수정되었습니다`, {
-          autoHideDelay: 555555555000,
-          appendToast: append
-        })
+        alert(' 수정되었습니다')
       }
     }
   };

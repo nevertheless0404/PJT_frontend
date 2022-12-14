@@ -55,7 +55,6 @@ export default {
   },
   created() {
     NotificationGet().then((response) => {
-      console.log(response)
       this.noCnt = response.data.length
       for (let i = 0; i < response.data.length; i++) {
         this.comment.push([

@@ -128,7 +128,7 @@ export default {
             if (error.response.status === 400) {
               this.signup_status = 'fail'
               // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-              this.err = '이미 존재하는 계정입니다 😀'
+              this.err = '아이디/비밀번호를 다시 확인해주세요 😀'
               this.showAlert()
               if (this.dismissSecs === 0) {
                 this.signup_status = 'success'
@@ -157,8 +157,8 @@ export default {
       if (this.password1 === '') {
         this.errors.push('Password required')
       }
-      if (this.password1.length < 9) {
-        this.errors.push('Too short you password length. Please password +8')
+      if (this.password1.length < 8) {
+        this.errors.push('Too short you password length. Please password +7')
       }
       if (this.password1 != this.password2) {
         this.errors.push('Password does not matching')
