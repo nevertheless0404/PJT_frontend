@@ -4,7 +4,7 @@
     <div class="container mt-4">
       <h3 class="title fw-bold my-5">ProjectMember</h3>
       <div class="d-flex flex-column justify-content-center align-items-center">
-        <form @submit.prevent="postmember" class="form1 mb-5 input-wrap">
+        <form @submit.prevent="postmember" v-click-outside="pannelHide" class="form1 mb-5 input-wrap">
           <div class="w-100 d-flex">
             <input
               @keyup="searchEmail"
@@ -68,7 +68,7 @@ import { changeLeader } from '@/api/index'
 import { deleteMember } from '@/api/index'
 import { memberCreate } from '@/api/index'
 import { searchEmail } from '@/api/index'
-
+import ClickOutside from 'vue-click-outside'
 export default {
   components: { NavBar_detail },
   data() {
@@ -98,6 +98,9 @@ export default {
     })
   },
   mounted() {},
+  directives: {
+    ClickOutside
+  },
   unmounted() {},
   methods: {
     test() {
@@ -111,12 +114,13 @@ export default {
       let memberInputSubmit = this.memberInput
       await searchEmail(memberInputSubmit).then((response) => {
         this.userList = response.data
-      })
-      if (this.userList.length  == 0) {
-        this.isSearch = false
-      } else {
-        this.isSearch = true
-      }
+      }).catch((error) => {
+        this.userList = []
+            })
+    },
+    pannelHide() {
+      this.isSearch = false
+      this.userList = []
     },
     async changeleader() {
       const meberId = event.target.getAttribute('data-id')
