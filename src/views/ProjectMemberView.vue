@@ -53,54 +53,56 @@
                   v-if="(user.email === teamLeader)"
                   class="btn2 float-end"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
+                  data-bs-target="#memberDelete"
+                  @click="memberIdGet(member.id)"
                 >
                   팀원 삭제
                 </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">팀원 삭제</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        팀원을 정말 삭제하시겠습니까?
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
-                        <button @click="deletemember" :data-id="member.id" type="button" class="btn btn-primary">네</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 <button
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal1"
-                  v-if="user.email === teamLeader"
-                  class="btn3 float-end"
+                data-bs-toggle="modal"
+                data-bs-target="#teamLeader"
+                v-if="user.email === teamLeader"
+                class="btn3 float-end"
+                @click="memberIdGet(member.id)"
                 >
-                  팀장 위임
-                </button>
-                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">팀장 위임</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          팀장을 위임하시겠습니까?
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
-                        <button @click="changeleader" :data-id="member.id" type="button" class="btn btn-primary">네</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </span>
+                팀장 위임
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="modal fade" id="memberDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">팀원 삭제</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            팀원을 정말 삭제하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
+            <button @click="deletemember(memberId)" type="button" class="btn btn-primary">네</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="teamLeader" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">팀장 위임</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+              팀장을 위임하시겠습니까?
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
+            <button @click="changeleader(memberId)" type="button" class="btn btn-primary">네</button>
           </div>
         </div>
       </div>
@@ -145,7 +147,8 @@ export default {
       teamMember: [],
       userList: [],
       memberInput: '',
-      isSearch: false
+      isSearch: false,
+      memberId: 0
     }
   },
   setup() {},
@@ -177,6 +180,9 @@ export default {
   },
   unmounted() {},
   methods: {
+    memberIdGet(memberId) {
+      this.memberId = memberId
+    },
     updateInput(email) {
       this.memberInput = email
       this.userList = []
@@ -193,8 +199,9 @@ export default {
       this.isSearch = false
       this.userList = []
     },
-    async changeleader() {
-      const meberId = event.target.getAttribute('data-id')
+    async changeleader(meberId) {
+      // const meberId = event.target.getAttribute('data-id')
+      console.log(meberId)
       await changeLeader(this.$route.params.id, meberId)
       MemberList(this.$route.params.id).then((response) => {
       this.members = response.data
@@ -211,8 +218,8 @@ export default {
         this.$router.go()
       })
     },
-    async deletemember() {
-      const meberId = event.target.getAttribute('data-id')
+    async deletemember(meberId) {
+      // const meberId = event.target.getAttribute('data-id')
       await deleteMember(this.$route.params.id, meberId)
       MemberList(this.$route.params.id).then((response) => {
       this.members = response.data
