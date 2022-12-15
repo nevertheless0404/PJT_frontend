@@ -19,7 +19,12 @@
 
 # 팀 구성
 
-![](https://velog.velcdn.com/images/hvvany/post/de8b26fe-1978-49e8-8235-3024c17400ca/image.png)
+@SeBin-Kwon
+@kimdakyeom
+@hvvany
+@nevertheless0404
+@tenedict
+[![](https://velog.velcdn.com/images/hvvany/post/de8b26fe-1978-49e8-8235-3024c17400ca/image.png)](https://github.com/hvvany/pjt-frontend/graphs/contributors)
 
 # 프로젝트 수행 도구
 
