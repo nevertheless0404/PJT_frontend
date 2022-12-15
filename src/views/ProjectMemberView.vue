@@ -49,21 +49,55 @@
               <span v-if="member.leader === false"
                 >팀원
                 <button
-                  @click="deletemember"
-                  :data-id="member.id"
                   v-if="(user.email === teamLeader)"
                   class="btn2 float-end"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
                 >
                   팀원 삭제
                 </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">팀원 삭제</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        팀원을 정말 삭제하시겠습니까?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
+                        <button @click="deletemember" :data-id="member.id" type="button" class="btn btn-primary">네</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <button
-                  @click="changeleader"
-                  :data-id="member.id"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"
                   v-if="user.email === teamLeader"
                   class="btn3 float-end"
                 >
                   팀장 위임
                 </button>
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">팀장 위임</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          팀장을 위임하시겠습니까?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아뇨</button>
+                        <button @click="changeleader" :data-id="member.id" type="button" class="btn btn-primary">네</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </span>
             </div>
           </div>
