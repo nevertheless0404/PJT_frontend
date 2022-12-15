@@ -12,10 +12,15 @@
 
 > PJT 사이트는 기존의 `복잡하고 사용이 어려운` 일정 관리 서비스들에 비하여 `좀 더 쉽고 직관적`이게 사용할 수 있게 제작하였습니다.
 
+<br>
+
 ## 웹사이트 주소
 
 👉🏻 https://pjt.vercel.app/
+
 ![](https://velog.velcdn.com/images/hvvany/post/65a4d6b7-38eb-4603-a809-a061e8da0ae0/image.png)
+
+<br>
 
 # 팀 구성
 
@@ -25,6 +30,8 @@
 @nevertheless0404
 @tenedict
 [![](https://velog.velcdn.com/images/hvvany/post/de8b26fe-1978-49e8-8235-3024c17400ca/image.png)](https://github.com/hvvany/pjt-frontend/graphs/contributors)
+
+<br>
 
 # 프로젝트 수행 도구
 
@@ -39,6 +46,8 @@
 ## 데이터 베이스
 
 ![](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)![](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+
+<br>
 
 # 프로젝트 일정
 
@@ -60,6 +69,8 @@
 
 12/15 : 프로젝트 발표
 
+<br>
+
 # 프로젝트 구성
 
 ## 템플릿 구성도 ( Figma )
@@ -74,6 +85,8 @@
 
 ![](https://velog.velcdn.com/images/hvvany/post/e5b48099-11ee-4ce8-a0b6-53673df57c60/image.png)
 
+<br>
+
 # 서비스 소개
 
 ## 주요 기능
@@ -85,6 +98,8 @@
 - 댓글 및 댓글 `알림` 기능
 - 프로젝트별 공지사항
 - 인사이트 UI
+
+<br>
 
 ## 로그인 페이지 & 메인 페이지
 
@@ -482,6 +497,17 @@ False로 되어있어서 안된거임
 서버 True False 설정 확인!!!
 
 푸쉬 하고 풀 당기고 하다보니 누군가가 DEBUG = False 로 해놓으면 갑자기 로컬 서버가 아닌 배포 서버로 데이터가 간다. 항상 잘 확인하자..!
+
+<br>
+<br>
+
+## 모바일 대응
+
+![](https://velog.velcdn.com/images/hvvany/post/3c8dec6f-713d-442b-8b7c-b6ef00a3885e/image.jpeg)![](https://velog.velcdn.com/images/hvvany/post/6bf3fb9c-a0c4-4660-9f31-8c64082fc426/image.jpeg)
+![](https://velog.velcdn.com/images/hvvany/post/afc822f0-00f1-4cf6-8180-c58df81ed7af/image.jpeg)![](https://velog.velcdn.com/images/hvvany/post/c9ea11f7-6dd0-4654-b1fc-52fb3df81300/image.jpeg)
+![](https://velog.velcdn.com/images/hvvany/post/806638e5-80a8-40f3-a084-b8dba95bb590/image.jpeg)
+
+> 모바일 반응형도 구현을 하여 대응을 하였다. 언제 어디서나 일정을 확인/ 관리할 수 있는 서비스 PJT 입니다.
 
 <br>
 <br>
