@@ -1,7 +1,7 @@
 # P 개발자의 J되기 프로젝T
 
-서비스 주소: https://pjt.vercel.app/
-깃허브 프론트엔드: https://github.com/hvvany/pjt-frontend
+서비스 주소: https://pjt.vercel.app/ <br>
+깃허브 프론트엔드: https://github.com/hvvany/pjt-frontend <br>
 깃허브 백엔드 : https://github.com/kimdakyeom/PJT_backend
 
 ## 초보 개발자들을 위한 개발 일정 관리 서비스 🧐
@@ -92,11 +92,17 @@
 
 > 내가 미완료한 일들을 `To Do List`에서 확인할 수 있고 `Project` 항목에서 나의 프로젝트 목록을 볼 수 있다.
 
+<br>
+<br>
+
 ## 캘린더
 
 ![](https://velog.velcdn.com/images/hvvany/post/d80db794-0c1a-47e8-872a-0fee6282ad3f/image.png)
 
 > 메인 페이지와 프로젝트 디테일 페이지에 캘린더를 넣어 직관적이게 볼 수 있다.
+
+<br>
+<br>
 
 ## 프로젝트 디테일( 칸반 드래그 + 댓글)
 
@@ -108,11 +114,17 @@
 
 > 카드를 클릭하면 `상세 정보`를 볼 수 있고 내용 수정 및 댓글을 달 수 있다. `댓글`을 통해 팀원들과 소통을 하여 효율적인 프로젝트 진행이 가능하다
 
+<br>
+<br>
+
 ## 마크다운 생성
 
 ![](https://velog.velcdn.com/images/hvvany/post/d9d2c53f-3ff4-46d9-997f-4f6e7024d211/image.gif)
 
 > PJT를 사용하다 보면 자연스럽게 README.md의 작성이 완료됩니다.
+
+<br>
+<br>
 
 ## 개발 이슈
 
@@ -282,13 +294,13 @@ class이름이랑 저장소이름을 똑같이 해버려서 에러 계속 떠서
 
 ---
 
-### 6. pk값이 객체가 아니여서 안들어감
+### 7. pk값이 객체가 아니여서 안들어감
 
 ![](https://velog.velcdn.com/images/hvvany/post/b1ad3c0a-240a-4c80-a95a-1113621521a3/image.png)
 
 ---
 
-### 7. axios request 400 error
+### 8. axios request 400 error
 
 ### vue form
 
@@ -304,19 +316,19 @@ form 태그 사용 시 .prevent 로 새로고침 방지를 해야한다.
 ### src/api/index.js \_ axios 분리
 
 ```jsx
-import axios from "axios";
+import axios from 'axios'
 
 function registerUser(userData) {
   // 요청할 URL
-  const url = "http://127.0.0.1:8000/api/accounts/v1/registration/";
-  console.log("userData :", userData);
+  const url = 'http://127.0.0.1:8000/api/accounts/v1/registration/'
+  console.log('userData :', userData)
   return axios.post(url, userData, {
-    "Content-Type": "application/json",
-  });
+    'Content-Type': 'application/json'
+  })
 }
 
 // 함수 export
-export { registerUser };
+export { registerUser }
 ```
 
 ### headers 추가
@@ -330,12 +342,12 @@ export default {
   data() {
     return {
       // form
-      email: "",
-      password1: "",
-      password2: "",
+      email: '',
+      password1: '',
+      password2: '',
       // log
-      logMessage: "",
-    };
+      logMessage: ''
+    }
   },
   methods: {
     async submitForm() {
@@ -343,22 +355,22 @@ export default {
       const userData = {
         email: this.email,
         password1: this.password1,
-        password2: this.password2,
-      };
-      const { data } = await registerUser(userData);
+        password2: this.password2
+      }
+      const { data } = await registerUser(userData)
 
-      this.logMessage = `${data.email} 님이 가입되었습니다.`;
+      this.logMessage = `${data.email} 님이 가입되었습니다.`
 
       // 가입 후 폼 초기화
-      this.initForm();
+      this.initForm()
     },
     initForm() {
-      this.email = "";
-      this.password1 = "";
-      this.password2 = "";
-    },
-  },
-};
+      this.email = ''
+      this.password1 = ''
+      this.password2 = ''
+    }
+  }
+}
 ```
 
 ---
@@ -465,6 +477,9 @@ False로 되어있어서 안된거임
 서버 True False 설정 확인!!!
 
 푸쉬 하고 풀 당기고 하다보니 누군가가 DEBUG = False 로 해놓으면 갑자기 로컬 서버가 아닌 배포 서버로 데이터가 간다. 항상 잘 확인하자..!
+
+<br>
+<br>
 
 ## 프로젝트 후기
 
