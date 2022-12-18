@@ -27,7 +27,7 @@
         ></i>
         <hr />
         <div class="px-3 py-2">
-          <p :key="idx" v-for="(c, idx) in comment">
+          <div :key="idx" v-for="(c, idx) in comment">
             <router-link :to="{ name: 'projectdetail', params: { id: c[1] } }"
               ><p @click="isRead" :data-id="c[2]" class="text-decoration-none">
                 <span class="fw-bold">{{ c[0] }}</span> 님이
@@ -35,7 +35,7 @@
                 달았습니다.
               </p></router-link
             >
-          </p>
+          </div>
         </div>
       </div>
     </b-sidebar>
@@ -63,13 +63,22 @@ export default {
           response.data[i].send_user.email,
           response.data[i].project.id,
           response.data[i].id,
-          response.data[i].project.title
+          response.data[i].project.title,
+          response.data[i].todo.id
         ])
-        console.log(response.data[i])
       }
     })
   },
   methods: {
+    clickRouter(dataId, todoId) {
+      this.$router.push(
+        {
+          name: 'projectdetail',
+          params: {id:dataId},
+          hash: `#${todoId}`
+        }
+      )
+    },
     async isRead(event) {
       const dataId = event.target.getAttribute('data-id')
       await isRead(dataId)

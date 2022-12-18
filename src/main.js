@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-import './axios'
 // axios를 import
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueClipboard from 'vue-clipboard2'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -33,6 +33,8 @@ Vue.use(IconsPlugin)
 Vue.use(VueMarkdownEditor)
 VueMarkdownEditor.lang.use('ko-KR', koKR)
 Vue.config.productionTip = false
+Vue.use(VueClipboard)
+axios.defaults.baseURL = process.env.VUE_APP_API_URL
 
 new Vue({
   router,

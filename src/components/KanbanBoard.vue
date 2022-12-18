@@ -1,19 +1,29 @@
 <template>
   <div class="mt-4">
     <div class="row">
-      <div class="col d-flex">
-        <!-- <b-form-input
-          v-model="newTask.title"
-          placeholder="Enter Task"
-          @keyup.enter="add"
-        ></b-form-input> -->
-        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>할 일 추가</div>
+      <div class="col d-flex justify-content-between">
+        <div class="btn1" variant="primary" v-b-modal.modal-prevent-closing>
+          <i class="bi bi-plus-lg"></i>&nbsp;할 일 추가
+        </div>
+        <div class="float-right">
+          <b-form-group  label="" v-slot="{ ariaDescribedby }">
+            <b-form-radio-group
+              @change="filterTodo"
+              id="btn-radios-1"
+              v-model="selected"
+              :options="filterOptions"
+              :aria-describedby="ariaDescribedby"
+              name="radios-btn-default"
+              buttons
+            ></b-form-radio-group>
+          </b-form-group>
+        </div>
       </div>
     </div>
     <div class="row mt-3">
       <div class="col-md-4">
         <div class="p-2 alert alert-warning">
-          <h3>시작전</h3>
+          <h3>시작 전</h3>
           <draggable
             class="list-group kanban-column"
             :list="arrBacklog"
@@ -22,14 +32,18 @@
             @change="refresh"
             ><div v-for="element in arrBacklog" :key="element.id">
               <!-- 칸반보드 요소들 -->
+              <!-- <div class="sdfsdf" @mouseenter="cursor(element)" :class="{cursorNot : isCursor}"> -->
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                :id="'todo-' + element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -52,15 +66,22 @@
             v-model="arrInProgress"
             @change="refresh"
           >
-            <div v-for="element in arrInProgress" :key="element.id">
+            <div
+              v-for="element in arrInProgress"
+              :key="element.id"
+              :id="element.id"
+            >
               <button
                 class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                :id="'todo-' + element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -85,13 +106,17 @@
           >
             <div v-for="element in arrDone" :key="element.id">
               <button
-                class="todo list-group-item text-start w-100 rounded-2"
-                id="show-btn"
+                class="todoPk-${element.id} todo list-group-item text-start w-100 rounded-2"
+                :id="'todo-' + element.id"
+                data-id="element.id"
                 @click="showModal(element)"
                 @mousedown="pick_id(element)"
                 v-if="element.title"
               >
-                <div class="d-flex justify-content-between align-items-center">
+                <div
+                  class="d-flex justify-content-between"
+                  style="margin: 8px 0px"
+                >
                   <p class="todoTitle">{{ element.title }}</p>
                   <!-- 유저 이름 -->
                   <div class="avatar">{{ element.user_s }}</div>
@@ -114,13 +139,15 @@
         no-close-on-backdrop
         no-close-on-esc
       >
-        <div class="d-block" v-if="!edit">
-          <div class="d-flex justify-content-between align-items-center">
+        <div class="d-block" id="test1" v-if="!edit">
+          <div class="d-flex justify-content-between">
             <div class="">
-              <h3 class="m-0">{{ modalData.title }}</h3>
+              <h3 class="m-0" style="word-break: break-all">
+                {{ modalData.title }}
+              </h3>
               <p
                 class="mt-1 mb-0"
-                style="font-weight: 500; color: rgb(110 110 110);"
+                style="font-weight: 500; color: rgb(110 110 110)"
               >
                 {{ modalData.user_s }}의 할 일
               </p>
@@ -130,7 +157,7 @@
               variant="outline-danger"
               block
               @click="hideModal"
-              class="bi bi-x-lg"
+              class="bi bi-x-lg ms-3"
               style="font-size: 25px; cursor: pointer"
             ></i>
           </div>
@@ -191,7 +218,7 @@
             <b-form-group label="할 일 상태" v-slot="{ ariaDescribedby }">
               <b-form-radio-group
                 id="btn-radios-2"
-                v-model="complete"
+                v-model="updateData.complete"
                 :options="options"
                 :aria-describedby="ariaDescribedby"
                 button-variant="outline-success"
@@ -234,25 +261,65 @@
         <div v-if="!edit">
           <hr />
           <p>댓글</p>
-          <form @submit.prevent="submitComment" class="row justify-content-end">
-            <input
-              type="text"
-              v-model="comment"
-              class="col-auto form-control mb-3"
-            />
-            <button type="submit" class="col-auto btn btn-primary mb-3">
-              댓글
+          <form
+            @submit.prevent="submitComment"
+            class="d-flex justify-content-end"
+          >
+            <input type="text" v-model="comment" class="form-control mb-3" />
+            <button
+              type="submit"
+              class="btn btn-primary mb-3 ms-2"
+              style="width: 15%"
+            >
+              추가
             </button>
           </form>
           <div
-            :key="id"
-            v-for="(c, id) in comments"
+            :key="idx"
+            v-for="(content, idx) in comments"
             class="row"
             style="justify-content: flex-end"
           >
-            <p class="col">{{ c.user }}</p>
-            <p class="col">{{ c.comment }}</p>
-            <p class="col">{{ c.created_at }}</p>
+            <!-- <p class="col">{{ content.user }}</p>
+            <p class="col">{{ content.comment }}</p>
+            <p class="col">{{ content.created_at }}</p> -->
+            <div class="my-1">
+              <b-card sub-title class="shadow-sm">
+                <div style="font-size: 20px; font-weight: 400">
+                  {{ content.comment }}
+                </div>
+                <div v-if="editComment && idx == updateCommentIdx">
+                  <form @submit.prevent="commentPut(content)">
+                    <input type="text" v-model="updateComment" />
+                    <button class="update_btn" type="submit">저장</button>
+                  </form>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div style="font-size: 10px">
+                    작성자 | {{ content.user }} <br />
+                    작성일 | {{ content.created_at }}
+                  </div>
+                  <div v-if="content.user == user.email">
+                    <b-button
+                      size="sm"
+                      @click="commentPutBtn(content, idx)"
+                      class="card-link"
+                      style="text-decoration: none"
+                      variant="outline-primary"
+                      ><i class="bi bi-pencil"></i
+                    ></b-button>
+                    <b-button
+                      size="sm"
+                      @click="commentDelBtn(content, idx)"
+                      class="card-link"
+                      style="text-decoration: none"
+                      variant="outline-danger"
+                      ><i class="bi bi-trash3"></i
+                    ></b-button>
+                  </div>
+                </div>
+              </b-card>
+            </div>
           </div>
         </div>
       </b-modal>
@@ -273,7 +340,11 @@
               id="exampleFormControlInput1"
               placeholder=""
               v-model="newTask.title"
+              :state="validation"
             />
+            <b-form-invalid-feedback :state="validation">
+              제목은 30자 이내로 작성해 주세요.
+            </b-form-invalid-feedback>
           </div>
           <div class="mb-3">
             <label for="exampleFormControlInput1" class="form-label"
@@ -320,11 +391,15 @@ import draggable from 'vuedraggable'
 import {
   todoCreate,
   todoList,
+  todoListFilter,
   todoPut,
   todoPutDrag,
   todoDel,
   commentCreate,
-  commentList
+  commentList,
+  commentUpdate,
+  commentDelete,
+  NotificationTodo
 } from '@/api/index'
 
 let before_title,
@@ -337,19 +412,26 @@ let before_title,
   len_in,
   len_done,
   refresh_onetime = 0,
-  user_s
+  user_s,
+  userCheckStatus = true,
+  userCheck
 
 export default {
   components: { draggable },
   data() {
     return {
+      updateComment: '',
+      updateCommentIdx: '',
+      editComment: false,
+      isCursor: false,
       complete: '',
       user_s: '',
       newTask: {
         title: '',
         content: '',
         start_at: '',
-        end_at: ''
+        end_at: '',
+        user: ''
       },
       arrBacklog: [],
       arrInProgress: [],
@@ -362,83 +444,145 @@ export default {
           start_at: '',
           end_at: '',
           user_s: '',
-          user: ''
+          user: '',
+          complete: ''
         }
       ],
       updateData: [],
       edit: false,
       options: [
-        { text: 'Backlog', value: 0 },
-        { text: 'In Progress', value: 1 },
-        { text: 'Done', value: 2 }
+        { text: '시작 전', value: 0 },
+        { text: '진행중', value: 1 },
+        { text: '완료됨', value: 2 }
       ],
       comment: '',
-      comments: []
+      comments: [],
+      selected: 0,
+      filterOptions : [
+        { text: '팀의 할 일', value: 0},
+        { text: '나의 할 일', value: 1},
+      ]
     }
   },
   setup() {},
   created() {
-    todoList(this.$route.params.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
-      .then((response) => {
-        response.data.forEach((ele) => {
-          if (ele.complete === 0) {
-            this.arrBacklog.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: 0
-            })
-            this.complete = ele.complete
-          } else if (ele.complete === 1) {
-            this.arrInProgress.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: 1
-            })
-            this.complete = ele.complete
-          } else {
-            this.arrDone.push({
-              id: ele.id,
-              project: ele.project,
-              title: ele.title,
-              content: ele.content,
-              start_at: ele.start_at,
-              end_at: ele.end_at,
-              user_s: ele.user.split('@')[0],
-              user: ele.user,
-              complete: 2
-            })
-            this.complete = ele.complete
-          }
-        })
-        len_back = this.arrBacklog.length
-        len_in = this.arrInProgress.length
-        len_done = this.arrDone.length
-      }) // 성공하면 json 객체를 받아온다.
-      .catch((error) => console.log(error))
-    todoUpdate(this.$route.params.id)
+    this.filterTodo()
   },
-  mounted() {},
   unmounted() {},
   methods: {
+    async filterTodo() {
+      this.arrBacklog = []
+      this.arrInProgress = []
+      this.arrDone = []
+      if (this.selected == 0) {
+        await todoList(this.$route.params.id)
+          .then((response) => {
+            response.data.forEach((ele) => {
+              if (ele.complete === 0) {
+                this.arrBacklog.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              } else if (ele.complete === 1) {
+                this.arrInProgress.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.
+              } else {
+                this.arrDone.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              }
+            })
+            len_back = this.arrBacklog.length
+            len_in = this.arrInProgress.length
+            len_done = this.arrDone.length
+          }) // 성공하면 json 객체를 받아온다.
+        .catch((error) => console.log(error))
+        }
+      else {
+        await todoListFilter(this.$route.params.id)
+          .then((response) => {
+            response.data.forEach((ele) => {
+              if (ele.complete === 0) {
+                this.arrBacklog.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              } else if (ele.complete === 1) {
+                this.arrInProgress.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.
+              } else {
+                this.arrDone.push({
+                  id: ele.id,
+                  project: ele.project,
+                  title: ele.title,
+                  content: ele.content,
+                  start_at: ele.start_at,
+                  end_at: ele.end_at,
+                  user_s: ele.user.split('@')[0],
+                  user: ele.user,
+                  complete: ele.complete
+                })
+                // this.modalData.complete = ele.complete
+              }
+            })
+            len_back = this.arrBacklog.length
+            len_in = this.arrInProgress.length
+            len_done = this.arrDone.length
+          }) // 성공하면 json 객체를 받아온다.
+        .catch((error) => console.log(error))
+      }
+    },
     async submitComment() {
       const new_comment = this.comment
       await commentCreate(this.$route.params.id, this.modalData.id, {
         comment: new_comment
       })
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
       this.comment = ''
@@ -454,12 +598,12 @@ export default {
       before_end_at = this.modalData.end_at
       before_complete = this.modalData.complete
       commentList(this.$route.params.id, this.modalData.id).then((response) => {
-        console.log(response)
         this.comments = response.data
       })
     },
     hideModal() {
       this.$refs['my-modal'].hide()
+      this.$parent.forceRerender()
     },
     async todoAdd() {
       this.updateData.title = ''
@@ -467,13 +611,15 @@ export default {
       this.updateData.start_at = ''
       this.updateData.end_at = ''
       this.updateData.complete = ''
-      if (this.newTask) {
+      if (this.newTask && this.newTask.title.length < 30) {
         this.arrBacklog.push({
           project: this.$route.params.id,
           title: this.newTask.title,
           content: this.newTask.content,
           start_at: this.newTask.start_at,
-          end_at: this.newTask.end_at
+          end_at: this.newTask.end_at,
+          user_s: this.user.email.split('@')[0],
+          user: this.user
         })
         const new_data = {
           title: this.newTask.title,
@@ -482,7 +628,6 @@ export default {
           end_at: this.newTask.end_at
         }
         await todoCreate(this.$route.params.id, new_data)
-        console.log('이번 user :')
         this.newTask.title = ''
         this.newTask.content = ''
         this.newTask.start_at = ''
@@ -490,6 +635,7 @@ export default {
         this.$refs['modal'].hide()
       }
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     editModal() {
       this.edit = true
@@ -504,7 +650,7 @@ export default {
       // this.$refs['my-modal'].hide()
     },
     async todoUpdate() {
-      this.updateData.complete = this.complete
+      // this.updateData[0].complete = this.complete
       await todoPut(this.$route.params.id, this.updateData)
       this.updateData = []
       this.$router.go()
@@ -513,26 +659,38 @@ export default {
       len_in = this.arrInProgress.length
       len_done = this.arrDone.length
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
     async todoUpdateDrag() {
       this.updateData[0].complete = this.complete
-      await todoPutDrag(this.$route.params.id, this.updateData)
-      this.updateData = []
-      len_back = this.arrBacklog.length
-      len_in = this.arrInProgress.length
-      len_done = this.arrDone.length
-      this.$parent.calendarRefresh()
+      if (userCheckStatus == true) {
+        await todoPutDrag(this.$route.params.id, this.updateData)
+        len_back = this.arrBacklog.length
+        len_in = this.arrInProgress.length
+        len_done = this.arrDone.length
+        this.$parent.calendarRefresh()
+        this.$parent.forceRerender()
+      } else {
+        alert('본인이 작성한 카드만 수정할 수 있습니다')
+      }
     },
     deleteTodo() {
       todoDel(this.$route.params.id, this.modalData)
       this.$router.go()
       this.$refs['my-modal'].hide()
       this.$parent.calendarRefresh()
+      this.$parent.forceRerender()
     },
-    pick_id(ele) {
+    async pick_id(ele) {
       drag_id = ele.id
+      if (ele.user === this.user.email) {
+        userCheckStatus = true
+        userCheck = ele.user
+      } else {
+        userCheckStatus = false
+      }
       this.updateData.id = drag_id
-      this.updateData.push({
+      await this.updateData.push({
         id: drag_id,
         complete: '',
         title: ele.title,
@@ -557,10 +715,56 @@ export default {
       } else {
         refresh_onetime = 0
       }
+      this.$parent.forceRerender()
+    },
+    commentPutBtn(content, idx) {
+      console.log('5555555', content)
+      if (content.user === this.user.email) {
+        this.updateComment = content.comment
+        this.updateCommentIdx = idx
+        this.editComment = true
+      } else {
+        alert('본인이 작성한 댓글만 수정 가능합니다')
+      }
+    },
+    async commentPut(content) {
+      content.comment = this.updateComment
+      await commentUpdate(
+        this.$route.params.id,
+        this.modalData.id,
+        content.id,
+        content
+      )
+      this.editComment = false
+      this.updateComment = ''
+      await commentList(this.$route.params.id, this.modalData.id).then(
+        (response) => {
+          this.comments = response.data
+        }
+      )
+    },
+    async commentDelBtn(content) {
+      if (content.user === this.user.email) {
+        await commentDelete(
+          this.$route.params.id,
+          this.modalData.id,
+          content.id
+        )
+        await commentList(this.$route.params.id, this.modalData.id).then(
+          (response) => {
+            this.comments = response.data
+          }
+        )
+      } else {
+        alert('본인이 작성한 댓글만 삭제 가능합니다')
+      }
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user']),
+    validation() {
+      return this.newTask.title.length < 30
+    }
   }
 }
 </script>
@@ -573,7 +777,8 @@ export default {
 .todoTitle {
   font-size: 18px;
   font-weight: 600;
-  margin: 8px 0px;
+  word-break: break-all;
+  /* margin: 8px 0px; */
   color: rgb(54, 54, 54);
 }
 
@@ -582,36 +787,54 @@ export default {
   color: #ababab;
   font-weight: 600;
   letter-spacing: -0.5px;
-  padding: 0px 5px;
+  padding: 3px 5px;
 }
 
 .todo {
   overflow: hidden;
 }
 
-
 .btn1 {
   display: flex;
   color: white;
   background-color: #3485ff;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 100%;
+  width: 150px;
   height: 40px;
   border-radius: 10px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
-  text-align : center;
-  box-shadow: inset 0px 0px 0px #FFC062;
+  text-align: center;
+  box-shadow: inset 0px 0px 0px #ffc062;
   display: block;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  -webkit-transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
-  transition: all 0.8s cubic-bezier(.5, .24, 0, 1);
+  -webkit-transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 
 .btn1:hover {
   box-shadow: inset 1600px 0px 0px 0px #ffc062;
+}
+
+.cursorNot {
+  cursor: not-allowed;
+}
+
+.update_btn {
+  margin-left: 3px;
+  color: white;
+  background-color: #3485ff;
+  box-shadow: 5px 9px 16px 0px #0d224216;
+  height: 32px;
+  border-radius: 4px;
+  border: #d9d9d9 solid 0px;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: inset 0px 0px 0px #ffc062;
+  -webkit-transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
+  transition: all 1.8s cubic-bezier(0.5, 0.24, 0, 1);
 }
 </style>
