@@ -54,6 +54,24 @@
           </b-alert>
         </div>
       </div>
+      <!-- 경고 메시지 출력 -->
+      <b-alert
+        :show="dismissCountDown"
+        variant="warning"
+        @dismissed="dismissCountDown = 0"
+        @dismiss-count-down="countDownChanged"
+        v-if="err"
+      >
+        <p>
+          {{ err }}
+        </p>
+        <b-progress
+          variant="warning"
+          :max="dismissSecs"
+          :value="dismissCountDown"
+          height="4px"
+        ></b-progress>
+      </b-alert>
 
       <!-- <b-button @click="showDismissibleAlert=true" variant="info" class="m-1">
         Show dismissible alert ({{ showDismissibleAlert ? 'visible' : 'hidden' }})
@@ -65,6 +83,7 @@
 <script>
 import { registerUser } from '@/api/index'
 
+let cnt = 0
 export default {
   data() {
     return {
@@ -75,7 +94,12 @@ export default {
       // log
       logMessage: '',
       errors: [],
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      // error
+      dismissSecs: 5,
+      dismissCountDown: 0,
+      err: null,
+      signup_status: 'success'
     }
   },
   methods: {
@@ -94,12 +118,23 @@ export default {
           password1: this.password1,
           password2: this.password2
         }
-        const { data } = await registerUser(userData)
-        this.logMessage = `${data.email} 님이 가입되었습니다.`
-
-        // 가입 후 폼 초기화
-        this.initForm()
-        this.$router.push('/login')
+        await registerUser(userData)
+          .then((response) => {
+            // 가입 후 폼 초기화
+            this.initForm()
+            this.$router.push('/login')
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              this.signup_status = 'fail'
+              // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+              this.err = '이미 존재하는 계정입니다 😀'
+              this.showAlert()
+              if (this.dismissSecs === 0) {
+                this.signup_status = 'success'
+              }
+            }
+          })
       } else {
         this.showDismissibleAlert = true
       }
@@ -110,7 +145,6 @@ export default {
       this.password2 = ''
     },
     checkForm() {
-      console.log('체크폼 실행')
       this.errors = []
       if (this.email === '') {
         this.errors.push('Email required')
@@ -129,6 +163,20 @@ export default {
       if (this.password1 != this.password2) {
         this.errors.push('Password does not matching')
       }
+    },
+    countDownChanged(dismissCountDown) {
+      cnt += 1
+      this.dismissCountDown = dismissCountDown
+      if (cnt > 5) {
+        this.login_status = 'success'
+        cnt = 0
+      }
+    },
+    showAlert() {
+      this.dismissCountDown = this.dismissSecs
+    },
+    changeLoginStatus() {
+      this.login_status = 'success'
     }
   }
 }

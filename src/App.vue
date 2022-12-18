@@ -12,8 +12,7 @@ import axios from 'axios'
 
 export default {
   async created() {
-    console.log(localStorage.getItem('access_token'))
-    const response = await axios.get('user/', {
+    const response = await axios.get('api/accounts/v1/user/', {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }

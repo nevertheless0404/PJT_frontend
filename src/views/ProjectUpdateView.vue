@@ -121,10 +121,10 @@ export default {
       this.start_at = response.data.start_at
       this.end_at = response.data.end_at
       this.goal = response.data.goal
-      for (const resSkill of response.data.skill.split(' ')) {
+      for (const resSkill of response.data.skill.split(';')) {
         this.skill.push({name: resSkill})
       }
-      for (const resFunctions of response.data.functions.split(' ')) {
+      for (const resFunctions of response.data.functions.split(';')) {
         this.functions.push({content: resFunctions})
       }
     })
@@ -144,12 +144,14 @@ export default {
       // API 요청시 전달할 ProjectData 객체
       let stringSkill = ''
       this.skill.forEach((ele) => {
-        stringSkill += ele.name + ' '
+        stringSkill += ele.name + ';'
       })
+      stringSkill = stringSkill.substr(0, stringSkill.length-1)
       let stringFunction = ''
       this.functions.forEach((ele) => {
-        stringFunction += ele.content + ' '
+        stringFunction += ele.content + ';'
       })
+      stringFunction = stringFunction.substr(0, stringFunction.length-1)
       const projectData = {
         title: this.title,
         start_at: this.start_at,
@@ -166,7 +168,6 @@ export default {
       this.skill.push({
         name: ''
       })
-      console.log(this.skill)
     },
     removeSkill() {
       if (this.skill.length > 1) {
@@ -175,13 +176,11 @@ export default {
         this.skill.splice(-1, 1)
         this.addSkill()
       }
-      console.log(this.skill)
     },
     addfunc() {
       this.functions.push({
         content: ''
       })
-      console.log(this.functions)
     },
     removefunc() {
       if (this.functions.length > 1) {
@@ -190,7 +189,6 @@ export default {
         this.functions.splice(-1, 1)
         this.addfunc()
       }
-      console.log(this.functions)
     }
   }
 }

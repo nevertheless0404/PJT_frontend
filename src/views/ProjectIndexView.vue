@@ -1,57 +1,57 @@
 <template>
   <div>
     <ProjectIndexNav />
-    <div class="container mt-4">
-      <div class="d-flex justify-content-evenly row">
+    <div class="container mt-5">
+      <div class="justify-content-evenly row">
         <!-- <ProjectCalender v-bind:childValue="projects" class="col-12 col-lg-8" /> -->
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 row" style="height:750px;">
           <FullCalendar v-bind:options="calendarOptions" />
         </div>
         <!-- <p>{{ this.projects }}</p> -->
 
-        <div class="allpjtindex col col-4 col-xs-12">
+        <div class="allpjtindex col-12 col-lg-4">
           <!-- 할 일 목록 블럭 -->
-          <div class="card-body cb1">
+          <div class="card-body cb1 scrollspy-example-2">
             <div class="todoli">
-              <div style="font-size: 40px my-5" class="btn1">할 일 목록</div>
+              <h1 class="todoTitle sticky-top bg-white">To Do List</h1>
               <div :key="idx" v-for="(todo, idx) in todos">
                 <div
-                  class="ms-3 listbox1"
-                  v-if="todo.color === 1"
+                  class="listbox1 mb-1"
+                  v-if="todo.color == 1"
                   style="font-size: 15px"
                 >
                   <div class="todo2 font1">
-                    {{ todo.title }}
+                    {{ todo.project }}
                   </div>
                   <div class="todo1 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
 
                 <div
-                  class="ms-3 listbox2"
-                  v-if="todo.color === 2"
+                  class="listbox2"
+                  v-else-if="todo.color == 2"
                   style="font-size: 15px"
                 >
                   <div class="todo4 font1">
-                    {{ todo.title }}
+                    {{ todo.project }}
                   </div>
                   <div class="todo3 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
                 <div class="listbox3" v-else style="font-size: 15px">
                   <div class="todo6 font1">
-                    {{ todo.title }}
+                    {{ todo.project }}
                   </div>
                   <div class="todo5 font1">
-                    {{ todo.content }}
+                    {{ todo.title }}
                   </div>
                 </div>
               </div>
-              <div style="font-size: 40px my-5" class="btn2"></div>
             </div>
             <div class="pjtindex">
+              <h1 class="todoTitle sticky-top bg-white">Project</h1>
               <div
                 v-for="(project, id) in projects"
                 :key="id"
@@ -82,13 +82,14 @@
                 </router-link>
               </div>
             </div>
-            <router-link :to="{ name: 'projectcreate' }" class="btn1">
-              프로젝트 생성
-            </router-link>
+            <router-link :to="{ name: 'projectcreate' }" class="btn1"
+              ><i class="bi bi-plus-lg"></i>&nbsp;프로젝트 생성</router-link
+            >
+            <TodoList />
           </div>
         </div>
+        <router-view></router-view>
       </div>
-      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -96,7 +97,6 @@
 <script>
 import ProjectIndexNav from '@/components/ProjectIndexNav.vue'
 // import ProjectCalender from '@/components/ProjectCalender.vue'
-import TodoList from '@/components/TodoList.vue'
 // 캘린터 임포트
 import '@fullcalendar/core/vdom' // solves problem with Vite
 import FullCalendar from '@fullcalendar/vue'
@@ -111,7 +111,6 @@ export default {
   components: {
     // ProjectCalender,
     ProjectIndexNav,
-    TodoList,
     FullCalendar
   },
   data() {
@@ -143,7 +142,6 @@ export default {
       .then((response) => {
         this.projects = response.data
         for (const pjt of this.projects) {
-          console.log('pjt:', pjt)
           if (pjt.color === 1) {
             pjt_color = '#3485ff'
           } else if (pjt.color === 2) {
@@ -162,9 +160,9 @@ export default {
           todoList(pjt.id) // 위에서 임포트한 통신 메소드이다. 렌더링시 생성(created)되도록 만든다.
             .then((response) => {
               response.data.forEach((ele) => {
-                console.log('ele data:', ele)
                 if (ele.complete != 2) {
                   this.todos.push({
+                    project: ele.project,
                     title: ele.title,
                     content: ele.content,
                     color: pjt.color
@@ -190,7 +188,7 @@ export default {
 .pjts-1 {
   background-color: white;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 280px;
+  width: 330px;
   border-radius: 0px 10px 10px 0px;
   padding: 20px;
   color: black;
@@ -203,7 +201,7 @@ export default {
 
 .pjts-1:hover {
   color: white;
-  box-shadow: inset 300px 0px 0px #3485ff;
+  box-shadow: inset 330px 0px 0px #3485ff;
 }
 
 .pjts-color-1 {
@@ -213,15 +211,15 @@ export default {
   border-radius: 10px 0px 0px 10px;
 }
 
-.pjts-1:hover {
+/* .pjts-1:hover {
   color: white;
   box-shadow: inset 300px 0px 0px #3485ff;
-}
+} */
 
 .pjts-2 {
   background-color: white;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 280px;
+  width: 330px;
   border-radius: 0px 10px 10px 0px;
   border: #f2f2f2;
   border-style: solid;
@@ -243,14 +241,14 @@ export default {
 }
 
 .pjts-2:hover {
-  box-shadow: inset 300px 0px 0px #ffc062;
+  box-shadow: inset 330px 0px 0px #ffc062;
   color: white;
 }
 
 .pjts-3 {
   background-color: white;
   box-shadow: 5px 9px 16px 0px #0d224216;
-  width: 280px;
+  width: 330px;
   border-radius: 0px 10px 10px 0px;
   border: #f2f2f2;
   border-style: solid;
@@ -272,7 +270,7 @@ export default {
 }
 
 .pjts-3:hover {
-  box-shadow: inset 300px 0px 0px #f24e1e;
+  box-shadow: inset 330px 0px 0px #f24e1e;
   color: white;
 }
 
@@ -282,8 +280,10 @@ export default {
   background-color: #3485ff;
   box-shadow: 5px 9px 16px 0px #0d224216;
   width: 300px;
-  height: 40px;
-  border-radius: 10px;
+  height: 50px;
+  margin-top: 35px;
+  margin-bottom: 50px;
+  border-radius: 70px;
   border: #d9d9d9 solid 0px;
   text-decoration: none;
   text-align: center;
@@ -304,19 +304,26 @@ export default {
 .pjtTitle {
   font-weight: bold;
   text-decoration: none;
+    padding: 30px 0px 18px;
 }
 
 .pjtindex {
-  margin-top: 50px;
-  width: 300px;
+  margin-top: 30px;
+  width: 100%;
+  padding: 0px 30px;
+  border-radius: 15px;
   overflow: auto;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   flex-direction: column;
+  position:relative;
+  height:350px;
+  overflow-y:scroll;
+  box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
 }
 
 .pjtindex::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
+  display: none;
 }
 
 .allpjtindex {
@@ -324,6 +331,7 @@ export default {
   align-items: center;
   flex-direction: column;
   height: 800px;
+
 }
 
 .project_add {
@@ -349,19 +357,40 @@ export default {
 
 /* 할 일 목록 스타일 */
 .cb1 {
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 .font1 {
-  font-family: 'Dela Gothic One';
-  font-weight: bold;
+  /* font-family: 'Dela Gothic One'; */
+  font-weight: 500;
+  color: white;
 }
 
 .todoli {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  box-shadow: 2px 5px 13px 2px rgba(47, 47, 47, 0.096);
+  margin-top: 30px;
+  padding: 0 30px;
+  border-radius: 15px;
+  position:relative;
+  height:350px;
+  overflow-y:scroll;
+}
+
+.todoli::-webkit-scrollbar {
+  display: none;
+}
+
+
+.todoTitle{
+  font-family: 'Dela Gothic One';
+  font-size: 30px;
+  padding: 30px 0px 18px;
 }
 
 .progressbar {
@@ -395,7 +424,7 @@ export default {
 .listbox1 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -403,7 +432,7 @@ export default {
 .listbox2 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -411,7 +440,7 @@ export default {
 .listbox3 {
   display: flex;
   transform: translateX(0);
-  transition-property: transform, background, overflow, white-space, width;
+  transition-property: transform, overflow, white-space, width;
   transition-duration: 0.3s;
   transition-timing-function: ease-in;
 }
@@ -420,57 +449,53 @@ export default {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+
 }
 
 .listbox1:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #3485ff;
+  box-shadow: inset 0px -5px 0px 0px #3485ff;
 }
 
 .listbox2:hover {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+
 }
 
 .listbox2:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #ffc062;
+  box-shadow: inset 0px -5px 0px 0px #ffc062;
 }
 
 .listbox3:hover {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
+
 }
 
 .listbox3:hover * {
   overflow: visible;
   white-space: wrap;
   min-width: 80px;
-  width: auto;
-  color: white;
-  box-shadow: inset 300px 0px 0px #f24e1e;
+  box-shadow: inset 0px -5px 0px 0px #f24e1e;
 }
 
 .todo1 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #3485ff;
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 
   width: 200px;
   overflow: hidden;
@@ -484,12 +509,14 @@ export default {
 }
 
 .todo2 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: #3485ff;
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #3485ff;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
@@ -498,12 +525,14 @@ export default {
 }
 
 .todo3 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #ffc062;
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
 
   width: 200px;
   overflow: hidden;
@@ -517,12 +546,14 @@ export default {
 }
 
 .todo4 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: #ffc062;
   color: white;
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #ffc062;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
@@ -531,13 +562,14 @@ export default {
 }
 
 .todo5 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: white;
   color: black;
   padding: 5px;
-  border-radius: 0px 10px 10px 0px;
-  border: #f24e1e;
-
+  border-radius: 0px;
+  border: #9f9f9f;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
   width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -550,12 +582,14 @@ export default {
 }
 
 .todo6 {
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   background-color: #f24e1e;
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 5px;
   border-radius: 10px 0px 0px 10px;
   border: #f24e1e;
+  border-width: 4px;
+  border-style: solid;
 
   width: 100px;
   overflow: hidden;
@@ -563,44 +597,75 @@ export default {
   white-space: nowrap;
 }
 
-.btn1 {
-  display: flex;
-  color: white;
-  background-color: #9e9e9e;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  margin-top: 15px;
-  margin-bottom: 5px;
-  width: 300px;
-  height: 30px;
-  border-radius: 10px 10px 0px 0px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: inset 0px 0px 0px #adb5bd;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+@media ( max-width: 1199px ) {
+  .pjts-1 {
+    width: 230px;
+  }
+  .pjts-1:hover {
+    box-shadow: inset 230px 0px 0px #3485ff;
+  }
+  .pjts-2 {
+    width: 230px;
+  }
+  .pjts-2:hover {
+    box-shadow: inset 230px 0px 0px #ffc062;
+  }
+  .pjts-3 {
+    width: 230px;
+  }
+  .pjts-3:hover {
+    box-shadow: inset 230px 0px 0px #f24e1e;
+  }
 }
 
-.btn2 {
-  display: flex;
-  color: white;
-  background-color: #9e9e9e;
-  box-shadow: 5px 9px 16px 0px #0d224216;
-  margin-bottom: 5px;
-  width: 300px;
-  height: 30px;
-  border-radius: 0px 0px 10px 10px;
-  border: #d9d9d9 solid 0px;
-  text-decoration: none;
-  text-align: center;
-  box-shadow: inset 0px 0px 0px #adb5bd;
-  display: block;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
+@media ( max-width: 991px ) {
+  .todo1 {
+    width: 530px;
+  }
+  .todo3 {
+    width: 530px;
+  }
+  .todo5 {
+    width: 530px;
+  }
+  .pjts-1 {
+    width: 610px;
+  }
+  .pjts-1:hover {
+    box-shadow: inset 610px 0px 0px #3485ff;
+  }
+  .pjts-2 {
+    width: 610px;
+  }
+  .pjts-2:hover {
+    box-shadow: inset 610px 0px 0px #ffc062;
+  }
+  .pjts-3 {
+    width: 610px;
+  }
+  .pjts-3:hover {
+    box-shadow: inset 610px 0px 0px #f24e1e;
+  }
+}
+
+@media ( max-width: 767px ) {
+  .pjts-1 {
+    width: 435px;
+  }
+  .pjts-1:hover {
+    box-shadow: inset 435px 0px 0px #3485ff;
+  }
+  .pjts-2 {
+    width: 435px;
+  }
+  .pjts-2:hover {
+    box-shadow: inset 435px 0px 0px #ffc062;
+  }
+  .pjts-3 {
+    width: 435px;
+  }
+  .pjts-3:hover {
+    box-shadow: inset 435px 0px 0px #f24e1e;
+  }
 }
 </style>
