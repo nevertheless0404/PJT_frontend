@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function registerUser(userData) {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/api/accounts/v1/registration/'
+  const url = 'api/accounts/v1/registration/'
   return axios.post(url, userData, {
     'Content-Type': 'application/json'
   })
@@ -10,7 +10,7 @@ function registerUser(userData) {
 
 function projectIndex() {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/'
+  const url = 'project/'
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ function projectIndex() {
 
 function projectCreate(projectData) {
   // 요청할 URL
-  const url = 'http://127.0.0.1:8000/project/'
+  const url = 'project/'
   return axios.post(url, projectData, {
     headers: {
       'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ function projectCreate(projectData) {
 
 function projectGet(project) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/project/${project}/`
+  const url = `project/${project}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ function projectGet(project) {
 
 function projectUpdate(project, projectData) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/project/${project}/`
+  const url = `project/${project}/`
   return axios.put(url, projectData, {
     headers: {
       'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ function projectUpdate(project, projectData) {
 function markdownGet(project) {
   // 요청할 URL
   console.log('웨 안 뒈 마 크 다 운')
-  const url = `http://127.0.0.1:8000/${project}/markdown/`
+  const url = `${project}/markdown/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ function markdownGet(project) {
 
 function markdownPut(project, update_markdown) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${project}/markdown/`
+  const url = `${project}/markdown/`
   return axios.put(url, update_markdown, {
     headers: {
       'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ function markdownPut(project, update_markdown) {
 }
 // function projectPk() {
 //   // 요청할 URL
-//   const url = 'http://127.0.0.1:8000/recent_project/'
+//   const url = 'recent_project/'
 //   // console.log('projectData :', projectData)
 //   return axios.get(url, {
 //     headers: {
@@ -88,7 +88,7 @@ function markdownPut(project, update_markdown) {
 
 function memberCreate(pjt_pk, memberEmail) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${pjt_pk}/`
+  const url = `memberadmin/${pjt_pk}/`
   return axios.post(url, memberEmail, {
     headers: {
       'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ function memberCreate(pjt_pk, memberEmail) {
 
 function NotificationGet() {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/notification`
+  const url = `notification`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ function NotificationGet() {
 
 function todoCreate(pjt_pk, new_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
+  const url = `${pjt_pk}/todo/`
   console.log('뉴데이터 : ', new_data)
   return (
     axios.post(url, new_data, {
@@ -125,7 +125,7 @@ function todoCreate(pjt_pk, new_data) {
 
 function todoList(pjt_pk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/`
+  const url = `${pjt_pk}/todo/`
   // console.log('projectData :', projectData)
   return axios.get(url, {
     headers: {
@@ -137,7 +137,7 @@ function todoList(pjt_pk) {
 
 function todoPutDrag(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   return axios.put(url, update_data[0], {
     headers: {
       'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ function todoPutDrag(pjt_pk, update_data) {
 
 function todoPut(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   return axios.put(url, update_data, {
     headers: {
       'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ function todoPut(pjt_pk, update_data) {
 
 function todoDel(pjt_pk, update_data) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${update_data.id}/`
+  const url = `${pjt_pk}/todo/${update_data.id}/`
   console.log('del 데이터 : ', update_data)
   return (
     axios.delete(url, {
@@ -174,7 +174,7 @@ function todoDel(pjt_pk, update_data) {
 
 function isRead(notificationPk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/isread/${notificationPk}`
+  const url = `isread/${notificationPk}`
   return axios.put(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -184,7 +184,7 @@ function isRead(notificationPk) {
 }
 
 function informCreate(pjt_pk, new_inform) {
-  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  const url = `informs/${pjt_pk}/`
   return axios.post(url, new_inform, {
     headers: {
       'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ function informCreate(pjt_pk, new_inform) {
 }
 
 function informList(pjt_pk) {
-  const url = `http://127.0.0.1:8000/informs/${pjt_pk}/`
+  const url = `informs/${pjt_pk}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ function informList(pjt_pk) {
 
 function InformPut(project, informData) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/informs/${project}/detail`
+  const url = `informs/${project}/detail`
   return axios.put(url, informData, {
     headers: {
       'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ function InformPut(project, informData) {
 }
 
 function commentCreate(pjt_pk, todo_pk, new_comment) {
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/`
   return axios.post(url, new_comment, {
     headers: {
       'Content-Type': 'application/json',
@@ -225,7 +225,7 @@ function commentCreate(pjt_pk, todo_pk, new_comment) {
 }
 
 function commentList(pjt_pk, todo_pk) {
-  const url = `http://127.0.0.1:8000/${pjt_pk}/todo/${todo_pk}/comment/`
+  const url = `${pjt_pk}/todo/${todo_pk}/comment/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -236,7 +236,7 @@ function commentList(pjt_pk, todo_pk) {
 
 function MemberList(project) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${project}/`
+  const url = `memberadmin/${project}/`
   return axios.get(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ function MemberList(project) {
 
 function deleteMember(pjt_pk, user_pk) {
   // 요청할 URL
-  const url = `http://127.0.0.1:8000/memberadmin/${pjt_pk}/${user_pk}`
+  const url = `memberadmin/${pjt_pk}/${user_pk}`
   return axios.delete(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ function deleteMember(pjt_pk, user_pk) {
 }
 
 function changeLeader(pjt_pk, user_pk) {
-  const url = `http://127.0.0.1:8000/changeleader/${pjt_pk}/${user_pk}/`
+  const url = `changeleader/${pjt_pk}/${user_pk}/`
   return axios.get(url, {
       headers: {
       'Content-Type': 'application/json',
