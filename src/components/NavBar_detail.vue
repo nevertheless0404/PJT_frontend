@@ -75,11 +75,6 @@
               >
             </b-dropdown-item>
             <b-dropdown-item v-if="user">
-              <routerLink class="nav-link" :to="{ name: 'todo_project' }"
-              >오늘 할 일</routerLink
-              >
-            </b-dropdown-item>
-            <b-dropdown-item v-if="user">
               <routerLink class="nav-link" :to="{ name: 'markdown' }"
               >마크다운 생성</routerLink
               >
@@ -89,13 +84,13 @@
               >팀원 확인</routerLink
               >
             </b-dropdown-item>
-            <div :v-if="(user.pk == resPk)">
+            <div v-if="(user.pk == resPk)">
               <b-dropdown-item v-if="user">
                 <routerLink class="nav-link" :to="{ name: 'projectupdate' }"
                   >프로젝트 수정</routerLink
                 >
               </b-dropdown-item>
-              <b-dropdown-item v-if="user">
+              <b-dropdown-item v-if="(user.pk == resPk)">
                 <routerLink class="nav-link" :to="{ name: 'projectnotice' }"
                   >공지사항 수정</routerLink
                 >
@@ -140,20 +135,21 @@ export default {
   props: ['childValue'],
   created() {
     projectGet(this.$route.params.id).then((response) => {
-      this.resPk = response.data.id
+      this.resPk = response.data.user_id
     })
   },
   data() {
     return {
       pjtPk: this.childValue,
-      resPk: ""
+      resPk: "",
+
     }
   },
   methods: {
     handleClick() {
       localStorage.removeItem('access_token')
       this.$store.dispatch('user', null)
-      this.$router.push('/')
+      this.$router.push('/login')
     }
   },
   computed: {
