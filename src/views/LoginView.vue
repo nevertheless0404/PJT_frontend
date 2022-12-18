@@ -83,7 +83,7 @@
               v-model="password"
             />
             <div class="form-text" v-if="errors">
-              {{ e}}
+              {{ e }}
             </div>
           </div>
           <button type="submit" class="btn w-100 my-3 shadow btn-login">
@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      const response = await axios.post('login/', {
+      const response = await axios.post('api/accounts/v1/login/', {
         email: this.email,
         password: this.password
       })
@@ -128,7 +128,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style scoped>
@@ -158,6 +157,8 @@ export default {
 
 .left-box {
   background-color: #eef0f3;
+  position: relative;
+  top: -60px;
 }
 
 .bottom-title {

@@ -58,12 +58,6 @@ const routes = [
     component: ProjectCreateView
   },
   {
-    path: '/project/:id/todo',
-    name: 'todo_project',
-    component: () =>
-      import(/* webpackChunkName: "project" */ '../views/TodoProjectView.vue')
-  },
-  {
     path: '/project/:id/markdown',
     name: 'markdown',
     component: MarkdownView
@@ -77,7 +71,7 @@ const routes = [
     path: '/project/:id/Member',
     name: 'projectmember',
     component: ProjectMemberView
-  },
+  }
 ]
 
 const router = new VueRouter({
